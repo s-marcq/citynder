@@ -11,6 +11,6 @@ app.config.from_object(Config)
 
 db = SQLAlchemy(app)
 
-login = LoginManager(app)
+# login = LoginManager(app)
 
 from .routes import recherche, users, erreurs, panier, page_finale

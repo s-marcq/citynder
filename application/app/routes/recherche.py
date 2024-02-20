@@ -3,10 +3,15 @@ from flask import render_template, request, flash, redirect, url_for, abort
 from sqlalchemy import or_
 # from ..models.citynder import 
 from ..models.formulaires import Recherche
+from ..models.citynder import Commune
 from sqlalchemy.sql import text
 from flask_login import login_required
 
-
+@app.route("/")
+def route_test_bdd():
+    test = Commune.query.filter(Commune.INSEE_C == 62765).first()
+    print(f"Commune : {test}\n, Interet naturel : {test.environnement_naturel} \n culture : {test.etablissements_culturels} \n commerce : {test.equipements_commerciaux} \n sport : {test.equipements_sportifs}")
+    return "ok" 
 
 @app.route("/recherche")
 def recherche():
