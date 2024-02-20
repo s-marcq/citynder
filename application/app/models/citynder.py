@@ -126,8 +126,17 @@ class Equipements_sportifs(db.Model):
     sport_id = db.Column(db.Integer, nullable=False, primary_key=True, unique=True, autoincrement=True)
     nom_eq_sportif = db.Column(db.Text, nullable=False)
     
-    # méthode permettant d'aller chercher le nombre de l'équipement sportif dans la base
+    # méthode permettant d'
+    
     def get_nombre(self):
+        """
+            Permet d'aller chercher le nombre du type d'équipement sportif en question au sein de la commune dans la base (table commune_equipements_sportifs)
+
+            Returns
+            -------
+            integer
+                La quantité de cet équipement dans la commune.
+        """
         nombre = db.session.query(commune_equipements_sportifs.c.sport_id).filter_by(nombre=self.sport_id).first()
         return nombre[0]
     
