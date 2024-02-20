@@ -6,8 +6,9 @@ from flask_login import UserMixin
 commune_equipements_sportifs = db.Table(
     "Commune_Equipements_sportifs",
     db.Column("INSEE_C", db.Integer, db.ForeignKey('Commune.INSEE_C'), nullable=False, primary_key=True),
-    db.Column("sport_id", db.Integer, db.ForeignKey('Equipements_sportifs.sport_id'), nullable=False),
-    db.Column("nombre", db.Integer)
+    # /!\ Inversion nombre et sport_id --> le nombre correspond au sport_id
+    db.Column("nombre", db.Integer, db.ForeignKey('Equipements_sportifs.sport_id'), nullable=False),
+    db.Column("sport_id", db.Integer) # le sport_id correspond au nombre
     )
 
 contenu_paniers_utilisateurs = db.Table(
@@ -124,9 +125,14 @@ class Equipements_sportifs(db.Model):
     __tablename__ = "Equipements_sportifs"
     sport_id = db.Column(db.Integer, nullable=False, primary_key=True, unique=True, autoincrement=True)
     nom_eq_sportif = db.Column(db.Text, nullable=False)
-
+    
+    # méthode permettant d'aller chercher le nombre de l'équipement sportif dans la base
+    def get_nombre(self):
+        nombre = db.session.query(commune_equipements_sportifs.c.sport_id).filter_by(nombre=self.sport_id).first()
+        return nombre[0]
+    
     def __repr__(self):
-        return f"<Equipements_sportifs {dict(sport_id=self.sport_id, nom_eq_sportif=self.nom_eq_sportif)}>"
+        return f"<Equipements_sportifs {dict(sport_id=self.sport_id, nom_eq_sportif=self.nom_eq_sportif, nombre=self.get_nombre())}>"
 
 class Utilisateurs(UserMixin, db.Model):
     __tablename__ = "Utilisateurs"
