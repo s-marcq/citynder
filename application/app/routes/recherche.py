@@ -14,25 +14,10 @@ def route_test_bdd():
     print(f"Commune : {test}\n, Interet naturel : {test.environnement_naturel} \n culture : {test.etablissements_culturels} \n commerce : {test.equipements_commerciaux} \n sport : {test.equipements_sportifs}")
     return "ok" 
 
-@app.route("/recherche", methods=['GET'])
-def recherche():
-    # coder des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
-    
-
-    
-    # fin du code de la route : stocker les résultats dans une liste, les trier aléatoirement et les stocker dans une variable de session
-    liste = []
-    liste = random.sample(liste, k=len(liste))
-    session['resultats'] = liste
-
-
-    return redirect(url_for('profil_commune', index=session['index']))
-
-
-
 @app.route("/recherche_provisoire", methods=['GET'])
 def recherche_provisoire():
-    liste_provisoire = ["71155", "59350", "26333", "38349","75107", "71543", "12269"]
+    # code des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
+    liste_provisoire = [71155, 59350, 26333, 38349,75107, 71543, 12269]
     liste_provisoire = random.sample(liste_provisoire, k=len(liste_provisoire))
     session['resultats'] = liste_provisoire
     session['index']= 0    
@@ -47,7 +32,7 @@ def profil_commune(index):
     Lancer la route recherche provisoire est obligatoire avant de lancer cette route.
         => Prévoir une exception/redirection si elle n'a pas été lancée par l'utilisateur.
     """
-    # try: 
+    # try:
         # code affichage du profil  -> MARINA
             # stocker le résultat des requêtes dans un dico ou des variables puis l'afficher avec jinja en html
             # coder le bouton " voir le profil détaillé" qui assure la redirection vers cette route en transmettant la variable du code insee dans le template resultats.html
