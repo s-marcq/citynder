@@ -17,7 +17,7 @@ def route_test_bdd():
 @app.route("/recherche_provisoire", methods=['GET'])
 def recherche_provisoire():
     # code des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
-    liste_provisoire: List[str]  = [71155, 59350, 26333, 38349,75107, 71543, 12269]
+    liste_provisoire: list[str]  = [71155, 59350, 26333, 38349,75107, 71543, 12269]
     liste_provisoire= random.sample(liste_provisoire, k=len(liste_provisoire))
     session['resultats'] = liste_provisoire
     session['index']= 0    
