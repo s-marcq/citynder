@@ -17,8 +17,8 @@ def route_test_bdd():
 @app.route("/recherche_provisoire", methods=['GET'])
 def recherche_provisoire():
     # code des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
-    liste_provisoire = [71155, 59350, 26333, 38349,75107, 71543, 12269]
-    liste_provisoire = random.sample(liste_provisoire, k=len(liste_provisoire))
+    liste_provisoire: List[str]  = [71155, 59350, 26333, 38349,75107, 71543, 12269]
+    liste_provisoire= random.sample(liste_provisoire, k=len(liste_provisoire))
     session['resultats'] = liste_provisoire
     session['index']= 0    
     return redirect(url_for('profil_commune', index=session['index']))
@@ -33,6 +33,7 @@ def profil_commune(index):
         => Prévoir une exception/redirection si elle n'a pas été lancée par l'utilisateur.
     """
     # try:
+    liste = session['resultats']
         # code affichage du profil  -> MARINA
             # stocker le résultat des requêtes dans un dico ou des variables puis l'afficher avec jinja en html
             # coder le bouton " voir le profil détaillé" qui assure la redirection vers cette route en transmettant la variable du code insee dans le template resultats.html
