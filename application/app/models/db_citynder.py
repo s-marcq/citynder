@@ -39,6 +39,7 @@ class Commune(db.Model):
     LONGITUDE = db.Column(db.Float)
     INTERET_NATUREL = db.Column(db.Boolean)
     NBRE_HEBERGEMENTS_TOURISTIQUES = db.Column(db.Integer)
+    url_image = db.Column(db.Text)
 
     # propriétés de relation
     environnement_naturel = db.relationship("Environnement_naturel_specifique", backref="environnement_naturel")

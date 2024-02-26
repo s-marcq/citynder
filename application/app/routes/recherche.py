@@ -17,9 +17,7 @@ def route_test_bdd():
 @app.route("/recherche", methods=['GET'])
 def recherche():
     # coder des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
-    
 
-    
     # fin du code de la route : stocker les résultats dans une liste, les trier aléatoirement et les stocker dans une variable de session
     liste = []
     liste = random.sample(liste, k=len(liste))
