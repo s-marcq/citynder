@@ -1,5 +1,5 @@
 from flask import url_for, render_template, redirect, request, flash
-from ..models.formulaires import AjoutUtilisateur, Connexion
+#from ..models.formulaires import AjoutUtilisateur, Connexion
 from ..app import app, db #, login
 from flask_login import login_user, current_user, logout_user
 

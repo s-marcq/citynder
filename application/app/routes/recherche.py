@@ -1,9 +1,10 @@
 from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for, abort
+from flask import render_template, request, flash, redirect, url_for, abort, session
+import random
 from sqlalchemy import or_
 # from ..models.citynder import 
-from ..models.formulaires import Recherche
-from ..models.citynder import Commune
+#from ..models.formulaires import Recherche
+from ..models.db_citynder import Commune
 from sqlalchemy.sql import text
 from flask_login import login_required
 
@@ -13,58 +14,56 @@ def route_test_bdd():
     print(f"Commune : {test}\n, Interet naturel : {test.environnement_naturel} \n culture : {test.etablissements_culturels} \n commerce : {test.equipements_commerciaux} \n sport : {test.equipements_sportifs}")
     return "ok" 
 
-@app.route("/recherche")
-def recherche():
-    # code des requêtes liées au formulaire de recherche --> stocker les résultats
-    return render_template("pages/???.html" # a completer
-                           )
+@app.route("/recherche_provisoire", methods=['GET'])
+def recherche_provisoire():
+    # code des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
+    liste_provisoire = [71155, 59350, 26333, 38349,75107, 71543, 12269]
+    liste_provisoire = random.sample(liste_provisoire, k=len(liste_provisoire))
+    session['resultats'] = liste_provisoire
+    session['index']= 0    
+    return redirect(url_for('profil_commune', index=session['index']))
 
-@app.route("/recherche/<int:code_Insee>")
-def profil_commune(code_Insee):
+
+@app.route("/resultats/<int:index>") # MARINA
+def profil_commune(index):
+    """
+    Route d'affichage des résultats. L'index correspond à l'index du résultat dans la liste transmise dans la route précédente
+    L'index et la liste sont des variables de session propres à l'utilisateur.
+    Lancer la route recherche provisoire est obligatoire avant de lancer cette route.
+        => Prévoir une exception/redirection si elle n'a pas été lancée par l'utilisateur.
+    """
     # try:
-        # code affichage du profil --> tout mettre dans un dictionnaire ?
-        # code affichage du profil détaillé --> tout mettre dans un dictionnaire ?
-        # code ajout dans le panier
-        # gérer le cas où il n'y a plus de résultats (peut-être à faire en amont ou en html)
+        # code affichage du profil  -> MARINA
+            # stocker le résultat des requêtes dans un dico ou des variables puis l'afficher avec jinja en html
+            # coder le bouton " voir le profil détaillé" qui assure la redirection vers cette route en transmettant la variable du code insee dans le template resultats.html
+
+        # Pour plus tard : code ajout dans le panier, gérer le cas où il n'y a plus de résultats (peut-être à faire en amont ou en html)
     
     # except Exception as e :
-        # code s'il faut prévoir des exceptions
-    return render_template("pages/???.html" # a completer
+        # gérer le cas où la liste est vide ou bien le cas où l'utilisatur n'est pas passé par la route /recherche
+    return render_template("pages/resultats.html") # a completer
+
+@app.route("/resultats/detail/<string:code_insee>") # GIL
+def profil_detallé_commune(code_insee):
+    """
+    Route d'affichage des profils détaillés. Le code insee est une variable récupérée et transmise à l'url grâce au {{url_for()}} de jinja dans le template html quand on clique sur un bouton pour voir le profil détaillé.
+    Faire des tests avec des codes insee au hasard en attendant que le bouton soit codé par Marina.
+    Lancer la route précédente est obligatoire avant de lancer cette route.
+        => Prévoir une exception/redirection si elle n'a pas été lancée par l'utilisateur.
+    """
+    # try:
+        # code affichage du profil détaillé -> GIL
+            # stocker le résultat des requêtes dans un dico ou des variables puis l'afficher avec jinja en html
+
+    # except Exception as e :
+
+    return render_template("pages/profil_detaille0.html" # a completer
                            )
 
-"""
-->  Une inspiration de la part de chatgpt :
-"""
-# @app.route('/', methods=['GET', 'POST'])
-# def critere_selection():
-#     if request.method == 'POST':
-#         # Traitement des critères sélectionnés par l'utilisateur
-#         critere_population = request.form.get('population')
-#         critere_nombre_sportifs = request.form.get('nombre_sportifs')
-#         # Filtrer les communes en fonction des critères
-#         communes_filtrees = Commune.query.filter(Commune.population > critere_population, Commune.nombre_sportifs > critere_nombre_sportifs).all()
-#         if communes_filtrees:
-#             # Stockage des communes filtrées dans la session
-#             session['communes_filtrees'] = [commune.INSEE_C for commune in communes_filtrees]
-#             # Redirection vers la première page de résultats de recherche
-#             return redirect(url_for('recherche_communes', index=0))
-#         else:
-#             return render_template('aucun_resultat.html')
-#     return render_template('critere_selection.html')
+@app.route("/suivant/<int:index>")
+# coder en HTML/Jinja l'accès à cette route quand le bouton pour passer au résultat suivant est cliqué 
+def page_suivante(index):
+    # Passer à la page suivante
+    session['index'] += 1
+    return redirect(url_for('profil_commune', code_insee='', index=session['index']))
 
-# @app.route('/recherche/<int:index>')
-# def recherche_communes(index):
-#     # Récupérer les communes filtrées de la session
-#     communes_filtrees = session.get('communes_filtrees', [])
-#     if communes_filtrees:
-#         # Vérifier si index est valide
-#         if 0 <= index < len(communes_filtrees):
-#             # Sélectionner la commune correspondant à l'index
-#             commune_selectionnee = Commune.query.filter_by(INSEE_C=communes_filtrees[index]).first()
-#             return render_template('resultat_recherche.html', commune_selectionnee=commune_selectionnee, index=index, total=len(communes_filtrees))
-#         else:
-#             # Toutes les communes ont été parcourues
-#             return render_template('fin_resultats.html')
-#     else:
-#         # Les critères de recherche ne sont pas définis
-#         return redirect(url_for('critere_selection'))

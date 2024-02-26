@@ -1,19 +1,19 @@
-<!doctype html>
-<html lang="en">
+{% extends "bootstrap/base.html" %}
 
-<head>
   <!-- <title>Citynder | {{sous_titre}}</title> -->
-  <title>Citynder</title>
+  {% block title %}Citynder{% endblock %}
+
+  {% block head %}
   {% include "partials/css.html" %}
   {% include "partials/metadata.html" %}
   {% include "partials/js.html" %}
   {% block js %}{%endblock%}
   {% block css %}{%endblock%}
+  {% endblock %}
 
-</head>
+  {% block navbar %}
+  {% endblock %}
 
-<body>
-  <!-- <p>Mettre ici la navbar</p> -->
-</body>
+  {% block body %}
 
-</html>
+  {% endblock %}
