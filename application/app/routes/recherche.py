@@ -3,28 +3,57 @@ from flask import render_template, request, flash, redirect, url_for, abort, ses
 import random
 from sqlalchemy import or_
 # from ..models.citynder import 
-#from ..models.formulaires import Recherche
-from ..models.db_citynder import Commune
+from ..models.formulaires import Recherche
+from ..models.db_citynder import Commune, Environnement_naturel_specifique, Etablissements_culturels
 from sqlalchemy.sql import text
 from flask_login import login_required
 
-@app.route("/")
-def route_test_bdd():
-    test = Commune.query.filter(Commune.INSEE_C == 62765).first()
-    print(f"Commune : {test}\n, Interet naturel : {test.environnement_naturel} \n culture : {test.etablissements_culturels} \n commerce : {test.equipements_commerciaux} \n sport : {test.equipements_sportifs}")
-    return "ok" 
 
-@app.route("/recherche", methods=['GET'])
+@app.route("/recherche", methods=['GET', 'POST'])
 def recherche():
     # coder des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
+    query_results = Commune.query
+    form = Recherche()
 
-    # fin du code de la route : stocker les résultats dans une liste, les trier aléatoirement et les stocker dans une variable de session
-    liste = []
-    liste = random.sample(liste, k=len(liste))
-    session['resultats'] = liste
+    try:
+        
+        if form.validate_on_submit():
 
+            # Montagne
+            session['montagne'] = request.form.get("montagne", None)
+            if session['montagne']:
+                query_results = query_results.join(Commune.environnement_naturel).filter(
+                                Environnement_naturel_specifique.LOI_MONTAGNE == True,
+                                Environnement_naturel_specifique.MASSIF != None
+                            )
+                
+            
+            # Culture
+            session['musée'] =  request.form.get("musée", None)
+            if session['musée'] :
+                query_results = query_results.join(Commune.etablissements_culturels).filter(Etablissements_culturels.MUSEE_sum > 0)
 
-    return redirect(url_for('profil_commune', index=session['index']))
+            
+            
+            # Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
+            liste_codes_insee = [resultat.INSEE_C for resultat in query_results]   
+            liste_codes_insee = random.sample(liste_codes_insee, k=len(liste_codes_insee))
+            session['resultats'] = liste_codes_insee
+            session['index']= 0  
+            print(session['resultats'])
+
+            return redirect(url_for('profil_commune', index=session['index']))
+        
+
+        # récupérer les données de la session dans un dictionnaire pour préremplir le formulaire quand on fait un retour en arrière (voir l'attribut "value" dans les balises "input" du html)
+        champs = {"montagne" : session.get('montagne'),
+        "musée" : session.get('musée')
+        }
+
+    except Exception as e:
+        flash("La recherche a rencontré une erreur "+ str(e), "info")
+    
+    return render_template('pages/recherche_filtres.html', form=form, champs = champs)
 
 
 
@@ -48,7 +77,7 @@ def profil_commune(index):
     # try: 
         # code affichage du profil  -> MARINA
             # stocker le résultat des requêtes dans un dico ou des variables puis l'afficher avec jinja en html
-            # coder le bouton " voir le profil détaillé" qui assure la redirection vers cette route en transmettant la variable du code insee dans le template resultats.html
+            # html : coder le bouton " voir le profil détaillé" qui assure la redirection vers cette route en transmettant la variable du code insee dans le template resultats.html
 
         # Pour plus tard : code ajout dans le panier, gérer le cas où il n'y a plus de résultats (peut-être à faire en amont ou en html)
     
@@ -80,3 +109,12 @@ def page_suivante(index):
     session['index'] += 1
     return redirect(url_for('profil_commune', code_insee='', index=session['index']))
 
+
+
+
+@app.route("/")
+def route_test_bdd():
+    test = Commune.query.filter(Commune.INSEE_C == 62765).first()
+    print(test)
+    print(f"Commune : {test}\n, Interet naturel : {test.environnement_naturel} \n culture : {test.etablissements_culturels} \n commerce : {test.equipements_commerciaux} \n sport : {test.equipements_sportifs}")
+    return "ok"

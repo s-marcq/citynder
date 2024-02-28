@@ -1,25 +1,53 @@
-<!-- <form action="{{url_for('recherche')}}" method="post" name="recherche">
+{% extends "bootstrap/base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+<form class="form form-horizontal" action="{{url_for('recherche')}}" method="post" name="recherche">
     {{ form.hidden_tag() }}
 
-    <div class="form-group">
-        <label for="nom_pays">Nom du pays recherché </label>
-        {{ form.nom_pays(class_="form-control", placeholder_="Pays") }}
-        <small id="nom_pays" class="form-text text-muted">Entrer tout ou partie du nom d'un
-            pays</small>
+
+    <!-- Nature -->
+    <div class="form-group" >
+
+        <label class="col-form-label" for="nature">Nature</label><br/>
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="montagne" name="montagne" value={{champs.montagne}}>
+            <label class="form-check-label" for="montagne">Zone de montagne</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="littoral" name="littoral">
+            <label class="form-check-label" for="littoral">Zone littorale</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="PNR" name="PNR">
+            <label class="form-check-label" for="PNR">Parc national/Parc naturel régional</label>
+        </div>
+    </div>
+
+    <!-- Culture -->
+    <div class="form-group" >
+
+        <label class="col-form-label" for="culture">Etablissements culturels</label><br/>
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="checkbox" id="musée" name="musée" value={{champs.musée}}>
+            <label class="form-check-label" for="musée">Musée</label>
+        </div>
+
     </div>
 
     <div class="form-group">
-        <label for="ressources">Ressource possédées</label>
-        {{ form.ressources(class_="form-control") }}
-        <small id="ressources" class="form-text text-muted">Sélectionner une ressource possédée dans le pays</small>
+        <div class="col">
+            <input type="submit" class="btn btn-primary" value="rechercher">
+        </div>
     </div>
 
-    <div class="form-group">
-        <label for="continents">Continent d'appartenance</label>
-        {{ form.continents(class_="form-control") }}
-        <small id="continents" class="form-text text-muted">Sélectionner un 
-            continent</small>
-    </div>
 
-    <p><input type="submit" value="Rechercher"></p>
-</form> -->
+</form>
+</div>
+{%endblock%}
