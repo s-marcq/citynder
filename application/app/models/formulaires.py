@@ -23,6 +23,12 @@ class Recherche(FlaskForm):
     # Culture
     musée = BooleanField("musée") 
 
+    # Validation
+    def validation(self):
+        if self.loyer_max.data or self.loyer_min.data:
+            if self.surface_min.data is None and self.surface_max.data is None:
+                raise ValidationError('Veuillez remplir le champ de surface.')
+        return "ok"
 
 
 # <exemples>

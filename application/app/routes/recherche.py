@@ -18,7 +18,7 @@ def recherche():
 
     try:
         
-        if form.validate_on_submit():
+        if form.validate_on_submit() and form.validation():
             # Loyer
             session['appart'] = request.form.get('appartement', None)
             session['maison'] = request.form.get('maison', None)
@@ -31,6 +31,7 @@ def recherche():
 
             loyer_m2_min = calculer_loyer_m2_min(session['loyer_min'], session['surface_min'], session['surface_max'])
             loyer_m2_max = calculer_loyer_m2_max(session['loyer_max'], session['surface_min'], session['surface_max'])
+
             # régler le cas où c'est mal rempli
 
             if session['appart'] :
@@ -71,7 +72,6 @@ def recherche():
                 query_results = query_results.join(Commune.etablissements_culturels).filter(Etablissements_culturels.MUSEE_sum > 0)
 
             
-            
             # Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
             liste_codes_insee = [resultat.INSEE_C for resultat in query_results]   
             liste_codes_insee = random.sample(liste_codes_insee, k=len(liste_codes_insee))
@@ -90,13 +90,13 @@ def recherche():
 
     
     except Exception as e:
-        flash("La recherche a rencontré une erreur "+ str(e), "info")
+        print("La recherche a rencontré une erreur : "+ str(e))
     
     champs = {"montagne" : session.get('montagne'),
         "musée" : session.get('musée'),
         "appart" : session.get('appart'), 
         "maison" : session.get('maison'),
-        "appart_et_maison" : session.get('appart_et_maison'), # il est nécessaire de cocher cette valeur par défaut si rien d'autre n'est coché
+        "appart_et_maison" : session.get('appart_et_maison'),
         "loyer_min" : normalisation_champs_texte(session.get('loyer_min')),
         "loyer_max" : normalisation_champs_texte(session.get('loyer_max')),
         "surface_min" : normalisation_champs_texte(session.get('surface_min')),
@@ -104,9 +104,7 @@ def recherche():
         }
 
     
-    return render_template('pages/recherche_filtres.html', form=form, champs = champs)
-
-
+    return render_template('pages/recherche_filtres.html', form=form, champs=champs)
 
 @app.route("/recherche_provisoire", methods=['GET'])
 def recherche_provisoire():
