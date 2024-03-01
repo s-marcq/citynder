@@ -1,12 +1,24 @@
 from flask_wtf import FlaskForm
-from wtforms import StringField, SelectField, SelectMultipleField, TextAreaField, PasswordField, BooleanField
-from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError
+from wtforms import StringField, SelectField, SelectMultipleField, TextAreaField, PasswordField, BooleanField, IntegerField
+from wtforms.validators import DataRequired, Email, Length, EqualTo, ValidationError, Optional
 import re
 
 
 class Recherche(FlaskForm):
+    # Loyer
+    appartement = BooleanField("appartement")
+    maison = BooleanField("maison")
+    appart_et_maison = BooleanField("appart_et_maison")
+    loyer_min = IntegerField("loyer_min", validators=[Optional(), DataRequired()],render_kw={"placeholder": "Entrez un nombre entier"})
+    loyer_max = IntegerField("loyer_max", validators=[Optional(), DataRequired()],render_kw={"placeholder": "Entrez un nombre entier"})
+    surface_min = IntegerField("surface_min", validators=[Optional(), DataRequired()],render_kw={"placeholder": "Entrez un nombre entier"})
+    surface_max = IntegerField("surface_max", validators=[Optional(), DataRequired()],render_kw={"placeholder": "Entrez un nombre entier"})
+
     # Nature
     montagne = BooleanField("montagne") 
+    littoral = BooleanField("littoral") 
+    PNR = BooleanField("PNR") 
+
 
     # Culture
     musée = BooleanField("musée") 

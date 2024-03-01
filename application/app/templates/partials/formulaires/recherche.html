@@ -3,10 +3,57 @@
 {% block content %}
 
 <div class="container">
+    {% set valeur_appart_et_maison = "checked" if champs.appartement is none and champs.appart_et_maison is none and champs.maison is none else champs.appart_et_maison %}
+    
+  
 
 <form class="form form-horizontal" action="{{url_for('recherche')}}" method="post" name="recherche">
     {{ form.hidden_tag() }}
 
+
+    <!-- Appartement/maison -->
+    <div class="form-group" >
+
+        <label class="col-form-label" for="culture">Je souhaite vivre :</label><br/>
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="appartement" name="logement" value={{champs.appartement}}>
+            <label class="form-check-label" for="appartement">En appartement</label>
+        </div>
+
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="maison" name="logement" value={{champs.maison}}>
+            <label class="form-check-label" for="maison">En maison</label>
+        </div>
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="radio" id="appart_et_maison" name="logement" checked={{valeur_appart_et_maison}}>
+            <label class="form-check-label" for="appart_et_maison">Peu importe</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label" for="surface">Surface du logement à louer :</label><br/>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label" for="surface_min">de </label>
+            <input class="form-check-input" type="text" id="surface_min" name="surface_min" value={{champs.surface_min}}>
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label" for="surface_max">à </label>
+            <input class="form-check-input" type="text" id="surface_max" name="surface_max" value={{champs.surface_max}}>                
+            <label class="form-check-label"> mètres carrés</label>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-form-label" for="loyer">Prix du loyer :</label><br/>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label" for="loyer_min">de</label>
+            <input class="form-check-input" type="text" id="loyer_min" name="loyer_min" value={{champs.loyer_min}}>
+        </div>
+        <div class="form-check form-check-inline">
+            <label class="form-check-label" for="loyer_max">à </label>
+            <input class="form-check-input" type="text" id="loyer_max" name="loyer_max" value={{champs.loyer_max}}>                
+            <label class="form-check-label">€</label>
+        </div>
+    </div>
 
     <!-- Nature -->
     <div class="form-group" >
