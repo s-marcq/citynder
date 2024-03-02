@@ -1,100 +1,175 @@
-{% extends "bootstrap/base.html" %}
+{% extends "partials/conteneur.html" %}
+
+{% set valeur_appart_et_maison = "checked" if champs.appartement is none and champs.appart_et_maison is none and champs.maison is none else champs.appart_et_maison %}
+dict
+
+
 
 {% block content %}
 
-<div class="container">
-    {% set valeur_appart_et_maison = "checked" if champs.appartement is none and champs.appart_et_maison is none and champs.maison is none else champs.appart_et_maison %}
-    
-  
 
-<form class="form form-horizontal" action="{{url_for('recherche')}}" method="post" name="recherche">
-    {{ form.hidden_tag() }}
+<div class="container">  
+
+    <form class="form form-horizontal" action="{{url_for('recherche', champs=champs)}}" method="post" name="recherche">
+        {{ form.hidden_tag() }}
 
 
-    <!-- Appartement/maison -->
-    <div class="form-group" >
+        <!-- Appartement/maison -->
+        <div class="form-group" >
 
-        <label class="col-form-label" for="culture">Je souhaite vivre :</label><br/>
+            <label class="col-form-label" for="culture">Je souhaite vivre :</label><br/>
 
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="appartement" name="logement" value={{champs.appartement}}>
-            <label class="form-check-label" for="appartement">En appartement</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="appartement" name="logement" value={{champs.appartement}}>
+                <label class="form-check-label" for="appartement">En appartement</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="maison" name="logement" value={{champs.maison}}>
+                <label class="form-check-label" for="maison">En maison</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" id="appart_et_maison" name="logement" checked={{valeur_appart_et_maison}}>
+                <label class="form-check-label" for="appart_et_maison">Sans préférence</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label" for="surface">Surface du logement à louer :</label><br/>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" for="surface_min">de</label>
+                <input class="form-check-input" type="text" id="surface_min" name="surface_min" value={{champs.surface_min}}>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" for="surface_max">à</label>
+                <input class="form-check-input" type="text" id="surface_max" name="surface_max" value={{champs.surface_max}}>                
+                <label class="form-check-label"> mètres carrés</label>
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-form-label" for="loyer">Prix du loyer :</label><br/>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" for="loyer_min">de</label>
+                <input class="form-check-input" type="text" id="loyer_min" name="loyer_min" value={{champs.loyer_min}}>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" for="loyer_max">à </label>
+                <input class="form-check-input" type="text" id="loyer_max" name="loyer_max" value={{champs.loyer_max}}>                
+                <label class="form-check-label">€</label>
+            </div>
         </div>
 
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="maison" name="logement" value={{champs.maison}}>
-            <label class="form-check-label" for="maison">En maison</label>
-        </div>
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="radio" id="appart_et_maison" name="logement" checked={{valeur_appart_et_maison}}>
-            <label class="form-check-label" for="appart_et_maison">Sans préférence</label>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-form-label" for="surface">Surface du logement à louer :</label><br/>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label" for="surface_min">de </label>
-            <input class="form-check-input" type="text" id="surface_min" name="surface_min" value={{champs.surface_min}}>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label" for="surface_max">à </label>
-            <input class="form-check-input" type="text" id="surface_max" name="surface_max" value={{champs.surface_max}}>                
-            <label class="form-check-label"> mètres carrés</label>
-        </div>
-    </div>
-    <div class="form-group">
-        <label class="col-form-label" for="loyer">Prix du loyer :</label><br/>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label" for="loyer_min">de</label>
-            <input class="form-check-input" type="text" id="loyer_min" name="loyer_min" value={{champs.loyer_min}}>
-        </div>
-        <div class="form-check form-check-inline">
-            <label class="form-check-label" for="loyer_max">à </label>
-            <input class="form-check-input" type="text" id="loyer_max" name="loyer_max" value={{champs.loyer_max}}>                
-            <label class="form-check-label">€</label>
-        </div>
-    </div>
+        <!-- Nature -->
+        <div class="form-group" >
 
-    <!-- Nature -->
-    <div class="form-group" >
+            <label class="col-form-label" for="nature">Nature :</label><br/>
 
-        <label class="col-form-label" for="nature">Nature</label><br/>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="montagne" name="montagne" {{champs.montagne}}>
+                <label class="form-check-label" for="montagne">Zone de montagne</label>
+            </div>
 
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="montagne" name="montagne" value={{champs.montagne}}>
-            <label class="form-check-label" for="montagne">Zone de montagne</label>
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="littoral" name="littoral" {{champs.littoral}}>
+                <label class="form-check-label" for="littoral">Zone littorale</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="PNR" name="PNR" {{champs.PNR}}>
+                <label class="form-check-label" for="PNR">Parc national/Parc naturel régional</label>
+            </div>
         </div>
 
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="littoral" name="littoral">
-            <label class="form-check-label" for="littoral">Zone littorale</label>
+        <!-- Culture -->
+        <div class="form-group" >
+
+            <label class="col-form-label" for="culture">Culture :</label><br/>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="musée" name="musée" {{champs.musée}}>
+                <label class="form-check-label" for="musée">Musée</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="cinema" name="cinema" {{champs.cinema}}>
+                <label class="form-check-label" for="cinema">Cinema</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="opera" name="opera" {{champs.opera}}>
+                <label class="form-check-label" for="opera">Opéra</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="theatre" name="theatre" {{champs.theatre}}>
+                <label class="form-check-label" for="theatre">Théatre</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="bibliothèque" name="bibliothèque" {{champs.bibliothèque}}>
+                <label class="form-check-label" for="bibliothèque">Bibliothèque</label>
+            </div>
         </div>
 
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="PNR" name="PNR">
-            <label class="form-check-label" for="PNR">Parc national/Parc naturel régional</label>
+        <!-- Sports -->
+        <div class="form-group" >
+
+            <label class="col-form-label" for="sports">Sport :</label><br/>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="foot" name="foot" {{champs.foot}}>
+                <label class="form-check-label" for="foot">Terrain de football</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="piscine" name="piscine" {{champs.piscine}}>
+                <label class="form-check-label" for="piscine">Piscine</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="rando" name="rando" {{champs.rando}}>
+                <label class="form-check-label" for="rando">Boucle de randonnée</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="sportco" name="sportco" {{champs.sportco}}>
+                <label class="form-check-label" for="sportco">Salle de sports collectifs</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="escalade" name="escalade" {{champs.escalade}}>
+                <label class="form-check-label" for="escalade">Escalade</label>
+            </div>
+
+            <div class="form-check form-check-inline">
+                <input class="form-check-input" type="checkbox" id="petanque" name="petanque" {{champs.petanque}}>
+                <label class="form-check-label" for="petanque">Terrain de pétanque</label>
+            </div>
+
         </div>
-    </div>
 
-    <!-- Culture -->
-    <div class="form-group" >
+       
+        <!-- Commerces -->
+        <div class="form-group" >
 
-        <label class="col-form-label" for="culture">Etablissements culturels</label><br/>
+            <label class="col-form-label" for="commerces">Commerces :</label><br/>
 
-        <div class="form-check form-check-inline">
-            <input class="form-check-input" type="checkbox" id="musée" name="musée" value={{champs.musée}}>
-            <label class="form-check-label" for="musée">Musée</label>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" for="musée">Commerces alimentaires</label>
+                {{ form.com_alim(class_="form-control", value=champs.com_alim) }}
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" for="musée">Commerces non alimentaires</label>
+                {{ form.com_non_alim(class_="form-control", value=champs.com_non_alim) }}
+            </div>
+
+
         </div>
 
-    </div>
-
-    <div class="form-group">
-        <div class="col">
-            <input type="submit" class="btn btn-primary" value="rechercher">
+        <div class="form-group">
+            <div class="col">
+                <input type="submit" class="btn btn-primary" value="Rechercher">
+            </div>
         </div>
-    </div>
-
-
-</form>
+    </form>
 </div>
 {%endblock%}

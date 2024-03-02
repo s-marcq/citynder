@@ -1,11 +1,11 @@
 from ..app import app, db
 from flask import render_template, request, flash, redirect, url_for, abort, session
 import random
-from sqlalchemy import or_, and_
+from sqlalchemy import or_, and_, func
 from ..utils.calcul_loyer import calculer_loyer_m2_max, calculer_loyer_m2_min, normalisation_champs_texte
 # from ..models.citynder import 
 from ..models.formulaires import Recherche
-from ..models.db_citynder import Commune, Environnement_naturel_specifique, Etablissements_culturels
+from ..models.db_citynder import Commune, Environnement_naturel_specifique, Etablissements_culturels, Etablissements_commerciaux, Equipements_sportifs
 from sqlalchemy.sql import text
 from flask_login import login_required
 
@@ -66,44 +66,153 @@ def recherche():
                             )
                 
             
-            # Culture
+# Culture
             session['musée'] =  request.form.get("musée", None)
             if session['musée'] :
                 query_results = query_results.join(Commune.etablissements_culturels).filter(Etablissements_culturels.MUSEE_sum > 0)
 
+            session['opera'] =  request.form.get("opera", None)
+            if session['opera'] :
+                query_results = query_results.join(Commune.etablissements_culturels).filter(Etablissements_culturels.OPERA_sum > 0)
+           
+            session['cinema'] =  request.form.get("cinema", None)
+            if session['cinema'] :
+                query_results = query_results.join(Commune.etablissements_culturels).filter(Etablissements_culturels.CINEMA_sum > 0)
+
+            session['theatre'] = request.form.get("theatre", None)
+            if session['theatre'] :
+                query_results = query_results.join(Commune.etablissements_culturels).filter(Etablissements_culturels.THEATRE_sum > 0)
             
+            session['bibliothèque'] = request.form.get("bibliothèque", None)
+            if session['bibliothèque'] :
+                query_results = query_results.join(Commune.etablissements_culturels).filter(Etablissements_culturels.BIB_sum> 0)
+
+            #Sports
+            session['foot'] = request.form.get("foot", None)
+            if session['foot']:
+                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Terrain de football")
+
+            session['piscine'] = request.form.get("piscine", None)
+            if session['piscine']:
+                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Piscine/Bassin exercice aquatique")
+
+            session['rando'] = request.form.get("rando", None)
+            if session['rando']:
+                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Boucle de randonnée")
+
+            session['sportco'] = request.form.get("sportco", None)
+            if session['sportco']:
+                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Salles de pratiques collectives / gymnase")
+
+            session['escalade'] = request.form.get("escalade", None)
+            if session['escalade']:
+                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Equipement escalade")
+
+
+            session['petanque'] = request.form.get("petanque", None)
+            if session['petanque']:
+                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Terrain de pétanque")
+
+            # commerces 
+            session['com_alim'] = request.form.get("com_alim", None)
+                #query_results = query_results.join(Commune.equipements_commerciaux).filter(Etablissements_commerciaux.ALIMENTATION > 0)
+            match session['com_alim']:
+                case "0":
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(Etablissements_commerciaux.ALIMENTATION == 0)
+                case "1" :
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(Etablissements_commerciaux.ALIMENTATION == 1)
+
+                case "2 à 5":
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(and_(Etablissements_commerciaux.ALIMENTATION >= 2, Etablissements_commerciaux.ALIMENTATION <= 5))
+
+                case "5 à 10":
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(and_(Etablissements_commerciaux.ALIMENTATION >= 5, Etablissements_commerciaux.ALIMENTATION <= 10))
+
+                    
+                case "plus de 10":
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(and_(Etablissements_commerciaux.ALIMENTATION > 10))
+            
+            session['com_non_alim'] = request.form.get("com_non_alim", None)
+            commerces_non_alimentaires = Etablissements_commerciaux.LOISIRS + Etablissements_commerciaux.STATION_SERVICE + Etablissements_commerciaux.BEAUTE_ET_ACCESSOIRES + Etablissements_commerciaux.COMMERCES_GENERAUX +Etablissements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE
+            match session['com_non_alim']:
+                case "0":
+                    print('ok zero')
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(commerces_non_alimentaires==0)
+
+                case "1" :
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(commerces_non_alimentaires==1)
+
+                case "2 à 5":
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(and_(commerces_non_alimentaires>=2, commerces_non_alimentaires<=5))
+
+                case "5 à 10":
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(and_(commerces_non_alimentaires>=5, commerces_non_alimentaires<=10))
+
+                    
+                case "plus de 10":
+                    query_results = query_results.join(Commune.equipements_commerciaux).filter(commerces_non_alimentaires>=10)
+
+            # Population
+            match session['pop']:
+                case '':
+                    Commune.query.filter(Commune.POP == ...)
+
+            # Département
+            if session['département'] :
+                Commune.query.filter(Commune.DEPARTEMENT == ...)
+            
+                  # Département
+            if session['région'] :
+                Commune.query.filter(Commune.REGION == ...)
+
+
+
             # Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
-            liste_codes_insee = [resultat.INSEE_C for resultat in query_results]   
+            liste_codes_insee = [resultat.INSEE_C for resultat in query_results] 
+            # cas où il n'y aurait pas de résultat  
+            if liste_codes_insee == []:
+                flash("Aucun résultat, veuillez réessayer")
+                return redirect(url_for('recherche'))
             liste_codes_insee = random.sample(liste_codes_insee, k=len(liste_codes_insee))
             session['resultats'] = liste_codes_insee
             session['index']= 0  
-            print(session['resultats'])
 
+            for resultat in liste_codes_insee :
+                resultat = Commune.query.filter(Commune.INSEE_C == resultat).first()
+                print(resultat)
             return redirect(url_for('profil_commune', index=session['index']))
-        
-
-            # récupérer les données de la session dans un dictionnaire pour préremplir le formulaire quand on fait un retour en arrière (voir l'attribut "value" dans les balises "input" du html)
-        
-        else : 
-            print(form.errors)  
-
 
     
     except Exception as e:
-        print("La recherche a rencontré une erreur : "+ str(e))
+        flash("La recherche a rencontré une erreur : "+ str(e))
     
+    # sauvegarde des champs dans la session
     champs = {"montagne" : session.get('montagne'),
+        "littoral" : session.get('littoral'),
+        "PNR" : session.get('PNR'),
         "musée" : session.get('musée'),
+        "opera" : session.get('opera'),
+        "cinema" : session.get('cinema'),
+        "theatre" : session.get('theatre'),
+        "bibliothèque" : session.get('bibliothèque'),
+        "foot" : session.get('foot'),
+        "piscine" : session.get('piscine'),
+        "rando" : session.get('rando'),
+        "sportco" : session.get('sportco'),
+        "escalade" : session.get('escalade'),
+        "petanque" : session.get('petanque'),
         "appart" : session.get('appart'), 
         "maison" : session.get('maison'),
         "appart_et_maison" : session.get('appart_et_maison'),
         "loyer_min" : normalisation_champs_texte(session.get('loyer_min')),
         "loyer_max" : normalisation_champs_texte(session.get('loyer_max')),
         "surface_min" : normalisation_champs_texte(session.get('surface_min')),
-        "surface_max" : normalisation_champs_texte(session.get('surface_max')),
+        "surface_max" : normalisation_champs_texte(session.get('surface_max'))
         }
+    for champ in champs :
+        if champs[champ]=="on":
+            champs[champ]= "checked"
 
-    
     return render_template('pages/recherche_filtres.html', form=form, champs=champs)
 
 @app.route("/recherche_provisoire", methods=['GET'])
@@ -158,12 +267,9 @@ def page_suivante(index):
     session['index'] += 1
     return redirect(url_for('profil_commune', code_insee='', index=session['index']))
 
-
-
-
 @app.route("/")
 def route_test_bdd():
-    test = Commune.query.filter(Commune.INSEE_C == 62765).first()
-    print(test)
+    test = Commune.query.join(Commune.equipements_commerciaux).filter((Etablissements_commerciaux.LOISIRS+Etablissements_commerciaux.STATION_SERVICE) ==17).first()
     print(f"Commune : {test}\n, Interet naturel : {test.environnement_naturel} \n culture : {test.etablissements_culturels} \n commerce : {test.equipements_commerciaux} \n sport : {test.equipements_sportifs}")
     return "ok"
+

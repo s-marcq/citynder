@@ -12,8 +12,8 @@
   {% endblock %}
 
   {% block navbar %}
-  {% endblock %}
-  
+ 
+{% block header %}
   <div class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
@@ -26,9 +26,9 @@
     </div>
     {% endif %}
     {% endwith %}
-    <div class="row">
-      <div class="col">
-        {% block body %}{% endblock %}
-      </div>
-    </div>
+
   </div>
+
+  {% endblock %}
+
+  {% endblock %}

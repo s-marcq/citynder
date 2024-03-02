@@ -19,9 +19,24 @@ class Recherche(FlaskForm):
     littoral = BooleanField("littoral") 
     PNR = BooleanField("PNR") 
 
-
     # Culture
     musée = BooleanField("musée") 
+    opera = BooleanField("opera")
+    cinema = BooleanField("cinema") 
+    theatre = BooleanField("theatre")
+    bibliothèque = BooleanField("bibliothèque")
+
+    #Sports
+    foot = BooleanField("foot")
+    piscine = BooleanField("piscine")
+    rando = BooleanField("rando")
+    sportco = BooleanField("sportco")
+    escalade = BooleanField("escalade")
+    petanque = BooleanField("petanque")
+
+    # Commerces 
+    com_alim = SelectField('com_alim', choices=[('', ''),('0', '0'),('1', '1'), ('2 à 5', '2 à 5'), ('5 à 10', '5 à 10'), ('plus de 10', 'plus de 10')])
+    com_non_alim = SelectField('com_non_alim', choices=[('', ''),('0', '0'),('1', '1'), ('2 à 5', '2 à 5'), ('5 à 10', '5 à 10'), ('plus de 10', 'plus de 10')])
 
     # Validation
     def validation(self):
@@ -29,17 +44,6 @@ class Recherche(FlaskForm):
             if self.surface_min.data is None and self.surface_max.data is None:
                 raise ValidationError('Veuillez remplir le champ de surface.')
         return "ok"
-
-
-# <exemples>
-class InsertionPays(FlaskForm):
-    code_pays =  StringField("code_pays", validators=[]) 
-    nom_pays =  StringField("nom_pays", validators=[])
-    type = SelectField('type', choices=[('', ''),('sovereign', 'Souverain'), ('dependency', 'Dépendance'), ('ocean', 'Océan'), ('other', 'Autre')])
-    introduction =  TextAreaField("code_pays", validators=[]) 
-    ressources = SelectMultipleField('ressources', choices=[('', ''),('PET','petroleum'),('NAT','natural gas'),('IRO','iron ore'),('PHO','phosphates'),('URA','uranium'),('LEA','lead'),('ZIN','zinc'),('DIA','diamonds'),('COP','copper'),('FEL','feldspar'),('GOL','gold'),('BAU','bauxite'),('NIC','nickel'),('SAL','salt'),('SOD','soda ash'),('POT','potash'),('COA','coal'),('SIL','silver'),('LIM','limestone'),('MAR','marble'),('TIM','timber'),('RAR','rare earth oxides'),('PEA','peat'),('COB','cobalt'),('PLA','platinum'),('VAN','vanadium'),('ARA','arable land'),('HYD','hydropower'),('NIO','niobium'),('TAN','tantalum'),('TIN','tin'),('TUN','tungsten'),('KAO','kaolin'),('FIS','fish (Lake Chad)'),('SAN','sand and gravel'),('MAG','magnesium'),('MAN','manganese'),('OIL','oil'),('BAS','basalt rock'),('CLA','clay'),('GYP','gypsum'),('GRA','granite'),('PUM','pumice'),('TAL','talc'),('ASB','asbestos'),('ZIR','zircon'),('RUB','rubber'),('COC','cocoa beans'),('COF','coffee'),('PAL','palm oil'),('GEM','gemstones'),('FLU','fluorspar'),('WIL','wildlife'),('WAT','water'),('BUI','building stone'),('CHR','chromite'),('QUA','quartz'),('TAR','tar sands'),('SEM','semiprecious stones'),('MIC','mica'),('AND','and bauxite'),('NOT','note'),('MOL','molybdenum'),('HAR','hardwoods'),('MET','methane'),('CIN','cinnamon trees'),('ANT','antimony'),('LOB','lobster'),('LIK','likely oil reserves'),('LIT','lithium'),('CAD','cadmium'),('FOR','forests'),('EME','emeralds'),('ICE','icefish'),('TOO','toothfish'),('NON','none'),('CRA','crayfish'),('ALU','alumina'),('MIN','mineral sands'),('OPA','opals'),('BEA','beaches'),('NEG','NEGL'),('GEO','geothermal power'),('TRO','tropical fruit'),('CHI','chicle'),('CAL','calcium carbonate'),('<P>','<p>fish'),('MAH','mahogany forests'),('SHR','shrimp'),('ASP','asphalt'),('SPI','spiny lobster'),('CON','conch'),('PRO','protected harbors'),('HOT','hot springs</p>'),('PLE','pleasant climate'),('MER','mercury'),('BIS','bismuth'),('BRO','brown coal'),('SUL','sulfur'),('PRE','precious stones'),('HEL','helium'),('ARS','arsenic'),('GAL','gallium'),('GER','germanium'),('HAF','hafnium'),('TEL','tellurium'),('SEL','selenium'),('STR','strontium'),('LIG','lignite'),('CAR','carbonates'),('DOL','dolomitic limestone'),('CHA','chalk'),('PYR','pyrites'),('STO','stone'),('BAR','barite'),('SEA','sea mud'),('SOF','soft coal'),('WHA','whales'),('FRE','French Guiana'),('CRO','cropland'),('LOW','low-grade iron ore'),('AMB','amber'),('GAS','gas'),('SEP','sepiolite'),('SLA','slate'),('SHA','shale oil'),('ROC','rock salt'),('BOR','borate'),('PER','perlite'),('BER','beryllium'),('NIT','nitrates'),('SQU','squid'),('SPH','sphagnum moss'),('OTH','other minerals'),('SUG','sugarcane'),('SCE','scenic beauty'),('POO','poor quality coal')])
-    continent = SelectField('ressources', choices=[('', ''),('Europe', 'Europe'), ('Asia', 'Asie'), ('Africa', 'Afrique'), ('Oceania', 'Océanie'), ('North America', 'Amérique du Nord')])
-# </exemples>
     
 
 # Utilisateurs (à garder et probablement modifier)
