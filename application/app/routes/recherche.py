@@ -243,22 +243,20 @@ def profil_commune(index):
         # gérer le cas où la liste est vide ou bien le cas où l'utilisatur n'est pas passé par la route /recherche
     return render_template("pages/resultats.html") # a completer
 
-@app.route("/resultats/detail/<string:code_insee>") # GIL
-def profil_detallé_commune(code_insee):
-    """
-    Route d'affichage des profils détaillés. Le code insee est une variable récupérée et transmise à l'url grâce au {{url_for()}} de jinja dans le template html quand on clique sur un bouton pour voir le profil détaillé.
-    Faire des tests avec des codes insee au hasard en attendant que le bouton soit codé par Marina.
-    Lancer la route précédente est obligatoire avant de lancer cette route.
-        => Prévoir une exception/redirection si elle n'a pas été lancée par l'utilisateur.
-    """
-    # try:
-        # code affichage du profil détaillé -> GIL
-            # stocker le résultat des requêtes dans un dico ou des variables puis l'afficher avec jinja en html
-
-    # except Exception as e :
-
-    return render_template("pages/profil_detaille0.html" # a completer
-                           )
+@app.route("/resultats/detail/<string:code_insee>") 
+def profil_detaille_commune(code_insee):
+    dico_codes_insee = dict() # creation dictionaire vide 'dico_codes_insee'
+    try:
+        form = ProfilDetailleCommune() # boutton ProfilDetailleCommune
+        if form.validate_on_submit(): # bouton cliqué
+            dico_codes_insee[code_insee] =  dico_codes_insee # stocke la variable recuperee 'code_insee' dans le dictionaire vide 'dico_codes_insee'
+            return redirect(url_for('profil_detaille_commune', code_insee=''))
+            flash("Bouton cliqué avec succès !")
+    
+    except Exception as e:
+        flash(f"ERREUR : {str(e)}. Le bouton n'a pas été encore cliqué !")
+    
+    return render_template("pages/profil_detaille.html", form=form)
 
 @app.route("/suivant/<int:index>")
 # coder en HTML/Jinja l'accès à cette route quand le bouton pour passer au résultat suivant est cliqué 
