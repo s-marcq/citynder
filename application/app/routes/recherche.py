@@ -156,18 +156,27 @@ def recherche():
                     query_results = query_results.join(Commune.equipements_commerciaux).filter(commerces_non_alimentaires>=10)
 
             # Population
+            session['pop'] = request.form.get('pop', None)
             match session['pop']:
-                case '':
-                    Commune.query.filter(Commune.POP == ...)
+                case 'moins de 1 000':
+                    query_results= query_results.filter(Commune.POP <= 1000)
+                case '1 000 à 5 000':
+                    query_results = query_results.filter(and_(Commune.POP > 1000, Commune.POP<=5000))
+                case '5 000 à 10 000':
+                    query_results = query_results.filter(and_(Commune.POP > 5000, Commune.POP<=10000))
+                case 'plus de 10 000':
+                    query_results = query_results.filter(Commune.POP > 10000)
 
-            # Département
-            if session['département'] :
-                Commune.query.filter(Commune.DEPARTEMENT == ...)
-            
-                  # Département
-            if session['région'] :
-                Commune.query.filter(Commune.REGION == ...)
+            # # Département 
+            #         """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
+            # session['departement'] = request.form.get("departement", None)
+            # if session['departement'] :
+            #     query_results  = query_results.filter(Commune.DEPARTEMENT == session['departement'])
 
+            # # Région
+            # if session['region'] :
+            #     """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
+            #     query_results = query_results.filter(Commune.REGION == session['region'])
 
 
             # Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
