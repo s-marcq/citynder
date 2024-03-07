@@ -167,16 +167,15 @@ def recherche():
                 case 'plus de 10 000':
                     query_results = query_results.filter(Commune.POP > 10000)
 
-            # # Département 
-            #         """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
-            # session['departement'] = request.form.get("departement", None)
-            # if session['departement'] :
-            #     query_results  = query_results.filter(Commune.DEPARTEMENT == session['departement'])
+            # Département
+            if session['département'] :
+                Commune.query.filter(Commune.DEPARTEMENT == ...)
+            
+                  # Département
+            if session['région'] :
+                Commune.query.filter(Commune.REGION == ...)
 
-            # # Région
-            # if session['region'] :
-            #     """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
-            #     query_results = query_results.filter(Commune.REGION == session['region'])
+
 
             # Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
             liste_codes_insee = [resultat.INSEE_C for resultat in query_results] 
