@@ -152,18 +152,18 @@ def recherche():
                 case "plus de 10":
                     query_results = query_results.join(Commune.equipements_commerciaux).filter(commerces_non_alimentaires>=10)
 
-            # Population
-            match session['pop']:
-                case '':
-                    Commune.query.filter(Commune.POP == ...)
+                # # Population
+                # match session['pop']:
+                #     case '':
+                #         Commune.query.filter(Commune.POP == ...)
 
-            # Département
-            if session['département'] :
-                Commune.query.filter(Commune.DEPARTEMENT == ...)
-            
-                  # Département
-            if session['région'] :
-                Commune.query.filter(Commune.REGION == ...)
+                # # Département
+                # if session['département'] :
+                #     Commune.query.filter(Commune.DEPARTEMENT == ...)
+                
+                #     # Département
+                # if session['région'] :
+                #     Commune.query.filter(Commune.REGION == ...)
 
 
 
