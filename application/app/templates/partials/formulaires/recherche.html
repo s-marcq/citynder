@@ -1,8 +1,5 @@
-{% extends "partials/conteneur.html" %}
 
 {% set valeur_appart_et_maison = "checked" if champs.appartement is none and champs.appart_et_maison is none and champs.maison is none else champs.appart_et_maison %}
-
-{% block content %}
 
 <div class="container" id="conteneur">  
     <form class="form form-horizontal" action="{{url_for('recherche', champs=champs)}}" method="post" name="recherche">
@@ -214,4 +211,3 @@
     submit.addEventListener('click', loading);
 </script>
 
-{%endblock%}

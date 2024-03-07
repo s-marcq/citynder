@@ -33,9 +33,10 @@ def recherche():
             session['surface_min'] = request.form.get('surface_min', None)
             session['surface_max'] = request.form.get('surface_max', None)
 
+
             # calcul du loyer minimal et maximal à requêter d'après les informations remplies par l'utilisateur
-            loyer_m2_min = calculer_loyer_m2_min(session['loyer_min'], session['surface_min'], session['surface_max'])
-            loyer_m2_max = calculer_loyer_m2_max(session['loyer_max'], session['surface_min'], session['surface_max'])
+            loyer_m2_min = calculer_loyer_m2_min(session['loyer_min'], session['loyer_max'], session['surface_min'], session['surface_max'])
+            loyer_m2_max = calculer_loyer_m2_max(session['loyer_min'], session['loyer_max'], session['surface_min'], session['surface_max'])
 
             if session['appart'] :
                 query_results = query_results.filter(and_(Commune.LOYERM2_APPART >= loyer_m2_min,
@@ -50,7 +51,6 @@ def recherche():
             # Nature
             session['littoral'] = request.form.get("littoral", None)
             if session['littoral']:
-                print("ok litto")
                 query_results = query_results.join(Commune.environnement_naturel).filter(or_(
                                 Environnement_naturel_specifique.MER == True,
                                 Environnement_naturel_specifique.ESTUAIRE == True,
@@ -58,14 +58,12 @@ def recherche():
                             )
             session['montagne'] = request.form.get("montagne", None)
             if session['montagne']:
-                print("ok mont")
                 query_results = query_results.join(Commune.environnement_naturel).filter(or_(
                                 Environnement_naturel_specifique.LOI_MONTAGNE == True,
                                 Environnement_naturel_specifique.MASSIF != None)
                             )
             session['PNR'] = request.form.get("PNR", None)
             if session['PNR']:
-                print("ok pnr")
                 query_results = query_results.join(Commune.environnement_naturel).filter(or_(
                                 Environnement_naturel_specifique.PN_LIBGEO != None,
                                 Environnement_naturel_specifique.PNR_LIBGEO != None)
