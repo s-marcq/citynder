@@ -5,7 +5,6 @@
 {% block content %}
 
 <div class="container" id="conteneur">  
-
     <form class="form form-horizontal" action="{{url_for('recherche', champs=champs)}}" method="post" name="recherche">
         {{ form.hidden_tag() }}
 
@@ -54,6 +53,30 @@
             </div>
         </div>
 
+        <!-- Localisation -->
+        <!-- <div class="form-group" >
+
+            <label class="col-form-label" for="Localisation">Localisation :</label><br/>
+
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" for="region">Région</label>
+            </div>
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" for="departement">Département</label>
+            </div>
+        </div> -->
+
+        <!-- Population -->
+        <div class="form-group" >
+
+            <label class="col-form-label" for="population">Population :</label><br/>
+
+            <div class="form-check form-check-inline">
+                <label class="form-check-label" for="pop">Population</label>
+                {{ form.pop(class_="form-control", value=champs.pop) }}
+            </div>
+
+        </div>
         <!-- Nature -->
         <div class="form-group" >
 
@@ -150,15 +173,14 @@
             <label class="col-form-label" for="commerces">Commerces :</label><br/>
 
             <div class="form-check form-check-inline">
-                <label class="form-check-label" for="musée">Commerces alimentaires</label>
+                <label class="form-check-label" for="com_alim">Commerces alimentaires</label>
                 {{ form.com_alim(class_="form-control", value=champs.com_alim) }}
             </div>
             <div class="form-check form-check-inline">
-                <label class="form-check-label" for="musée">Commerces non alimentaires</label>
+                <label class="form-check-label" for="com_non_alim">Commerces non alimentaires</label>
                 {{ form.com_non_alim(class_="form-control", value=champs.com_non_alim) }}
             </div>
-
-
+        </div>
         </div>
 
         <div class="form-group" id="validation">
