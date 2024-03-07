@@ -167,15 +167,16 @@ def recherche():
                 case 'plus de 10 000':
                     query_results = query_results.filter(Commune.POP > 10000)
 
-            # Département
-            if session['département'] :
-                Commune.query.filter(Commune.DEPARTEMENT == ...)
-            
-                  # Département
-            if session['région'] :
-                Commune.query.filter(Commune.REGION == ...)
+            # # Département 
+            #         """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
+            # session['departement'] = request.form.get("departement", None)
+            # if session['departement'] :
+            #     query_results  = query_results.filter(Commune.DEPARTEMENT == session['departement'])
 
-
+            # # Région
+            # if session['region'] :
+            #     """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
+            #     query_results = query_results.filter(Commune.REGION == session['region'])
 
             # Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
             liste_codes_insee = [resultat.INSEE_C for resultat in query_results] 
@@ -328,4 +329,3 @@ def route_test_bdd():
     test = Commune.query.join(Commune.equipements_commerciaux).filter((Etablissements_commerciaux.LOISIRS+Etablissements_commerciaux.STATION_SERVICE) ==17).first()
     print(f"Commune : {test}\n, Interet naturel : {test.environnement_naturel} \n culture : {test.etablissements_culturels} \n commerce : {test.equipements_commerciaux} \n sport : {test.equipements_sportifs}")
     return "ok"
-
