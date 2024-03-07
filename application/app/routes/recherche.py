@@ -10,6 +10,9 @@ from sqlalchemy.sql import text
 from flask_login import login_required
 
 
+############################################### ----- SARAH & ANNA ----- ###########################################################################################
+
+
 @app.route("/recherche", methods=['GET', 'POST'])
 def recherche():
     # coder des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
@@ -215,48 +218,93 @@ def recherche():
 
     return render_template('pages/recherche_filtres.html', form=form, champs=champs)
 
-@app.route("/recherche_provisoire", methods=['GET'])
-def recherche_provisoire():
-    liste_provisoire = ["71155", "59350", "26333", "38349","75107", "71543", "12269"]
-    liste_provisoire = random.sample(liste_provisoire, k=len(liste_provisoire))
-    session['resultats'] = liste_provisoire
-    session['index']= 0    
-    return redirect(url_for('profil_commune', index=session['index']))
+
+############################################## ----- RECHERCHE PROVISOIRE ----- ###############################################################################
 
 
-@app.route("/resultats/<int:index>") # MARINA
-def profil_commune(index):
-    """
-    Route d'affichage des résultats. L'index correspond à l'index du résultat dans la liste transmise dans la route précédente
+# @app.route("/recherche_provisoire", methods=['GET'])
+# def recherche_provisoire():
+#     liste_provisoire = ["71155", "59350", "26333", "38349","75107", "71543", "12269"]
+#     liste_provisoire = random.sample(liste_provisoire, k=len(liste_provisoire))
+#     session['resultats'] = liste_provisoire
+#     session['index']= 0    
+#     return redirect(url_for('profil_commune', index=session['index']))
+
+
+############################################### ----- MARINA ----- ###########################################################################################
+
+
+"""
+    Route qui affiche les résultats. L'index correspond à l'index du résultat dans la liste transmise dans la route précédente
     L'index et la liste sont des variables de session propres à l'utilisateur.
     Lancer la route recherche provisoire est obligatoire avant de lancer cette route.
         => Prévoir une exception/redirection si elle n'a pas été lancée par l'utilisateur.
-    """
-    # try: 
-        # code affichage du profil  -> MARINA
-            # stocker le résultat des requêtes dans un dico ou des variables puis l'afficher avec jinja en html
-            # html : coder le bouton " voir le profil détaillé" qui assure la redirection vers cette route en transmettant la variable du code insee dans le template resultats.html
-
-        # Pour plus tard : code ajout dans le panier, gérer le cas où il n'y a plus de résultats (peut-être à faire en amont ou en html)
-    
-    # except Exception as e :
-        # gérer le cas où la liste est vide ou bien le cas où l'utilisatur n'est pas passé par la route /recherche
-    return render_template("pages/resultats.html") # a completer
-
-@app.route("/resultats/detail/<string:code_insee>") 
-def profil_detaille_commune(code_insee):
-    dico_codes_insee = dict() # creation dictionaire vide 'dico_codes_insee'
+"""
+@app.route("/resultats/<int:index>")
+def profil_commune(index):
     try:
-        form = ProfilDetailleCommune() # boutton ProfilDetailleCommune
-        if form.validate_on_submit(): # bouton cliqué
-            dico_codes_insee[code_insee] =  dico_codes_insee # stocke la variable recuperee 'code_insee' dans le dictionaire vide 'dico_codes_insee'
-            return redirect(url_for('profil_detaille_commune', code_insee=''))
-            flash("Bouton cliqué avec succès !")
-    
+        # Récupérer la liste des codes INSEE des communes de la session
+        liste_code_insee = session['resultats']
+
+         # Vérifier si l'index est validé, s'il n'est pas vide ou trop plein, supérieur à la liste totale des codes insee
+        if index < 0 or index >= len(liste_code_insee):
+            raise IndexError("Index n'est pas valide.")
+        
+        # Récupérer le code INSEE de la commune à partir de l'index
+        code_insee = liste_code_insee[index]
+
+        # Récupérer les informations de base de la commune à partir de la bdd
+        commune = Commune.query.get(code_insee)
+
+        # Stocker le résultat des requêtes dans un dictionnaire pour les transmettre au template
+        infos_commune = { 
+            'code_insee': code_insee,
+            'nom_commune': commune.LIBGEO,
+            'prix_m2_maisons': commune.LOYERM2_MAISON,
+            'prix_m2_appartements': commune.LOYERM2_APPART,
+            'nb_etablissements_culturels': sum([commune.etablissements_culturels.MUSEE_sum, commune.etablissements_culturels.OPERA_sum, commune.etablissements_culturels.C_CREATION_MUSI_sum, commune.etablissements_culturels.C_CREATION_ARTI_sum, commune.etablissements_culturels.C_CULTU_sum, commune.etablissements_culturels.SCENE_sum, commune.etablissements_culturels.THEATRE_sum, commune.etablissements_culturels.C_ART_sum, commune.etablissements_culturels.BIB_sum, commune.etablissements_culturels.CONSERVATOIRE_sum, commune.etablissements_culturels.CINEMA_sum]),
+            'nb_etablissements_sportifs': sum([equipement.get_nombre() for equipement in commune.equipements_sportifs]),
+            'interets_naturels': {
+                'MER': commune.environnement_naturel.MER,
+                'LAC': commune.environnement_naturel.LAC,
+                'ESTUAIRE': commune.environnement_naturel.ESTUAIRE,
+                'LOI_MONTAGNE': commune.environnement_naturel.LOI_MONTAGNE,
+                'MASSIF': commune.environnement_naturel.MASSIF,
+            },
+            'nb_commerces': sum([commune.equipements_commerciaux.ALIMENTATION, commune.equipements_commerciaux.COMMERCES_GENERAUX, commune.equipements_commerciaux.LOISIRS, commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES, commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE, commune.equipements_commerciaux.STATION_SERVICE])
+        }
+
+        return render_template("pages/resultats.html", infos_commune=infos_commune)
+
     except Exception as e:
-        flash(f"ERREUR : {str(e)}. Le bouton n'a pas été encore cliqué !")
+        flash("Une erreur s'est produite lors de l'affichage des résultats de votre requête : "+ str(e))
+
+        # Reste à faire : 
+        # Marina en html : coder le bouton " voir le profil détaillé" qui assure la redirection vers cette route en transmettant la variable du code insee dans le template resultats.html
+        # Pour Sarah/Anna après le code sur la route des utilisateurs : code ajout dans le panier, gérer le cas où il n'y a plus de résultats (peut-être à faire en amont ou en html)
+
+
+############################################### ----- GILMAR ----- ###########################################################################################
+
+
+# @app.route("/resultats/detail/<string:code_insee>") 
+# def profil_detaille_commune(code_insee):
+#     dico_codes_insee = dict() # creation dictionaire vide 'dico_codes_insee'
+#     try:
+#         form = ProfilDetailleCommune() # boutton ProfilDetailleCommune
+#         if form.validate_on_submit(): # bouton cliqué
+#             dico_codes_insee[code_insee] =  dico_codes_insee # stocke la variable recuperee 'code_insee' dans le dictionaire vide 'dico_codes_insee'
+#             return redirect(url_for('profil_detaille_commune', code_insee=''))
+#             flash("Bouton cliqué avec succès !")
     
-    return render_template("pages/profil_detaille.html", form=form)
+    # except Exception as e:
+    #     flash(f"ERREUR : {str(e)}. Le bouton n'a pas été encore cliqué !")
+    
+    # return render_template("pages/profil_detaille.html", form=form)
+
+
+##########################################################################################################################################################
+
 
 @app.route("/suivant/<int:index>")
 # coder en HTML/Jinja l'accès à cette route quand le bouton pour passer au résultat suivant est cliqué 
