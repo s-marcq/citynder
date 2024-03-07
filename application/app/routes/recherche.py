@@ -32,10 +32,9 @@ def recherche():
             session['surface_min'] = request.form.get('surface_min', None)
             session['surface_max'] = request.form.get('surface_max', None)
 
+            # calcul du loyer minimal et maximal à requêter d'après les informations remplies par l'utilisateur
             loyer_m2_min = calculer_loyer_m2_min(session['loyer_min'], session['surface_min'], session['surface_max'])
             loyer_m2_max = calculer_loyer_m2_max(session['loyer_max'], session['surface_min'], session['surface_max'])
-
-            # régler le cas où c'est mal rempli
 
             if session['appart'] :
                 query_results = query_results.filter(and_(Commune.LOYERM2_APPART >= loyer_m2_min,
@@ -50,6 +49,7 @@ def recherche():
             # Nature
             session['littoral'] = request.form.get("littoral", None)
             if session['littoral']:
+                print("ok litto")
                 query_results = query_results.join(Commune.environnement_naturel).filter(or_(
                                 Environnement_naturel_specifique.MER == True,
                                 Environnement_naturel_specifique.ESTUAIRE == True,
@@ -57,19 +57,21 @@ def recherche():
                             )
             session['montagne'] = request.form.get("montagne", None)
             if session['montagne']:
+                print("ok mont")
                 query_results = query_results.join(Commune.environnement_naturel).filter(or_(
                                 Environnement_naturel_specifique.LOI_MONTAGNE == True,
                                 Environnement_naturel_specifique.MASSIF != None)
                             )
             session['PNR'] = request.form.get("PNR", None)
             if session['PNR']:
+                print("ok pnr")
                 query_results = query_results.join(Commune.environnement_naturel).filter(or_(
                                 Environnement_naturel_specifique.PN_LIBGEO != None,
                                 Environnement_naturel_specifique.PNR_LIBGEO != None)
                             )
                 
             
-# Culture
+            # Culture
             session['musée'] =  request.form.get("musée", None)
             if session['musée'] :
                 query_results = query_results.join(Commune.etablissements_culturels).filter(Etablissements_culturels.MUSEE_sum > 0)
@@ -93,32 +95,31 @@ def recherche():
             #Sports
             session['foot'] = request.form.get("foot", None)
             if session['foot']:
-                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Terrain de football")
+                query_results = query_results.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Terrain de football")
 
             session['piscine'] = request.form.get("piscine", None)
             if session['piscine']:
-                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Piscine/Bassin exercice aquatique")
+                query_results = query_results.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Piscine/Bassin exercice aquatique")
 
             session['rando'] = request.form.get("rando", None)
             if session['rando']:
-                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Boucle de randonnée")
+                query_results = query_results.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Boucle de randonnée")
 
             session['sportco'] = request.form.get("sportco", None)
             if session['sportco']:
-                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Salles de pratiques collectives / gymnase")
+                query_results = query_results.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Salles de pratiques collectives / gymnase")
 
             session['escalade'] = request.form.get("escalade", None)
             if session['escalade']:
-                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Equipement escalade")
+                query_results = query_results.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Equipement escalade")
 
 
             session['petanque'] = request.form.get("petanque", None)
             if session['petanque']:
-                Commune.query.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Terrain de pétanque")
+                query_results = query_results.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Terrain de pétanque")
 
             # commerces 
             session['com_alim'] = request.form.get("com_alim", None)
-                #query_results = query_results.join(Commune.equipements_commerciaux).filter(Etablissements_commerciaux.ALIMENTATION > 0)
             match session['com_alim']:
                 case "0":
                     query_results = query_results.join(Commune.equipements_commerciaux).filter(Etablissements_commerciaux.ALIMENTATION == 0)
@@ -139,7 +140,6 @@ def recherche():
             commerces_non_alimentaires = Etablissements_commerciaux.LOISIRS + Etablissements_commerciaux.STATION_SERVICE + Etablissements_commerciaux.BEAUTE_ET_ACCESSOIRES + Etablissements_commerciaux.COMMERCES_GENERAUX +Etablissements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE
             match session['com_non_alim']:
                 case "0":
-                    print('ok zero')
                     query_results = query_results.join(Commune.equipements_commerciaux).filter(commerces_non_alimentaires==0)
 
                 case "1" :
@@ -178,20 +178,19 @@ def recherche():
             #     """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
             #     query_results = query_results.filter(Commune.REGION == session['region'])
 
-
             # Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
             liste_codes_insee = [resultat.INSEE_C for resultat in query_results] 
-            # cas où il n'y aurait pas de résultat  
-            if liste_codes_insee == []:
+ 
+            if liste_codes_insee == []: # cas où il n'y aurait pas de résultat 
                 flash("Aucun résultat, veuillez réessayer")
                 return redirect(url_for('recherche'))
             liste_codes_insee = random.sample(liste_codes_insee, k=len(liste_codes_insee))
             session['resultats'] = liste_codes_insee
             session['index']= 0  
 
-            for resultat in liste_codes_insee :
-                resultat = Commune.query.filter(Commune.INSEE_C == resultat).first()
-                print(resultat)
+            #for resultat in liste_codes_insee :
+            resultat = Commune.query.filter(Commune.INSEE_C == session['resultats'][0]).first()
+            print(resultat)
             return redirect(url_for('profil_commune', index=session['index']))
 
     
@@ -215,6 +214,9 @@ def recherche():
         "petanque" : session.get('petanque'),
         "appart" : session.get('appart'), 
         "maison" : session.get('maison'),
+        "pop" : session.get('pop'),
+        # "region" : session.get('region'),
+        # "departement" : session.get('departement'),
         "appart_et_maison" : session.get('appart_et_maison'),
         "loyer_min" : normalisation_champs_texte(session.get('loyer_min')),
         "loyer_max" : normalisation_champs_texte(session.get('loyer_max')),
@@ -226,7 +228,6 @@ def recherche():
             champs[champ]= "checked"
 
     return render_template('pages/recherche_filtres.html', form=form, champs=champs)
-
 
 ############################################## ----- RECHERCHE PROVISOIRE ----- ###############################################################################
 
