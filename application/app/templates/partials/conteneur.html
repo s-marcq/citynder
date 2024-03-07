@@ -11,7 +11,14 @@
   {% block css %}{%endblock%}
   {% endblock %}
 
+
   {% block navbar %}
+  {% if current_user.is_authenticated %}
+  <a class="dropdown-item" href="{{ url_for('deconnexion') }}">Se déconnecter</a>
+  {% else %}
+  <a class="dropdown-item" href="{{ url_for('connexion') }}">Se connecter</a>
+  {% endif %}
+  {% endblock %}
  
 {% block header %}
   <div class="container">
@@ -31,10 +38,3 @@
 
   {% endblock %}
 
-  {% if current_user.is_authenticated %}
-<a class="dropdown-item" href="{{ url_for('deconnexion') }}">Se déconnecter</a>
-{% else %}
-<a class="dropdown-item" href="{{ url_for('connexion') }}">Se connecter</a>
-{% endif %}
-
-  {% endblock %}

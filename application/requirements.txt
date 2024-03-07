@@ -6,8 +6,10 @@ charset-normalizer==3.3.2
 click==8.1.7
 colorama==0.4.6
 defusedxml==0.7.1
+dnspython==2.6.1
 docutils==0.20.1
 dominate==2.9.1
+email_validator==2.1.1
 Flask==3.0.0
 Flask-Bootstrap==3.3.7.1
 Flask-Login==0.6.3

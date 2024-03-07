@@ -14,6 +14,7 @@ from flask_login import login_required
 
 
 @app.route("/recherche", methods=['GET', 'POST'])
+@login_required
 def recherche():
     # coder des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
     query_results = Commune.query
@@ -251,6 +252,7 @@ def recherche():
         => Prévoir une exception/redirection si elle n'a pas été lancée par l'utilisateur.
 """
 @app.route("/resultats/<int:index>")
+@login_required
 def profil_commune(index):
     try:
         # Récupérer la liste des codes INSEE des communes de la session
@@ -318,14 +320,9 @@ def profil_commune(index):
 
 
 @app.route("/suivant/<int:index>")
+@login_required
 # coder en HTML/Jinja l'accès à cette route quand le bouton pour passer au résultat suivant est cliqué 
 def page_suivante(index):
     # Passer à la page suivante
     session['index'] += 1
     return redirect(url_for('profil_commune', code_insee='', index=session['index']))
-
-@app.route("/")
-def route_test_bdd():
-    test = Commune.query.join(Commune.equipements_commerciaux).filter((Etablissements_commerciaux.LOISIRS+Etablissements_commerciaux.STATION_SERVICE) ==17).first()
-    print(f"Commune : {test}\n, Interet naturel : {test.environnement_naturel} \n culture : {test.etablissements_culturels} \n commerce : {test.equipements_commerciaux} \n sport : {test.equipements_sportifs}")
-    return "ok"
