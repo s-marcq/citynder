@@ -284,10 +284,11 @@ def profil_commune(index):
             'nb_commerces': sum([commune.equipements_commerciaux.ALIMENTATION, commune.equipements_commerciaux.COMMERCES_GENERAUX, commune.equipements_commerciaux.LOISIRS, commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES, commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE, commune.equipements_commerciaux.STATION_SERVICE])
         }
 
-        return render_template("pages/resultats.html", infos_commune=infos_commune)
+        return render_template("pages/resultats.html", infos_commune=infos_commune, index=session["index"]+1)
 
     except Exception as e:
         flash("Une erreur s'est produite lors de l'affichage des résultats de votre requête : "+ str(e))
+        return render_template("erreurs/404.html")
 
         # Reste à faire : 
         # Marina en html : coder le bouton " voir le profil détaillé" qui assure la redirection vers cette route en transmettant la variable du code insee dans le template resultats.html

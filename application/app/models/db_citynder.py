@@ -42,9 +42,9 @@ class Commune(db.Model):
     url_image = db.Column(db.Text)
 
     # propriétés de relation
-    environnement_naturel = db.relationship("Environnement_naturel_specifique", backref="environnement_naturel")
-    etablissements_culturels = db.relationship("Etablissements_culturels", backref="etablissements_culturels")
-    equipements_commerciaux = db.relationship("Etablissements_commerciaux", backref="etablissements_commerciaux")
+    environnement_naturel = db.relationship("Environnement_naturel_specifique", backref="environnement_naturel", uselist=False)
+    etablissements_culturels = db.relationship("Etablissements_culturels", backref="etablissements_culturels", uselist=False)
+    equipements_commerciaux = db.relationship("Etablissements_commerciaux", backref="etablissements_commerciaux",uselist=False)
 
     # relation vers la table de relation entre la commune et les équipements sportifs
     equipements_sportifs = db.relationship(
