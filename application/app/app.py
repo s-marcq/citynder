@@ -17,4 +17,4 @@ db = SQLAlchemy(app)
 
 login = LoginManager(app)
 
-from .routes import recherche, users, erreurs, panier, page_finale, accueil
+from .routes import recherche, users, erreurs, panier, page_finale, accueil, graphiques
