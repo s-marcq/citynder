@@ -57,17 +57,20 @@ class Recherche(FlaskForm):
         if self.loyer_max.data or self.loyer_min.data:
             if self.surface_min.data is None and self.surface_max.data is None:
                 raise ValidationError('Veuillez remplir le champ de surface.')
-
         for champs in [self.surface_max.data, self.surface_min.data, self.loyer_max.data, self.loyer_min.data]:
-            if champs :
-                if not isinstance(champs, int) and not int(champs)>=0:
+            if champs!="":
+                if not isinstance(champs, int) :
                     raise Exception("Veuillez entrer un nombre entier")
-                    
-        if int(self.loyer_max.data) <= int(self.loyer_min.data) :
-            raise Exception("Le loyer minimal doit être inférieur au loyer maximal")
-        
-        if int(self.surface_max.data) <= int(self.surface_min.data) :
-            raise Exception("La surface minimale doit être inférieur à la surface maximale")
+                elif int(champs)>=0:
+                    raise Exception("Veuillez entrer un nombre entier")
+
+        if self.loyer_max.data !="" :
+            if int(self.loyer_max.data) <= int(self.loyer_min.data) :
+                raise Exception("Le loyer minimal doit être inférieur au loyer maximal")
+            
+        if self.surface_max.data !="":
+            if int(self.surface_max.data) <= int(self.surface_min.data) :
+                raise Exception("La surface minimale doit être inférieur à la surface maximale")
 
         return "ok"
 
