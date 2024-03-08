@@ -60,9 +60,9 @@ class Recherche(FlaskForm):
         for champs in [self.surface_max.data, self.surface_min.data, self.loyer_max.data, self.loyer_min.data]:
             if champs!="":
                 if not champs.isnumeric() :
-                    raise Exception("Veuillez entrer des nombres entiers dans les champs surface et loyer")
+                    raise Exception("Veuillez entrer des nombres entiers positifs dans les champs surface et loyer")
                 elif int(champs)<=0:
-                    raise Exception("Veuillez entrer des nombres entier dans les champs surface et loyer")
+                    raise Exception("Veuillez entrer des nombres entiers positifs dans les champs surface et loyer")
 
         if self.loyer_max.data !="" :
             if int(self.loyer_max.data) <= int(self.loyer_min.data) :
