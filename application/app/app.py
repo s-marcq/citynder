@@ -16,5 +16,7 @@ Bootstrap(app)
 db = SQLAlchemy(app)
 
 login = LoginManager(app)
+login.login_message = "Veuillez vous connecter pour accèder à cette page."
+login.login_message_category = "info"
 
 from .routes import recherche, users, erreurs, panier, page_finale, accueil, graphiques

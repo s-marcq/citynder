@@ -8,7 +8,6 @@ from flask_login import login_user, current_user, logout_user
 
 @app.route("/utilisateurs/ajout", methods=["GET", "POST"])
 def ajout_utilisateur():
-    # return(None)
     form = AjoutUtilisateur()
 
     if form.validate_on_submit():
@@ -27,7 +26,6 @@ def ajout_utilisateur():
 
 @app.route("/utilisateurs/connexion", methods=["GET","POST"])
 def connexion():
-    # return(None)
     form = Connexion()
 
     if current_user.is_authenticated is True:
@@ -52,7 +50,6 @@ def connexion():
 
 @app.route("/utilisateurs/deconnexion", methods=["POST", "GET"])
 def deconnexion():
-    # return(None)
     if current_user.is_authenticated is True:
         logout_user()
     flash("Vous êtes déconnecté", "info")

@@ -12,10 +12,11 @@ commune_equipements_sportifs = db.Table(
     )
 
 contenu_paniers_utilisateurs = db.Table(
-    "Contenu_paniers_utilisateurs",
-    db.Column("INSEE_C", db.Integer, db.ForeignKey('Commune.INSEE_C'), nullable=False, primary_key=True),
+    "Contenu_panier_utilisateurs",
+    db.Column("INSEE_C_item", db.String(5), db.ForeignKey('Commune.INSEE_C'), nullable=False),
     db.Column("USER_ID", db.Integer, db.ForeignKey('Utilisateurs.USER_ID'), nullable=False),
-    db.Column("FAVORI", db.Boolean)
+    db.Column("FAVORI", db.Boolean),
+    db.Column("ID_item", db.Integer, primary_key=True, autoincrement=True, nullable=False)
     )
 
 
