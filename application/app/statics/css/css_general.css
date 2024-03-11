@@ -1,0 +1,21 @@
+/* Panier  */
+#grille_panier {
+    text-align: center;
+    border: 5px solid rgb(90, 7, 138);
+    margin: 10px;
+    height: 350px;
+    width: 300px;
+}
+
+#conteneur_image{
+    overflow: hidden;
+    padding: 10px;
+    max-height: 250px;
+    max-width: 280px;
+    text-align: center;
+    justify-content: center
+}
+/* 
+#img_panier{
+} */
+

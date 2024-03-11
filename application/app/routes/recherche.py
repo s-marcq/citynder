@@ -298,8 +298,10 @@ def profil_commune(index):
 ############################################### ----- GILMAR ----- ###########################################################################################
 
 
-# @app.route("/resultats/detail/<string:code_insee>") 
-# def profil_detaille_commune(code_insee):
+@app.route("/resultats/detail/<string:code_insee>") 
+def profil_detaille_commune(code_insee):
+    print(code_insee)
+    return "ok"
 #     dico_codes_insee = dict() # creation dictionaire vide 'dico_codes_insee'
 #     try:
 #         form = ProfilDetailleCommune() # boutton ProfilDetailleCommune

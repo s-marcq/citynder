@@ -7,10 +7,20 @@
     
         {% if communes%}
             {% for commune in communes%}
-                <div class="col-md-3">
-                <img src="{{commune.url_image}}" alt="image de {{commune.LIBGEO}}" class="img-fluid"/>
-                <p>{{commune.INSEE_C}} <br> {{commune.LIBGEO}}</p>
-                <p>Voir le profil détaillé</p>
+                <div class="col-12 col-sm-1 col-md-2 col-lg-3 d-flex flex-column" id="grille_panier">
+                    
+                    <div class="mt-auto mx-auto" id="conteneur_image">
+                        <img src="{{commune.url_image}}" alt="image de {{commune.LIBGEO}}" class="img-fluid mh-100" id="img_panier"/>
+                    </div>
+                    <div class="mt-auto mx-auto">
+                        <p class="h5">{{commune.LIBGEO}}, {{commune.DEPARTEMENT}}</p>
+                    </div>
+                    <div class="mt-auto mx-auto">
+                        <p>Voir le profil détaillé<br>
+                        <a href="{{ url_for('suppression_panier', code_insee=commune.INSEE_C) }}" class="link">Retirer du panier</a>
+                        </p>
+                    </div>
+
                 </div>
             {%endfor%}
         {%endif%}
