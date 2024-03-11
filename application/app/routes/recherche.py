@@ -184,12 +184,13 @@ def recherche():
                 flash("Aucun résultat, veuillez réessayer")
                 return redirect(url_for('recherche'))
             liste_codes_insee = random.sample(liste_codes_insee, k=len(liste_codes_insee))
-            session['resultats'] = liste_codes_insee
+            session['resultats'] = liste_codes_insee[:500]
             session['index']= 0  
 
             #for resultat in liste_codes_insee :
             resultat = Commune.query.filter(Commune.INSEE_C == session['resultats'][0]).first()
-            print(resultat)
+            #print(resultat)
+            print(session)
             return redirect(url_for('profil_commune', index=session['index']))
 
     

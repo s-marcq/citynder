@@ -5,8 +5,6 @@ from ..models.db_citynder import Utilisateurs, Commune
 from sqlalchemy.sql import text
 # from ..models.formulaires import  
 
-
-
 @app.route("/panier", methods=['GET', 'POST']) 
 @app.route("/panier/<int:page>", methods=['GET', 'POST']) 
 @login_required
