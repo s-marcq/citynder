@@ -58,10 +58,11 @@ class Recherche(FlaskForm):
             if self.surface_min.data is None and self.surface_max.data is None:
                 raise ValidationError('Veuillez remplir le champ de surface.')
         for champs in [self.surface_max.data, self.surface_min.data, self.loyer_max.data, self.loyer_min.data]:
+            print(champs)
             if champs!="":
                 if not champs.isnumeric() :
                     raise Exception("Veuillez entrer des nombres entiers positifs dans les champs surface et loyer")
-                elif int(champs)<=0:
+                elif int(champs)<0:
                     raise Exception("Veuillez entrer des nombres entiers positifs dans les champs surface et loyer")
 
         if self.loyer_max.data !="" :

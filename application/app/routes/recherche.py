@@ -284,7 +284,7 @@ def profil_commune(index):
             'nb_commerces': sum([commune.equipements_commerciaux.ALIMENTATION, commune.equipements_commerciaux.COMMERCES_GENERAUX, commune.equipements_commerciaux.LOISIRS, commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES, commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE, commune.equipements_commerciaux.STATION_SERVICE])
         }
 
-        return render_template("pages/resultats.html", infos_commune=infos_commune, index=session["index"]+1)
+        return render_template("pages/resultats.html", infos_commune=infos_commune, index=session["index"])
 
     except Exception as e:
         flash("Une erreur s'est produite lors de l'affichage des résultats de votre requête : "+ str(e))
