@@ -2,9 +2,14 @@
 {% set valeur_appart_et_maison = "checked" if champs.appartement is none and champs.appart_et_maison is none and champs.maison is none else champs.appart_et_maison %}
 
 <div class="container" id="conteneur">  
+    
     <form class="form form-horizontal" action="{{url_for('recherche', champs=champs)}}" method="post" name="recherche">
         {{ form.hidden_tag() }}
-
+        <div class="position-absolute" id="carte">
+            {% include "partials/cartes/carte_filtres.html"%}
+            <p class="font-italic mt-2 font-weight-bold text-center">Zoomer/Dézoomer et déplacer le cercle pour choisir une zone</p>
+        </div>
+    
 
         <!-- Appartement/maison -->
         <div class="form-group" >
@@ -181,8 +186,8 @@
         </div>
 
         <div class="form-group" id="validation">
-            <div class="col">
-                <input type="submit" class="btn btn-primary" value="Rechercher">
+            <div class="col" >
+                <input type="submit" class="btn btn-primary btn-lg" value="Rechercher" id="bouton-rechercher">
             </div>
         </div>
     </form>
@@ -195,17 +200,7 @@
         var p = document.createElement("p");
         var text = document.createTextNode("Chargement de la page...");
         conteneur.appendChild(p)
-        p.appendChild(text);
-        
-        var img = document.createElement("img");
-        img.src = "..../statics/loading_icone.png";
-        img.width = "35px";
-        img.height = "35px";
-        img.alt = "Chargement de la page";
-        conteneur.appendChild(img);  
-        
-        console.log("fonction lancée")
-    
+        p.appendChild(text);    
     }
     const submit = document.getElementById("validation")
     submit.addEventListener('click', loading);

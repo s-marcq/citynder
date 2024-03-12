@@ -8,7 +8,8 @@ from ..models.formulaires import Recherche
 from ..models.db_citynder import Commune, Environnement_naturel_specifique, Etablissements_culturels, Etablissements_commerciaux, Equipements_sportifs
 from sqlalchemy.sql import text
 from flask_login import login_required
-
+import cgi
+import cgitb
 
 ############################################### ----- SARAH & ANNA ----- ###########################################################################################
 
@@ -166,7 +167,13 @@ def recherche():
                 case 'plus de 10 000':
                     query_results = query_results.filter(Commune.POP > 10000)
 
-            # # Département 
+            # Localisation
+            if request.method == 'POST':
+                jsdata = request.form
+                print("\n\ndata:", jsdata)
+                if jsdata :
+                    print("\n\ndata:", jsdata.data)
+
             #         """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
             # session['departement'] = request.form.get("departement", None)
             # if session['departement'] :
@@ -227,7 +234,7 @@ def recherche():
         if champs[champ]=="on":
             champs[champ]= "checked"
 
-    return render_template('pages/recherche_filtres.html', form=form, champs=champs)
+    return render_template('pages/recherche_filtres.html', form=form, champs=champs, mimetype="application/json")
 
 ############################################## ----- RECHERCHE PROVISOIRE ----- ###############################################################################
 

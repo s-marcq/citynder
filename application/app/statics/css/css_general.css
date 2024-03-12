@@ -64,7 +64,7 @@
     align-items: center;
     justify-content: center
 }
-  body {
+body {
       background-color: #ebdff7;
       }
             
@@ -106,5 +106,15 @@
   color: black;
 }
 
+/* Formulaire de recherche */
+#carte{
+    width: 30%; height: 30%;
+    right: 15%;
+    z-index: 100
+}
+#bouton-rechercher{
+    float: right;
+    z-index: 100;
+    margin-right: 14%;
 
-
+}
