@@ -19,7 +19,6 @@ contenu_paniers_utilisateurs = db.Table(
     db.Column("ID_item", db.Integer, primary_key=True, autoincrement=True, nullable=False)
     )
 
-
 # classes : relations one-to-many
 class Commune(db.Model):
     __tablename__ = "Commune"

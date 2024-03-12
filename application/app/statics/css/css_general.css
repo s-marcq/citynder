@@ -3,19 +3,36 @@
     text-align: center;
     border: 5px solid rgb(90, 7, 138);
     margin: 10px;
-    height: 350px;
+    height: 360px;
     width: 300px;
 }
 
 #conteneur_image{
     overflow: hidden;
-    padding: 10px;
-    max-height: 250px;
-    max-width: 280px;
+    padding: 5px;
+    max-height: 290px;
+    max-width: 310px;
     text-align: center;
     justify-content: center
 }
-/* 
-#img_panier{
-} */
 
+/* URL */
+
+.link-secondary{
+    color: rgb(90, 7, 138) ;
+    text-decoration : underline;
+    font-size: 90%
+} 
+
+.link-primary{
+    color: rgb(90, 7, 138) ;
+    font-weight: bold;
+    font-size: 105%
+} 
+
+/* centrer verticalement */
+.vertical-center {
+    text-align: center;
+    align-items: center;
+    justify-content: center
+}

@@ -14,11 +14,31 @@ def panier() :
         # code affichage du panier
         id = current_user.USER_ID
         if current_user.is_authenticated :
-            communes = Commune.query.join(Utilisateurs.panier).filter(Utilisateurs.USER_ID==id).all()
+            communes = []
+            communes_panier = Commune.query.join(Utilisateurs.panier).filter(Utilisateurs.USER_ID==id)
+            for commune in communes_panier :
+
+                # Cas des communes avec arrondissements (posent problème dans les url du boncoin)
+                if 'Paris ' in commune.LIBGEO :
+                    url_leboncoin = "https://www.leboncoin.fr/recherche?category=10&locations="+"Paris"
+                elif 'Marseille ' in commune.LIBGEO :
+                    url_leboncoin = "https://www.leboncoin.fr/recherche?category=10&locations="+"Marseille"
+                elif 'Lyon ' in commune.LIBGEO :
+                    url_leboncoin = "https://www.leboncoin.fr/recherche?category=10&locations="+"Lyon"
+                # Casa des communes sans arrondissements
+                else : 
+                    url_leboncoin = "https://www.leboncoin.fr/recherche?category=10&locations="+commune.LIBGEO
+                dico = {"LIBGEO": commune.LIBGEO,
+                                 "INSEE_C" : commune.INSEE_C,
+                                 "DEPARTEMENT": commune.DEPARTEMENT,
+                                 "url_image": commune.url_image,
+                                 "url_se_loger" : "https://www.seloger.com/list.htm?tri=initial&enterprise=0&idtypebien=2,1&idtt=1&naturebien=1&ci="+commune.INSEE_C[:2]+"0"+commune.INSEE_C[2:]+"&m=search_hp_new",
+                                 "url_leboncoin" : url_leboncoin
+                }
+                communes.append(dico)
 
         # gérer la pagination
 
-        # code suppression d'un élément du panier
         # code mettre un élément en favori
     
     except Exception as e :
@@ -39,3 +59,5 @@ def suppression_panier(code_insee) :
     except Exception as e :
         flash("La suppression a rencontré une erreur : "+ str(e))
     return redirect(url_for('panier'))
+
+
