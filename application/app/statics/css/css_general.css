@@ -64,3 +64,47 @@
     align-items: center;
     justify-content: center
 }
+  body {
+      background-color: #ebdff7;
+      }
+            
+  .navbar-items {
+                display: flex ;
+                list-style: none;
+                justify-content: left;
+                background-color: #2f0458;
+                color: antiquewhite;
+            }
+
+  .navbar-item {
+                margin-right: 10px; 
+                
+               
+            }
+  .dropdown-item{
+    color: antiquewhite;
+  }
+
+#navbarNavAltMarkup{
+  background-color: #2f0458;
+  position:absolute;
+  height:auto;
+  width:350px;
+  max-width:100%;
+  padding-left:20px;
+}
+
+
+.unboutton{
+  border-radius: 12px;
+  background-color:rgb(52, 4, 97);
+  color: white;
+  border: 2px solid #140361; 
+}
+
+#connexion{
+  color: black;
+}
+
+
+

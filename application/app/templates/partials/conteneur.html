@@ -8,36 +8,92 @@
   {% include "partials/metadata.html" %}
   {% include "partials/js.html" %}
   {% block js %}{%endblock%}
-  {% block css %}{%endblock%}
+
+  {% block css %}
+
+  {%endblock%}
   {% endblock %}
 
 
 
   {% block body %}
 
+
   {% block navbar %}
-    {% if current_user.is_authenticated %}
-    <a class="dropdown-item" href="{{ url_for('deconnexion') }}">Se déconnecter</a>
-    {% else %}
-    <a class="dropdown-item" href="{{ url_for('connexion') }}">Se connecter</a>
-    {% endif %}
-    <a class="dropdown-item" href="{{ url_for('accueil') }}">Retour à l'accueil</a>
-  {%endblock%}
-  
-    <div class="container">
-      {% with messages = get_flashed_messages(with_categories=true) %}
-      {% if messages %}
-      <div class="row">
-        <div class="col">
-          {% for category, message in messages %}
-          <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
-          {% endfor %}
-        </div>
-      </div>
-      {% endif %}
-      {% endwith %}
-    </div>
+
+  <div class="d-md-none">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        
+    </button>
+</div>
+<div class="d-none d-md-block menuDesktop">
+    <button class="navbar-toggler btnMenu" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="d-none d-md-inline-block"><i class="fas fa-bars"></i> Menu </span>
+    </button>
     
-    {% block content %}{% endblock %}
+    {% if current_user.is_authenticated %}
+    <a id="headerPolymorphTopLeftLink" href="{{ url_for('deconnexion') }}">
+        <button class="navbar-toggler  ml-4" type="button">
+            <span class="d-none d-lg-inline-block">
+                Se déconnecter
+            </span>
+        </button>
+    </a>
+    {% else %}
+    
+    
+        <a id="headerPolymorphTopLeftLink" href="{{ url_for('connexion') }}">
+            <button class="navbar-toggler  ml-4" type="button">
+                <span class="d-none d-lg-inline-block">
+                    Se connecter
+                </span>
+            </button>
+        </a>
+        {% endif %}
+        <a id="headerPolymorphTopLeftLink" href="{{ url_for('accueil') }}">
+            <button class="navbar-toggler  ml-4" type="button">
+                <span class="d-none d-lg-inline-block">
+                    Retour à l'acceuil
+                </span>
+            </button>
+        </a>
+</div>
+<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+
+    <div class="navbar-nav">
+        <a href="{{ url_for('recherche')}}" class="boutton">Accèder à la recherche</a>
+        <a href="{{ url_for('panier')}}" class="boutton">Accèder à mon panier</a>
+        <a href="{{ url_for('connexion')}}" class="boutton">Route connexion</a>
+        <a href="{{ url_for('deconnexion')}}" class="boutton">Route déconnexion</a>
+        <a href="{{ url_for('ajout_utilisateur')}}" class="boutton">Route inscription</a>
+       
+                </div>
+              </div>
+ 
+  {%endblock%} 
+
+  <div class="container">
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}
+    <div class="row">
+      <div class="col">
+        {% for category, message in messages %}
+        <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+    {% endwith %}
+  </div>
+
+ 
+
+  {%block content %}
+  {%endblock%}  
+   
+    
+   
 
     {% endblock %}
