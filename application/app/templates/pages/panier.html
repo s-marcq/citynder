@@ -1,18 +1,17 @@
 {%extends "partials/conteneur.html" %}
 
 {% block content %}
-
 <div class="container-fluid">
-    <h1 class="text-center">Les communes que vous avez sélectionnées :</h1><br>
+    <h1 class="text-center">Les communes que vous avez sélectionnées</h1><br>
     
-        <div class="row vertical-center">
+        <div class="row" id="conteneur-row">
     
             {% if communes%}
                 {% for commune in communes%}
     
                     <div class="col-sm-5 col-md-3 col-lg-2 d-flex flex-column" id="grille_panier">
                         <div class="mt-3">
-                            <p class="h5">{{commune.LIBGEO}}, {{commune.DEPARTEMENT}}</p>
+                            <p class="h5 font-weight-bold">{{commune.LIBGEO}}, {{commune.DEPARTEMENT}}</p>
                         </div>
                         
                         <div class="mt-auto mx-auto" id="conteneur_image">
@@ -21,15 +20,14 @@
                         
                         <div class="mt-auto mx-auto">
                             <p>
-                                <a class="link-primary" href="{{commune.url_se_loger}}"><strong>SeLoger</strong></a>
+                                <a class="link-panier-1" href="{{commune.url_se_loger}}"><strong>SeLoger</strong></a>
                                 | 
-                                <a class="link-primary" href="{{commune.url_leboncoin}}"><strong>Leboncoin</strong></a>
+                                <a class="link-panier-1" href="{{commune.url_leboncoin}}"><strong>Leboncoin</strong></a>
                                 <p>
-                                <img src="../../statics/icons/card-list.svg" alt="détail">
-                                <a class="link-secondary" href="">Voir le profil détaillé</a><br>
-                                <img src="../../statics/icons/trash3-fill.svg" alt="poubelle">
-                                
-                            <a href="{{ url_for('suppression_panier', code_insee=commune.INSEE_C) }}" class="link-secondary">Retirer du panier</a>
+                                <i class="fas fa-file-lines"></i>
+                                <a class="link-panier-2" href=""> Voir le profil détaillé</a><br>
+                                <i class="fas fa-trash-can"></i>                                
+                            <a href="{{ url_for('suppression_panier', code_insee=commune.INSEE_C) }}" class="link-panier-2">Retirer du panier</a>
                         </p>
                         </p>
                         </div>

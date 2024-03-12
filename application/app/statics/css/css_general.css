@@ -1,10 +1,38 @@
 /* Panier  */
+
 #grille_panier {
     text-align: center;
-    border: 5px solid rgb(90, 7, 138);
+    color: rgb(55, 4, 61);
     margin: 10px;
     height: 360px;
     width: 300px;
+    border-radius: 20px;
+    -webkit-box-shadow: 9px 12px 18px 1px #393838; 
+    box-shadow: 8px 10px 16px 1px #3c3b3b;
+}
+
+
+/* #conteneur-row #grille_panier:nth-child(4n+1) { 
+    background: #FFED00;
+} */
+/* #conteneur-row #grille_panier:nth-child(4n+1) { 
+    background: linear-gradient(45deg, #e4dd78,50%, #ffe016);
+}
+#conteneur-row #grille_panier:nth-child(4n+2) { 
+    background: linear-gradient(45deg, #a7e2ed,50%, #11e6e9) ;
+
+}
+#conteneur-row #grille_panier:nth-child(4n+3) { 
+    background: linear-gradient(45deg, rgb(229, 229, 229),20%, rgb(255, 255, 255));
+}
+
+#conteneur-row #grille_panier:nth-child(4n+4) { 
+    background: linear-gradient(45deg,#f75939,70%, #e03f1e);
+
+}  */
+
+#conteneur-row{
+    padding-left: 9%;
 }
 
 #conteneur_image{
@@ -18,14 +46,14 @@
 
 /* URL */
 
-.link-secondary{
-    color: rgb(90, 7, 138) ;
-    text-decoration : underline;
+.link-panier-2{
+    color: rgb(55, 4, 61);
+    text-decoration-line: underline;
     font-size: 90%
 } 
 
-.link-primary{
-    color: rgb(90, 7, 138) ;
+.link-panier-1{
+    color: rgb(55, 4, 61) ;
     font-weight: bold;
     font-size: 105%
 } 
