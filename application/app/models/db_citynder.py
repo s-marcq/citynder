@@ -1,6 +1,7 @@
 from ..app import db #, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy.ext.hybrid import hybrid_method
 
 # tables de jointure :  equipements sportifs et paniers utilisateurs (relations many-to-many)
 commune_equipements_sportifs = db.Table(
@@ -52,6 +53,7 @@ class Commune(db.Model):
         secondary=commune_equipements_sportifs, 
         backref="equipements_sportifs"
     )
+
 
     def __repr__(self):
         return f"<Commune {dict(INSEE_C=self.INSEE_C, ID_ZONE=self.ID_ZONE, LIBGEO=self.LIBGEO, DEPARTEMENT=self.DEPARTEMENT, REGION=self.REGION, LOYERM2_MAISON=self.LOYERM2_MAISON, TYPPRED_MAISON=self.TYPPRED_MAISON, PRECISION_MAISON=self.PRECISION_MAISON, LOYERM2_APPART=self.LOYERM2_APPART, TYPPRED_APPART=self.TYPPRED_APPART, PRECISION_APPART=self.PRECISION_APPART, POP=self.POP, SUPERFICIE=self.SUPERFICIE, LATITUDE=self.LATITUDE, LONGITUDE=self.LONGITUDE, INTERET_NATUREL=self.INTERET_NATUREL, NBRE_HEBERGEMENTS_TOURISTIQUES=self.NBRE_HEBERGEMENTS_TOURISTIQUES)}>"
@@ -150,7 +152,7 @@ class Utilisateurs(UserMixin, db.Model):
     EMAIL = db.Column(db.String(50))
     MDP = db.Column(db.String(20))
 
-    # relation vers la table le contenu du panier
+    # relation vers la table le contenu du panier -> renvoie des utilisateurs, revoir
     panier = db.relationship('Commune', secondary = contenu_paniers_utilisateurs, backref="communes_selectionnees")
 
     def __repr__(self):

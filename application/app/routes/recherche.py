@@ -8,8 +8,7 @@ from ..models.formulaires import Recherche
 from ..models.db_citynder import Commune, Environnement_naturel_specifique, Etablissements_culturels, Etablissements_commerciaux, Equipements_sportifs
 from sqlalchemy.sql import text
 from flask_login import login_required
-import cgi
-import cgitb
+import geopy.distance
 
 ############################################### ----- SARAH & ANNA ----- ###########################################################################################
 
@@ -168,24 +167,22 @@ def recherche():
                     query_results = query_results.filter(Commune.POP > 10000)
 
             # Localisation
-            if request.method == 'POST':
-                jsdata = request.form
-                print("\n\ndata:", jsdata)
-                if jsdata :
-                    print("\n\ndata:", jsdata.data)
+                    # réduire le temps que ça prend --> pas ouf la boucle
+                    # trier les départements avec leaflet ?
+            session['coor'] = tuple(request.form.get('coor', None).strip("LatLng(").strip(")").split(','))
+            session['rayon'] = request.form.get('rayon', None)
+            coords_centre_cercle = (session['coor'][0], session['coor'][1])
+            rayon_km = float(session['rayon'])/1000
 
-            #         """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
-            # session['departement'] = request.form.get("departement", None)
-            # if session['departement'] :
-            #     query_results  = query_results.filter(Commune.DEPARTEMENT == session['departement'])
+            liste_codes_insee = []
 
-            # # Région
-            # if session['region'] :
-            #     """pour l'instant une seule possibilité à cocher, transformer en plusieurs options"""
-            #     query_results = query_results.filter(Commune.REGION == session['region'])
+            for result in query_results :
+                coords_result = (result.LATITUDE, result.LONGITUDE)
+                distance = geopy.distance.geodesic(coords_centre_cercle, coords_result).km
+                
+                if distance <= rayon_km :
+                    liste_codes_insee.append(result.INSEE_C)# Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
 
-            # Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
-            liste_codes_insee = [resultat.INSEE_C for resultat in query_results] 
  
             if liste_codes_insee == []: # cas où il n'y aurait pas de résultat 
                 flash("Aucun résultat, veuillez réessayer")
@@ -196,8 +193,8 @@ def recherche():
 
             #for resultat in liste_codes_insee :
             resultat = Commune.query.filter(Commune.INSEE_C == session['resultats'][0]).first()
-            #print(resultat)
-            print(session)
+            print(resultat)
+            #print(session)
             return redirect(url_for('profil_commune', index=session['index']))
 
     

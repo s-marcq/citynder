@@ -8,6 +8,10 @@
         <div class="position-absolute" id="carte">
             {% include "partials/cartes/carte_filtres.html"%}
             <p class="font-italic mt-2 font-weight-bold text-center">Zoomer/Dézoomer et déplacer le cercle pour choisir une zone</p>
+            <!-- Carte -->
+            <input class="hidden" type="text" id="rayon" name="rayon" value="">
+            <input class="hidden" type="text" id="coor" name="coor" value="">
+
         </div>
     
 
@@ -204,5 +208,8 @@
     }
     const submit = document.getElementById("validation")
     submit.addEventListener('click', loading);
+    submit.addEventListener('click', get_coor_rayon);
+
+
 </script>
 

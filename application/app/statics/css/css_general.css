@@ -118,3 +118,13 @@ body {
     margin-right: 14%;
 
 }
+
+#etoile-vide{
+    color:rgb(64, 64, 63);
+    margin-left: 100%;
+
+}
+#etoile-pleine{
+    color:rgb(255, 221, 0);
+    margin-left: 100%;
+}
