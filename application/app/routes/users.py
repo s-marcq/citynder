@@ -29,7 +29,7 @@ def connexion():
     form = Connexion()
 
     if current_user.is_authenticated is True:
-        flash("Vous êtes déjà connecté", "info")
+        flash("Vous êtes déjà connecté.e", "info")
         return redirect(url_for("accueil"))
 
     if form.validate_on_submit():
