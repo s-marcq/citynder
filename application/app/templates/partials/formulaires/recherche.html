@@ -2,15 +2,31 @@
 {% set valeur_appart_et_maison = "checked" if champs.appartement is none and champs.appart_et_maison is none and champs.maison is none else champs.appart_et_maison %}
 
 <div class="container" id="conteneur">  
-    
+
+    <!-- pop-up indiquant le chargement des résultats-->
+    <div class="modal fade mt-5" id="modalC" tabindex="-1" role="dialog" aria-labelledby="modalChargement" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="modalChargement">Chargement des résultats</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    <!-- formulaire -->
+
     <form class="form form-horizontal" action="{{url_for('recherche', champs=champs)}}" method="post" name="recherche">
         {{ form.hidden_tag() }}
         <div class="position-absolute" id="carte">
             {% include "partials/cartes/carte_filtres.html"%}
             <p class="font-italic mt-2 font-weight-bold text-center">Zoomer/Dézoomer et déplacer le cercle pour choisir une zone</p>
             <!-- Carte -->
-            <input class="hidden" type="text" id="rayon" name="rayon" value="">
-            <input class="hidden" type="text" id="coor" name="coor" value="">
+            <input hidden="true" type="text" id="rayon" name="rayon" value="">
+            <input hidden="true" type="text" id="coor" name="coor" value="">
 
         </div>
     
@@ -58,19 +74,6 @@
                 <label class="form-check-label">€</label>
             </div>
         </div>
-
-        <!-- Localisation -->
-        <!-- <div class="form-group" >
-
-            <label class="col-form-label" for="Localisation">Localisation :</label><br/>
-
-            <div class="form-check form-check-inline">
-                <label class="form-check-label" for="region">Région</label>
-            </div>
-            <div class="form-check form-check-inline">
-                <label class="form-check-label" for="departement">Département</label>
-            </div>
-        </div> -->
 
         <!-- Population -->
         <div class="form-group" >
@@ -187,29 +190,21 @@
                 {{ form.com_non_alim(class_="form-control", value=champs.com_non_alim) }}
             </div>
         </div>
+
         </div>
 
         <div class="form-group" id="validation">
             <div class="col" >
-                <input type="submit" class="btn btn-primary btn-lg" value="Rechercher" id="bouton-rechercher">
+                <input type="submit" class="btn btn-primary btn-lg" value="Rechercher" id="bouton-rechercher" data-toggle="modal" data-target="#modalC">
             </div>
         </div>
     </form>
 </div>
 
+
+
 <script>
-    function loading(){
-        var conteneur= document.getElementById("conteneur")
-
-        var p = document.createElement("p");
-        var text = document.createTextNode("Chargement de la page...");
-        conteneur.appendChild(p)
-        p.appendChild(text);    
-    }
-    const submit = document.getElementById("validation")
-    submit.addEventListener('click', loading);
-    submit.addEventListener('click', get_coor_rayon);
-
-
+    const submit = document.getElementById("validation") ;
+    submit.addEventListener('click', get_coor_rayon); // renvoyer les coordonnées du centre et le rayon du cercle au moment du clic
 </script>
 

@@ -41,17 +41,6 @@ class Recherche(FlaskForm):
     # Population
     pop = SelectField('pop', choices=[('', ''),('moins de 1 000', 'moins de 1 000 habitants'),('1 000 à 5 000', '1 000 à 5 000 habitants'), ('5 000 à 10 000', '5 000 à 10 000 habitants'), ('plus de 10 000', 'plus de 10 000 habitants')])
 
-    # Région et département
-    # with app.app_context():
-    #     choix_departements = [('', '')]
-    #     choix_regions = [('', '')]
-    #     for choix in Commune.query.with_entities(Commune.DEPARTEMENT).distinct():
-    #         choix_departements.append((choix[0], choix[0]))
-    #     for choix in Commune.query.with_entities(Commune.REGION).distinct():
-    #         choix_regions.append((choix[0], choix[0]))
-    # departement = SelectMultipleField("departement", choices=sorted(choix_departements))
-    # region = SelectMultipleField("region", choices=sorted(choix_regions))
-
     # Validation
     def validation(self):
         if self.loyer_max.data or self.loyer_min.data:

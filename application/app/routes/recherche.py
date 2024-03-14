@@ -21,8 +21,8 @@ def recherche():
     form = Recherche()
 
     try:
-        
         if form.validate_on_submit() and form.validation():
+            
             # Loyer
             session['appart'] = request.form.get('appartement', None)
             session['maison'] = request.form.get('maison', None)
@@ -169,32 +169,32 @@ def recherche():
             # Localisation
                     # réduire le temps que ça prend --> pas ouf la boucle
                     # trier les départements avec leaflet ?
-            session['coor'] = tuple(request.form.get('coor', None).strip("LatLng(").strip(")").split(','))
+            session['coor'] = request.form.get('coor', None).strip("LatLng(").strip(")").split(',')
             session['rayon'] = request.form.get('rayon', None)
             coords_centre_cercle = (session['coor'][0], session['coor'][1])
             rayon_km = float(session['rayon'])/1000
 
             liste_codes_insee = []
 
-            for result in query_results :
+            for result in random.sample(query_results.all(), k=len(query_results.all())) :
                 coords_result = (result.LATITUDE, result.LONGITUDE)
                 distance = geopy.distance.geodesic(coords_centre_cercle, coords_result).km
                 
                 if distance <= rayon_km :
                     liste_codes_insee.append(result.INSEE_C)# Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
 
- 
+
             if liste_codes_insee == []: # cas où il n'y aurait pas de résultat 
                 flash("Aucun résultat, veuillez réessayer")
                 return redirect(url_for('recherche'))
-            liste_codes_insee = random.sample(liste_codes_insee, k=len(liste_codes_insee))
             session['resultats'] = liste_codes_insee[:500]
             session['index']= 0  
 
             #for resultat in liste_codes_insee :
-            resultat = Commune.query.filter(Commune.INSEE_C == session['resultats'][0]).first()
-            print(resultat)
+            # resultat = Commune.query.filter(Commune.INSEE_C == session['resultats'][0]).first()
+            # print(resultat)
             #print(session)
+
             return redirect(url_for('profil_commune', index=session['index']))
 
     
@@ -219,8 +219,6 @@ def recherche():
         "appart" : session.get('appart'), 
         "maison" : session.get('maison'),
         "pop" : session.get('pop'),
-        # "region" : session.get('region'),
-        # "departement" : session.get('departement'),
         "appart_et_maison" : session.get('appart_et_maison'),
         "loyer_min" : normalisation_champs_texte(session.get('loyer_min')),
         "loyer_max" : normalisation_champs_texte(session.get('loyer_max')),
@@ -231,7 +229,7 @@ def recherche():
         if champs[champ]=="on":
             champs[champ]= "checked"
 
-    return render_template('pages/recherche_filtres.html', form=form, champs=champs, mimetype="application/json")
+    return render_template('pages/recherche_filtres.html', form=form, champs=champs)
 
 ############################################## ----- RECHERCHE PROVISOIRE ----- ###############################################################################
 
