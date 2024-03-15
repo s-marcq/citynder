@@ -18,7 +18,7 @@ def ajout_utilisateur():
         )
         if statut is True:
             flash("Inscription terminée", "success")
-            return redirect(url_for(accueil))
+            return redirect(url_for("accueil"))
         
         else:
             flash(",".join(donnees), "error")
