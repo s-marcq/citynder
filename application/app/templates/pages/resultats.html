@@ -1,28 +1,53 @@
 {% extends "partials/conteneur.html" %}
 
 {% block content %}
-<div class="container">
-    <h1>Premier résultat qui correspond à tes critères :</h1>
-    <!--Compléter avec les classes row col-->
-    <p><strong>Code INSEE de la commune :</strong> {{ infos_commune.code_insee }}</p>
-    <p><strong>Nom de la commune :</strong> {{ infos_commune.nom_commune }}</p>
-    <p><strong>Prix moyen du mètre carré des maisons en € :</strong> {{ infos_commune.prix_m2_maisons }}</p>
-    <p><strong>Prix moyen du mètre carré des appartements €:</strong> {{ infos_commune.prix_m2_appartements }}</p>
-    <p><strong>Nombre d'établissements culturels :</strong> {{ infos_commune.nb_etablissements_culturels }}</p>
-    <p><strong>Nombre d'établissements sportifs :</strong> {{ infos_commune.nb_etablissements_sportifs }}</p>
-    <p><strong>Intérêts naturels :</strong></p>
-    <ul>
-        <li><strong>Mer :</strong> {% if infos_commune.interets_naturels.MER %} Oui {% else %} Non {% endif %}</li>
-        <li><strong>Lac :</strong> {% if infos_commune.interets_naturels.LAC %} Oui {% else %} Non {% endif %}</li>
-        <li><strong>Estuaire :</strong> {% if infos_commune.interets_naturels.ESTUAIRE %} Oui {% else %} Non {% endif %}</li>
-        <li><strong>Montagne :</strong> {% if infos_commune.interets_naturels.LOI_MONTAGNE %} Oui {% else %} Non {% endif %}</li>
-        <li><strong>Massif montagneux :</strong> {% if infos_commune.interets_naturels.MASSIF %} Oui {% else %} Non {% endif %}</li>
-        <!-- Quid du pnr libgeo et du pn libgeo ?-->
-    </ul>
+<div class="container-flex">
+
+    <div class="row">
+
+        <!-- Bouton de gauche-->
+        <div class="col-3 text-center d-flex align-items-center justify-content-center">
+            <a href="{{url_for('profil_commune', index=index+1)}}">
+                <button type="button" class="btn btn-danger btn-circle">
+                    <i class="fa fa-times"></i>
+                </button>
+            </a>
+        </div>
+
+        <div class="col-6 ">
+            {% include "partials/popup/profil_detaille.html"%}
+
+            <h1>Premier résultat qui correspond à tes critères :</h1>
+            <!--Compléter avec les classes row col-->
+            <p><strong>Code INSEE de la commune :</strong> {{ infos_commune.code_insee }}</p>
+            <p><strong>Nom de la commune :</strong> {{ infos_commune.nom_commune }}</p>
+            <p><strong>Prix moyen du mètre carré des maisons en € :</strong> {{ infos_commune.prix_m2_maisons }}</p>
+            <p><strong>Prix moyen du mètre carré des appartements €:</strong> {{ infos_commune.prix_m2_appartements }}</p>
+            <p><strong>Nombre d'établissements culturels :</strong> {{ infos_commune.nb_etablissements_culturels }}</p>
+            <p><strong>Nombre d'établissements sportifs :</strong> {{ infos_commune.nb_etablissements_sportifs }}</p>
+            <p><strong>Intérêts naturels :</strong></p>
+            <ul>
+                <li><strong>Mer :</strong> {% if infos_commune.interets_naturels.MER %} Oui {% else %} Non {% endif %}</li>
+                <li><strong>Lac :</strong> {% if infos_commune.interets_naturels.LAC %} Oui {% else %} Non {% endif %}</li>
+                <li><strong>Estuaire :</strong> {% if infos_commune.interets_naturels.ESTUAIRE %} Oui {% else %} Non {% endif %}</li>
+                <li><strong>Montagne :</strong> {% if infos_commune.interets_naturels.LOI_MONTAGNE %} Oui {% else %} Non {% endif %}</li>
+                <li><strong>Massif montagneux :</strong> {% if infos_commune.interets_naturels.MASSIF %} Oui {% else %} Non {% endif %}</li>
+                <!-- Quid du pnr libgeo et du pn libgeo ?-->
+            </ul>
+        </div>
+
+                <!-- Bouton de gauche-->
+                <div class="col-3 d-flex align-items-center">
+                    <h5>Bouton de droite</h5>
+                </div>
     <!-- Ajoutez d'autres détails de la commune ici -->
 
-    <!--
-        Boutons
-    -->
+
+
+    </div>
+    <!-- Voir le profil détaillé (modal à coder plus tard -> route python à changer) -->
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
+        Voir le profil détaillé
+    </button>-->
     
 {% endblock %}

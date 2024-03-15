@@ -22,7 +22,7 @@ def recherche():
 
     try:
         if form.validate_on_submit() and form.validation():
-            
+
             # Loyer
             session['appart'] = request.form.get('appartement', None)
             session['maison'] = request.form.get('maison', None)
@@ -187,15 +187,15 @@ def recherche():
             if liste_codes_insee == []: # cas où il n'y aurait pas de résultat 
                 flash("Aucun résultat, veuillez réessayer")
                 return redirect(url_for('recherche'))
+            
             session['resultats'] = liste_codes_insee[:500]
-            session['index']= 0  
 
             #for resultat in liste_codes_insee :
             # resultat = Commune.query.filter(Commune.INSEE_C == session['resultats'][0]).first()
             # print(resultat)
             #print(session)
 
-            return redirect(url_for('profil_commune', index=session['index']))
+            return redirect(url_for('profil_commune', index=0))
 
     
     except Exception as e:
@@ -287,7 +287,7 @@ def profil_commune(index):
             'nb_commerces': sum([commune.equipements_commerciaux.ALIMENTATION, commune.equipements_commerciaux.COMMERCES_GENERAUX, commune.equipements_commerciaux.LOISIRS, commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES, commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE, commune.equipements_commerciaux.STATION_SERVICE])
         }
 
-        return render_template("pages/resultats.html", infos_commune=infos_commune, index=session["index"])
+        return render_template("pages/resultats.html", infos_commune=infos_commune, index=index)
 
     except Exception as e:
         flash("Une erreur s'est produite lors de l'affichage des résultats de votre requête : "+ str(e))
@@ -320,12 +320,3 @@ def profil_detaille_commune(code_insee):
 
 
 ##########################################################################################################################################################
-
-
-@app.route("/suivant/<int:index>")
-@login_required
-# coder en HTML/Jinja l'accès à cette route quand le bouton pour passer au résultat suivant est cliqué 
-def page_suivante(index):
-    # Passer à la page suivante
-    session['index'] += 1
-    return redirect(url_for('profil_commune', code_insee='', index=session['index']))

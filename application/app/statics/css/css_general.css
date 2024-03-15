@@ -128,3 +128,12 @@ body {
     color:rgb(255, 221, 0);
     margin-left: 100%;
 }
+
+.btn-circle {
+    width: 80px;
+    height: 80px;
+    padding: 6px 0px;
+    border-radius: 40px;
+    font-size: 50px;
+    line-height: 1.42857;
+    }
