@@ -110,11 +110,15 @@ body{
     font-variant-numeric: oldstyle-nums, proportional-nums;
     font-weight: 400;
     line-height: 1.25;
+
+    
 }
 
 body, html{
     background-color: #fafafa;
     color: #2f0458;
+    height: 100vh;
+
 }
 
 body.dark-mode {
@@ -261,7 +265,6 @@ background-color: #c76fe2;}
     float: right;
     z-index: 100;
     margin-right: 14%;
-
 }
 
 #etoile-vide{
@@ -282,3 +285,33 @@ background-color: #c76fe2;}
     font-size: 50px;
     line-height: 1.42857;
     }
+
+/* .center-in-div{
+    display:  flex;
+    align-items: center;
+
+} */
+
+/* image d'arrière plan de la connexion et l'inscription */
+.bg-image{
+    background-image: url('../img/3d-view-map.jpg') ;
+    background-repeat: no-repeat;
+    -moz-background-size: cover;
+    -webkit-background-size: cover;
+    -o-background-size: con;
+    background-size: contain;
+    height: 90%;
+    background-position: left;
+    position: fixed;
+    z-index: 5;
+        }
+        
+.bg-color-blue{ /* couleur d'arrière plan de la connexion et l'inscription */
+    background-color: #A9C4D3;
+}
+
+.down-right{ /* positionner en bas à droite */
+        position:absolute;
+        bottom:0;
+        right:1%;
+}

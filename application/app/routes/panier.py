@@ -39,7 +39,6 @@ def panier() :
                                  "url_se_loger" : "https://www.seloger.com/list.htm?tri=initial&enterprise=0&idtypebien=2,1&idtt=1&naturebien=1&ci="+commune.INSEE_C[:2]+"0"+commune.INSEE_C[2:]+"&m=search_hp_new",
                                  "url_leboncoin" : url_leboncoin,
                                  "favori" : str(favori[0]) }
-                print(favori)
                 communes.append(dico)
                 communes = sorted(communes, key=lambda x: x['favori'], reverse=True)
 

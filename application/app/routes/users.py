@@ -5,6 +5,7 @@ from ..models.users import Users
 
 from ..app import app, db, login
 from flask_login import login_user, current_user, logout_user
+from re import sub
 
 @app.route("/utilisateurs/ajout", methods=["GET", "POST"])
 def ajout_utilisateur():
@@ -16,8 +17,9 @@ def ajout_utilisateur():
             password=clean_arg(request.form.get("password", None))
         )
         if statut is True:
-            flash("Ajout effectué", "success")
-            return redirect(url_for("accueil"))
+            flash("Inscription terminée", "success")
+            return redirect(url_for(accueil))
+        
         else:
             flash(",".join(donnees), "error")
             return render_template("pages/ajout_utilisateur.html", form=form)
@@ -27,9 +29,9 @@ def ajout_utilisateur():
 @app.route("/utilisateurs/connexion", methods=["GET","POST"])
 def connexion():
     form = Connexion()
-
+    
     if current_user.is_authenticated is True:
-        flash("Vous êtes déjà connecté.e", "info")
+        flash("Tu es déjà connecté.e, tu as été redirigé.e vers l'accueil", "info")
         return redirect(url_for("accueil"))
 
     if form.validate_on_submit():
@@ -38,9 +40,11 @@ def connexion():
             password=clean_arg(request.form.get("password", None))
         )
         if utilisateur:
-            flash("Connexion effectuée", "success")
+            # flash("Connexion effectuée, tu as été redirigé.e vers l'accueil", "success")
             login_user(utilisateur)
-            return redirect(url_for("accueil"))
+            flash("Tu es connecté.e, tu as été redirigé.e vers l'accueil", "info")
+            return redirect(url_for('accueil'))
+
         else:
             flash("Les identifiants n'ont pas été reconnus", "error")
             return render_template("pages/connexion.html", form=form)
@@ -52,7 +56,7 @@ def connexion():
 def deconnexion():
     if current_user.is_authenticated is True:
         logout_user()
-    flash("Vous êtes déconnecté", "info")
+    flash("Tu es déconnecté.e", "info")
     return redirect(url_for("accueil"))
 
 login.login_view = 'connexion'

@@ -10,8 +10,8 @@
   {% block js %}{%endblock%}
 
   {% block css %}
-
   {%endblock%}
+
   {% endblock %}
 
 
@@ -79,12 +79,15 @@
                 </div>
               </div>
  
-  {%endblock%} 
+  {%endblock%}
 
+
+{%block messages %}
+ 
   <div class="container">
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <div class="row">
+    <div class="row mt-4">
       <div class="col">
         {% for category, message in messages %}
         <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
@@ -95,9 +98,10 @@
     {% endwith %}
   </div>
 
- 
+{%endblock%} 
 
   {%block content %}
+
   {%endblock%}  
    
     

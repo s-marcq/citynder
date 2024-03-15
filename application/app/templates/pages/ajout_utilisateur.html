@@ -1,26 +1,52 @@
 {% extends "partials/conteneur.html" %}
 
+{%block messages %}
+{%endblock%} 
+
 {% block content %}
 
-<div class="container">
 
-    <div class="row">
-        <div class="col-sm-2"></div>
-        <div class="col-sm-8">
+<div class="container-fluid h-100 w-100 bg-color-blue border bg-image">
 
-            <h3 data-toggle="collapse" data-target="#collapseExample" aria-expanded="false"
-                aria-controls="collapseExample">
-                Ajouter un utilisateur <i class="fa-solid fa-caret-down"></i>
-        </h3>
-            <div class="collapse show" id="collapseExample">
-                <div class="card card-body">
-                    {% include "partials/formulaires/ajout_utilisateur.html" %}
+    <!-- Messages -->
+    <div class="container w-100 bg-color-blue">
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="row mt-4">
+            <div class="col">
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
+            {% endfor %}
+            </div>
+        </div>
+        {% endif %}
+        {% endwith %}
+        </div>
+    
+    <!-- Conteneur formulaire d'ajout -->
+
+    <div class="container">
+        <div class="mt-5">
+            <div class="row mt-5">
+                <div class="col-lg-6 col-md-4 col-sm-2"></div>
+                <div class="col-lg-6 col-md-8 col-sm-10 mt-5">
+
+                    <h3 class="text-center text-dark">
+                        <strong>S'INSCRIRE</strong>
+                    </h3>
+                    <div>
+                        <div class="card mt-4">
+                            {% include "partials/formulaires/ajout_utilisateur.html" %}
+                        </div>
+
+                    </div>
+
+
                 </div>
             </div>
         </div>
-        <div class="col-sm-2">
-    </div>
-
+    </div>  
 </div>
 
+<p class="down-right"><i><small>Image by <a class="link link-primary" href="https://www.freepik.com/free-photo/3d-view-map_45145206.htm#&position=5&from_view=collections&uuid=ec493a08-fb33-4000-b09a-7790c562a182">Freepik</a></small></i></p>
 {% endblock %}
