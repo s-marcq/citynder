@@ -36,15 +36,15 @@
             </ul>
         </div>
 
-                <!-- Bouton de gauche-->
-                <div class="col-3 d-flex align-items-center">
-                    <h5>Bouton de droite</h5>
-                </div>
-    <!-- Ajoutez d'autres détails de la commune ici -->
+                <!-- Bouton de droite -->
+        <div class="col-3 text-center d-flex align-items-center justify-content-center">
+            <a href="{{url_for('profil_commune', index=index+1)}}">
+                <button type="button" class="btn btn-success btn-circle">
+                    <i class="fa fa-check"></i>
+                </button>
+            </a>
+        </div>
 
-
-
-    </div>
     <!-- Voir le profil détaillé (modal à coder plus tard -> route python à changer) -->
     <!-- <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalLong">
         Voir le profil détaillé
