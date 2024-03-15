@@ -68,24 +68,20 @@ body {
       background-color: #ebdff7;
       }
             
-  .navbar-items {
-                display: flex ;
-                list-style: none;
-                justify-content: left;
-                background-color: #2f0458;
-                color: antiquewhite;
-            }
-
-  .navbar-item {
-                margin-right: 10px; 
-                
-               
-            }
-  .dropdown-item{
+#topbar{
+        background-color: #2f0458;
+        box-shadow: 8px 10px 10px 1px #393838;
+        
+    }
+#topbar button:hover{
+    background-color:  #c76fe2;
+}
+#topbar-item{
     color: antiquewhite;
     padding: 10px;
     
 }
+
 #img-logo{
     padding-left: 300px;
     padding-right: 300px;
