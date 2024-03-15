@@ -303,7 +303,6 @@ background-color: #c76fe2;}
     height: 90%;
     background-position: left;
     position: fixed;
-    z-index: 5;
         }
         
 .bg-color-blue{ /* couleur d'arrière plan de la connexion et l'inscription */
