@@ -15,6 +15,8 @@ Flask-Bootstrap==3.3.7.1
 Flask-Login==0.6.3
 Flask-SQLAlchemy==3.1.1
 Flask-WTF==1.2.1
+geographiclib==2.0
+geopy==2.4.1
 gitdb==4.0.11
 GitPython==3.1.42
 greenlet==3.0.3
