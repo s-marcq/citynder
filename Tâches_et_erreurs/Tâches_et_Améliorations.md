@@ -3,8 +3,18 @@
 ## Filtres 
 
 #### Tâches :
-- Départerments et régions à ajouter
-- Fonction javascript à améliorer (superposition à chaque fois qu'on clique sur le bouton rechercher)
+-
 
 #### Améliorations :
-- 
+- pouvoir cacher la carte
+- bouton tout déplier / tout replier
+
+## Panier 
+
+#### Tâches :
+- Vérifier que l'"image vide" fonctionne
+
+#### Améliorations :
+
+## Head
+- titre et logo de l'application

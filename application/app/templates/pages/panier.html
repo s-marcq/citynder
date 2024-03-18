@@ -1,46 +1,54 @@
 {%extends "partials/conteneur.html" %}
 
 {% block content %}
-<div class="container-fluid">
-    <h1 class="text-center">Les communes que vous avez sélectionnées</h1><br>
-    
-        <div class="row" id="conteneur-row">
-    
-            {% if communes%}
-                {% for commune in communes%}
-    
-                    <div class="col-sm-5 col-md-3 col-lg-2 d-flex flex-column" id="grille_panier">
-                        {% if commune.favori == "0" %}
-                        <a href="{{url_for('modif_favori', code_insee=commune.INSEE_C, favori=commune.favori)}}"><i class="far fa-star fa-1x" id="etoile-vide"></i></a>
-                        {%else%}
-                        <a href="{{url_for('modif_favori', code_insee=commune.INSEE_C, favori=commune.favori)}}"><i class="fas fa-star fa-1x" id="etoile-pleine"></i></a>
-                        {%endif%}
 
-                        <div class="mt-3">
-                            <p class="h5 font-weight-bold">{{commune.LIBGEO}}, {{commune.DEPARTEMENT}}</p>
-                        </div>
-                        
-                        <div class="mt-auto mx-auto" id="conteneur_image">
-                            <img src="{{commune.url_image}}" alt="image de {{commune.LIBGEO}}" class="img-fluid mh-100" id="img_panier"/>
-                        </div>
-                        
-                        <div class="mt-auto mx-auto">
-                            <p>
-                                <a class="link-panier-1" href="{{commune.url_se_loger}}" target="_blank"><strong>Seloger</strong></a>
-                                | 
-                                <a class="link-panier-1" href="{{commune.url_leboncoin}}" target="_blank"><strong>Leboncoin</strong></a>
-                                <p>
-                                <i class="fas fa-file-lines"></i>
-                                <a class="link-panier-2" href=""> Voir le profil détaillé</a><br>
-                                <i class="fas fa-trash-can"></i>                                
-                            <a href="{{ url_for('suppression_panier', code_insee=commune.INSEE_C) }}" class="link-panier-2">Retirer du panier</a>
+<div class="container mt-5 mb-5">
+
+    <h1 class="text-center my-5">Les communes que vous avez sélectionnées</h1>
+    <p>
+        Paragraphe intro ?
+    </p>
+    <p>
+        Cliquer sur les villes pour afficher leur profil et accèder aux offres <i>Leboncoin</i> et <i>Seloger</i>.
+    </p>
+    
+    <div class="grid-wrapper my-5" id="grille-panier">
+        {% if communes%}
+        {% for commune in communes%}
+
+            {% set modalP = "modalP" ~ commune.INSEE_C %}
+            {% include "partials/popup/profil_panier.html"%}
+            <div class="card" id="grille-commune-panier">
+
+                {% if commune.favori == "0" %}
+                    <a href="{{url_for('modif_favori', code_insee=commune.INSEE_C, favori=commune.favori)}}"><i class="far fa-star float-right mt-2" id="etoile-vide"></i></a>
+                {%else%}
+                    <a href="{{url_for('modif_favori', code_insee=commune.INSEE_C, favori=commune.favori)}}"><i class="fas fa-star float-right mt-2" id="etoile-pleine"></i></a>
+                {%endif%}
+
+                <a data-toggle="modal" data-target="#{{modalP}}">
+                    {% if commune.url_image %}
+                        <img src="{{commune.url_image}}" alt="image de {{commune.LIBGEO}}" class="card-img-top pointer" id="img_panier"/>
+                    {% else %}
+                        <div class="img-top pointer"  id="img_panier">Image indisponible</div>
+                    {% endif %}
+                </a>
+                
+                <a class="pointer" data-toggle="modal" data-target="#{{modalP}}">
+                    <div class="card-body no-margin-bottom">
+                        <p class="small">
+                                {{commune.LIBGEO}}, {{commune.DEPARTEMENT}}
                         </p>
-                        </p>
-                        </div>
                     </div>
-                {%endfor%}
-            {%endif%}
-        </div>
+                </a>
+            </div>
+
+            {%endfor%}
+        {%else%}
+            <p>Tu n'as aucune commune dans ton panier.</p>
+            <a class="link link-primary" href="{{url_for('recherche')}}">Faire une recherche</a>
+        {%endif%}
+    </div>
     
 </div>
 {% endblock %}

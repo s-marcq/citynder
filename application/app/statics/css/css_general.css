@@ -117,7 +117,7 @@ body{
 body, html{
     background-color: #fafafa;
     color: #2f0458;
-    height: 100vh;
+    min-height: 100vh;
 
 }
 
@@ -144,17 +144,58 @@ body.dark-mode .home_title.is--active {
 
 /* Panier  */
 
-#grille_panier {
-    text-align: center;
-    color: rgb(55, 4, 61);
-    margin: 10px;
-    height: 360px;
-    width: 300px;
-    border-radius: 20px;
-    -webkit-box-shadow: 9px 12px 18px 1px #393838; 
-    box-shadow: 8px 10px 16px 1px #3c3b3b;
+#etoile-vide{
+    color:rgb(0, 0, 0);
+    margin-left: 92%;
+    z-index: 100;
+    position: absolute;
+}
+#etoile-pleine{
+    color:rgb(255, 221, 0);
+    margin-left: 92%;
+    z-index: 100;
+    position: absolute;
 }
 
+/* grille */
+
+#img_panier {
+    width: 100%;
+    object-fit: contain;      
+ }
+ #grille-commune-panier:hover {
+    filter: brightness(80%);
+  }
+
+
+.pointer{
+    cursor:pointer;
+}
+
+#grille-panier {
+    /* border:solid rgb(115, 206, 204); */
+    column-count: 3;
+    /* column-gap: 20px 20px; */
+    width: 100%;
+   }
+
+#grille-commune-panier {
+    /* border: solid #c76fe2; */
+    margin: 0;
+    display: inline-block;
+    margin-bottom: 0px;
+    width: 100%;
+   }
+
+.modal-big{
+    max-width: 80%;
+    position: center;
+}
+
+.no-margin-bottom{
+    margin-bottom: 0;
+    padding-bottom: 0;
+}
 
 /* #conteneur-row #grille_panier:nth-child(4n+1) { 
     background: #FFED00;
@@ -175,18 +216,6 @@ body.dark-mode .home_title.is--active {
 
 }  */
 
-#conteneur-row{
-    padding-left: 9%;
-}
-
-#conteneur_image{
-    overflow: hidden;
-    padding: 5px;
-    max-height: 290px;
-    max-width: 310px;
-    text-align: center;
-    justify-content: center
-}
 
 /* URL */
 
@@ -208,9 +237,10 @@ body.dark-mode .home_title.is--active {
     align-items: center;
     justify-content: center
 }
-body {
+
+/* body {
       background-color: #ebdff7;
-      }
+      } */
             
 #topbar{
         background-color: #2f0458;
@@ -256,26 +286,59 @@ background-color: #c76fe2;}
 }
 
 /* Formulaire de recherche */
-#carte{
-    width: 30%; height: 30%;
-    right: 15%;
-    z-index: 100
-}
+
 #bouton-rechercher{
     float: right;
     z-index: 100;
     margin-right: 14%;
 }
 
-#etoile-vide{
-    color:rgb(64, 64, 63);
-    margin-left: 100%;
+#bTypeBien{
+    background-color: rgb(218, 132, 173, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(218, 132, 173);
+}
+#bLoc{
+    /* rouge */
+    background-color: rgb(220, 132, 132, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(220, 132, 132);
+}
+#bLoySurf{
+    background-color: rgb(239, 185, 110, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(239, 185, 110);
+}
+#bPop{
+    /* jaune */
+    background-color: rgb(233, 243, 144, 0.1);
+    border: 0px;
+    border-left: 6px solid rgb(233, 243, 144);
+}
+#bNat{
+    background-color: rgb(141, 218, 132, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(141, 218, 132);
+}
+#bCulture{
+    background-color: rgb(115, 206, 204, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(115, 206, 204);
+}
+#bSport{
+
+    background-color: rgba(219, 159, 225, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(173, 158, 240);
+}
+#bCom{
+    background-color: rgb(218, 132, 217, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(218, 132, 217);
 
 }
-#etoile-pleine{
-    color:rgb(255, 221, 0);
-    margin-left: 100%;
-}
+
+
 
 .btn-circle {
     width: 80px;
@@ -314,3 +377,4 @@ background-color: #c76fe2;}
         bottom:0;
         right:1%;
 }
+

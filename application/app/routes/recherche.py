@@ -175,20 +175,20 @@ def recherche():
             rayon_km = float(session['rayon'])/1000
 
             liste_codes_insee = []
-
             for result in random.sample(query_results.all(), k=len(query_results.all())) :
                 coords_result = (result.LATITUDE, result.LONGITUDE)
                 distance = geopy.distance.geodesic(coords_centre_cercle, coords_result).km
-                
                 if distance <= rayon_km :
                     liste_codes_insee.append(result.INSEE_C)# Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
-
+                
+                if len(liste_codes_insee)>=500 : # s'arrêter au 500e résultat
+                    break
 
             if liste_codes_insee == []: # cas où il n'y aurait pas de résultat 
                 flash("Aucun résultat, veuillez réessayer")
                 return redirect(url_for('recherche'))
             
-            session['resultats'] = liste_codes_insee[:500]
+            session['resultats'] = liste_codes_insee
 
             #for resultat in liste_codes_insee :
             # resultat = Commune.query.filter(Commune.INSEE_C == session['resultats'][0]).first()

@@ -1,0 +1,63 @@
+<!-- pop-up avec le profil détaillé  -->
+
+<div class="modal fade mt-5" id="{{modalP}}" tabindex="-1" role="dialog" aria-labelledby="modalPanier" aria-hidden="true">
+    <div class="modal-dialog modal-big" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalPanier"><i class="fas fa-file-lines mr-3"></i> {{commune.LIBGEO}}, {{commune.DEPARTEMENT}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body row">
+                <div class="col-8">
+                        <p>Profil détaillé :
+                            <ul>
+                                <li> Rappeler ici le pop-up profil détaillé dans un "include"
+                                    <ul>
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+                                        <li>Aliquam tincidunt mauris eu risus.</li>
+                                        <li>Vestibulum auctor dapibus neque.</li>
+                                    </ul>
+                                </li>
+                                <li> Blabla
+                                    <ul>
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+                                        <li>Aliquam tincidunt mauris eu risus.</li>
+                                        <li>Vestibulum auctor dapibus neque.</li>
+                                    </ul>
+                                </li>
+                                <li> blala
+                                    <ul>
+                                        <li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+                                        <li>Aliquam tincidunt mauris eu risus.</li>
+                                        <li>Vestibulum auctor dapibus neque.</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </p>
+                </div>
+
+                <div class="col-4">
+                    <div>
+                        <p> 
+                            Voir les offres dans la commune :
+                            <br>
+                            <a href="{{commune.url_se_loger}}" target="_blank">
+                                SeLoger
+                            </a>
+                            <br>
+                            <a href="{{commune.url_leboncoin}}" target="_blank">
+                                Leboncoin
+                            </a>
+                        </p>
+                        <!-- Suppression : demande de confirmation avant de supprimer -->
+                        <a  onclick="if(confirm('Supprimer la commune du panier ?')) return true; else return false;" href="{{ url_for('suppression_panier', code_insee=commune.INSEE_C) }}">
+                            <i class="fas fa-trash-can text-dark down-right h1 mr-3 mb-2"></i>                                
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
