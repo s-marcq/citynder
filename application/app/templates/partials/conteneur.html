@@ -33,39 +33,40 @@
         <span class="d-none d-md-inline-block"><i class="fas fa-bars"></i> Menu </span>
     </button>
     
-    {% if current_user.is_authenticated %}
-    <a id="headerPolymorphTopLeftLink" href="{{ url_for('deconnexion') }}">
+    <a id="headerPolymorphTopLeftLink" href="{{ url_for('accueil') }}">
         <button class="navbar-toggler  ml-4" id="topbar-item" type="button">
             <span class="d-none d-lg-inline-block">
-                Se déconnecter
+                Retour à l'acceuil
             </span>
         </button>
     </a>
-    {% else %}
-    
-    
-        <a id="headerPolymorphTopLeftLink" href="{{ url_for('connexion') }}">
-            <button class="navbar-toggler  ml-4" id="topbar-item" type="button">
-                <span class="d-none d-lg-inline-block">
-                    Se connecter
-                </span>
-            </button>
-        </a>
-        {% endif %}
-
         
             <a id="img-logo" href="{{ url_for('accueil') }}">
                 <img src="/nom citynder.jpg" alt="Logo" id="logo">
             </a>
            
         
-        <a id="headerPolymorphTopLeftLink" href="{{ url_for('accueil') }}">
-            <button class="navbar-toggler  ml-4" id="topbar-item" type="button">
-                <span class="d-none d-lg-inline-block">
-                    Retour à l'acceuil
-                </span>
-            </button>
-        </a>
+       
+
+{% if current_user.is_authenticated %}
+<a id="headerPolymorphTopLeftLink" href="{{ url_for('deconnexion') }}">
+    <button class="navbar-toggler  ml-4" id="topbar-item" type="button">
+        <span class="d-none d-lg-inline-block">
+            Se déconnecter
+        </span>
+    </button>
+</a>
+{% else %}
+
+
+    <a id="headerPolymorphTopLeftLink" href="{{ url_for('connexion') }}">
+        <button class="navbar-toggler  ml-4" id="topbar-item" type="button">
+            <span class="d-none d-lg-inline-block">
+                Se connecter
+            </span>
+        </button>
+    </a>
+    {% endif %}
 </div>
 <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
 
