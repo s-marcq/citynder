@@ -22,3 +22,7 @@ def moyenne_loyer_par_commune_data():
 
 
     return jsonify(data)
+
+@app.route("/graphiques/carte", methods=['GET', 'POST'])
+def carte():
+    return render_template("pages/graphiques/carte.html")
