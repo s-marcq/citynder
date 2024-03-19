@@ -110,6 +110,124 @@ body{
     font-variant-numeric: oldstyle-nums, proportional-nums;
     font-weight: 400;
     line-height: 1.25;
+}
+
+body, html{
+    background-color: #fafafa;
+    color: #2f0458;
+}
+
+body.dark-mode {
+    background-color: #2f0458;
+    color: #fff;
+}
+
+body.dark-mode .home_intro {
+    background-color: #2f0458;
+}
+
+body.dark-mode .home_title.is--active {
+    color: #fff;
+}
+
+:root {
+    /* --main-color: #ecf0f1; */
+    --point-color: #fff;
+    --size: 4px;
+}
+/* VERIFIER LE LOGO CONTAINER
+.logo-container {
+    position:inherit;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0; /* Le logo sera initialement invisible */
+    /* transition: opacity 1.5s ease-in-out; /* Transition d'opacité 
+} */
+
+.logo {
+    font-size: 100px;
+    color: #d6cfcf; /* Couleur du logo */
+    z-index: 100000;
+} */
+
+
+
+/* Panier  */
+
+#grille_panier {
+    text-align: center;
+}
+
+.home_title h1 span:nth-child(3){
+    font-size: inherit;
+    line-height: 1.123;
+    text-align: right;
+}
+
+.home_title span{
+    display: block;
+}            
+.home_title h1{
+font-weight: 500;
+}   
+
+.h1{
+    display: block;
+    margin: 0px;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    font-weight: bold;
+    }
+
+*, :after, :before, html, input[type=search]{
+    box-sizing: border-box;
+}
+:-webkit-any(article, aside, nav, section) h1{
+    font-size: 1.5em;
+    margin-block-start: 0.83em;
+    margin-inline-end: 0.83em;
+}
+.home_title.is--active{
+    color: #fafafa;
+}
+
+.home_title{
+    align-items: center;
+    display: flex;
+    height: 100vh;
+    justify-content: center;
+    left: 0;
+    padding: 2rem;
+    position: relative;
+    top: 0;
+    transition: color .75s linear;
+    width: 100%;
+    z-index: 10;
+
+}
+
+.home_intro{
+    background-color: #fafafa;
+    font-size: clamp(32px,  8w, 86px);
+    overflow: hidden;
+    position: relative;
+    z-index: 30;
+}
+
+body{
+    font-feature-settings: "kern", "liga", "clig", "calt", "onum", "pnum", "ss03";
+    text-size-adjust: none;
+    font-family: Arial, Helvetica, sans-serif;
+    font-kerning: normal;
+    font-size: 18px;
+    font-size: 1.125rem;
+    font-style: normal;
+    font-variant-alternates: styleset(ss03);
+    font-variant-ligatures: common-ligatures, contextual;
+    font-variant-numeric: oldstyle-nums, proportional-nums;
+    font-weight: 400;
+    line-height: 1.25;
 
     
 }
