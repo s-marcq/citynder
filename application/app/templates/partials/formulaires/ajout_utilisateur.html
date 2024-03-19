@@ -1,4 +1,4 @@
-<!-- <form action="{{url_for('ajout_utilisateur')}}" method="post" name="ajout_utilisateur">
+<form action="{{url_for('ajout_utilisateur')}}" method="post" name="ajout_utilisateur">
     {{ form.hidden_tag() }}
     
     {% for field, errors in form.errors.items() %}
@@ -7,14 +7,9 @@
         </small>
     {% endfor %}
 
+    
     <div class="form-group">
-        <label for="prenom">Prénom de l'utilisateur</label>
-        {{ form.prenom(class_="form-control", placeholder_="Prénom") }}
-        <small id="prenom" class="form-text text-muted">Entrer le prénom de l'utilisateur</small>
-    </div>
-
-    <div class="form-group">
-        <label for="mail">Mail de l'utilisateur</label>
+        <label for="mail">Adresse Email de l'utilisateur</label>
         {{ form.mail(class_="form-control", placeholder_="Mail") }}
         <small id="mail" class="form-text text-muted">Entrer le mail de l'utilisateur</small>
     </div>
@@ -32,4 +27,4 @@
     </div>
 
     <p><input type="submit" value="Ajouter"></p>
-</form> -->
+</form> 

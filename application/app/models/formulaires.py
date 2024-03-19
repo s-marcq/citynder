@@ -9,10 +9,10 @@ class Recherche(FlaskForm):
     appartement = BooleanField("appartement")
     maison = BooleanField("maison")
     appart_et_maison = BooleanField("appart_et_maison")
-    loyer_min = IntegerField("loyer_min", validators=[Optional(), DataRequired()],render_kw={"placeholder": "Entrez un nombre entier"})
-    loyer_max = IntegerField("loyer_max", validators=[Optional(), DataRequired()],render_kw={"placeholder": "Entrez un nombre entier"})
-    surface_min = IntegerField("surface_min", validators=[Optional(), DataRequired()],render_kw={"placeholder": "Entrez un nombre entier"})
-    surface_max = IntegerField("surface_max", validators=[Optional(), DataRequired()],render_kw={"placeholder": "Entrez un nombre entier"})
+    loyer_min = TextAreaField("loyer_min", validators=[Optional()])
+    loyer_max = TextAreaField("loyer_max", validators=[Optional()])
+    surface_min = TextAreaField("surface_min", validators=[Optional()]) # supprimé : Integerfield, render_kw={"placeholder": "Entrez un nombre entier"}
+    surface_max = TextAreaField("surface_max", validators=[Optional()])
 
     # Nature
     montagne = BooleanField("montagne") 
@@ -38,15 +38,34 @@ class Recherche(FlaskForm):
     com_alim = SelectField('com_alim', choices=[('', ''),('0', '0'),('1', '1'), ('2 à 5', '2 à 5'), ('5 à 10', '5 à 10'), ('plus de 10', 'plus de 10')])
     com_non_alim = SelectField('com_non_alim', choices=[('', ''),('0', '0'),('1', '1'), ('2 à 5', '2 à 5'), ('5 à 10', '5 à 10'), ('plus de 10', 'plus de 10')])
 
+    # Population
+    pop = SelectField('pop', choices=[('', ''),('moins de 1 000', 'moins de 1 000 habitants'),('1 000 à 5 000', '1 000 à 5 000 habitants'), ('5 000 à 10 000', '5 000 à 10 000 habitants'), ('plus de 10 000', 'plus de 10 000 habitants')])
+
     # Validation
     def validation(self):
         if self.loyer_max.data or self.loyer_min.data:
             if self.surface_min.data is None and self.surface_max.data is None:
                 raise ValidationError('Veuillez remplir le champ de surface.')
-        return "ok"
-    
+        for champs in [self.surface_max.data, self.surface_min.data, self.loyer_max.data, self.loyer_min.data]:
+            print(champs)
+            if champs!="":
+                if not champs.isnumeric() :
+                    raise Exception("Veuillez entrer des nombres entiers positifs dans les champs surface et loyer")
+                elif int(champs)<0:
+                    raise Exception("Veuillez entrer des nombres entiers positifs dans les champs surface et loyer")
 
-# Utilisateurs (à garder et probablement modifier)
+        if self.loyer_max.data !="" :
+            if int(self.loyer_max.data) <= int(self.loyer_min.data) :
+                raise Exception("Le loyer minimal doit être inférieur au loyer maximal")
+            
+        if self.surface_max.data !="":
+            if int(self.surface_max.data) <= int(self.surface_min.data) :
+                raise Exception("La surface minimale doit être inférieur à la surface maximale")
+
+        return "ok"
+
+
+    
     
 class AjoutUtilisateur(FlaskForm):
     mail = StringField("mail", validators=[DataRequired(message="Champ mail obligatoire"),

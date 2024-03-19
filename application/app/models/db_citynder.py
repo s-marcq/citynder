@@ -1,6 +1,7 @@
 from ..app import db #, login
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_login import UserMixin
+from sqlalchemy.ext.hybrid import hybrid_method
 
 # tables de jointure :  equipements sportifs et paniers utilisateurs (relations many-to-many)
 commune_equipements_sportifs = db.Table(
@@ -12,12 +13,12 @@ commune_equipements_sportifs = db.Table(
     )
 
 contenu_paniers_utilisateurs = db.Table(
-    "Contenu_paniers_utilisateurs",
-    db.Column("INSEE_C", db.Integer, db.ForeignKey('Commune.INSEE_C'), nullable=False, primary_key=True),
+    "Contenu_panier_utilisateurs",
+    db.Column("INSEE_C_item", db.String(5), db.ForeignKey('Commune.INSEE_C'), nullable=False),
     db.Column("USER_ID", db.Integer, db.ForeignKey('Utilisateurs.USER_ID'), nullable=False),
-    db.Column("FAVORI", db.Boolean)
+    db.Column("FAVORI", db.Boolean),
+    db.Column("ID_item", db.Integer, primary_key=True, autoincrement=True, nullable=False)
     )
-
 
 # classes : relations one-to-many
 class Commune(db.Model):
@@ -42,9 +43,9 @@ class Commune(db.Model):
     url_image = db.Column(db.Text)
 
     # propriétés de relation
-    environnement_naturel = db.relationship("Environnement_naturel_specifique", backref="environnement_naturel")
-    etablissements_culturels = db.relationship("Etablissements_culturels", backref="etablissements_culturels")
-    equipements_commerciaux = db.relationship("Etablissements_commerciaux", backref="etablissements_commerciaux")
+    environnement_naturel = db.relationship("Environnement_naturel_specifique", backref="environnement_naturel", uselist=False)
+    etablissements_culturels = db.relationship("Etablissements_culturels", backref="etablissements_culturels", uselist=False)
+    equipements_commerciaux = db.relationship("Etablissements_commerciaux", backref="etablissements_commerciaux",uselist=False)
 
     # relation vers la table de relation entre la commune et les équipements sportifs
     equipements_sportifs = db.relationship(
@@ -52,6 +53,7 @@ class Commune(db.Model):
         secondary=commune_equipements_sportifs, 
         backref="equipements_sportifs"
     )
+
 
     def __repr__(self):
         return f"<Commune {dict(INSEE_C=self.INSEE_C, ID_ZONE=self.ID_ZONE, LIBGEO=self.LIBGEO, DEPARTEMENT=self.DEPARTEMENT, REGION=self.REGION, LOYERM2_MAISON=self.LOYERM2_MAISON, TYPPRED_MAISON=self.TYPPRED_MAISON, PRECISION_MAISON=self.PRECISION_MAISON, LOYERM2_APPART=self.LOYERM2_APPART, TYPPRED_APPART=self.TYPPRED_APPART, PRECISION_APPART=self.PRECISION_APPART, POP=self.POP, SUPERFICIE=self.SUPERFICIE, LATITUDE=self.LATITUDE, LONGITUDE=self.LONGITUDE, INTERET_NATUREL=self.INTERET_NATUREL, NBRE_HEBERGEMENTS_TOURISTIQUES=self.NBRE_HEBERGEMENTS_TOURISTIQUES)}>"
@@ -150,7 +152,7 @@ class Utilisateurs(UserMixin, db.Model):
     EMAIL = db.Column(db.String(50))
     MDP = db.Column(db.String(20))
 
-    # relation vers la table le contenu du panier
+    # relation vers la table le contenu du panier -> renvoie des utilisateurs, revoir
     panier = db.relationship('Commune', secondary = contenu_paniers_utilisateurs, backref="communes_selectionnees")
 
     def __repr__(self):

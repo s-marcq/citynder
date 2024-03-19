@@ -1,31 +1,24 @@
 from ..app import app, db
-from flask import render_template, request
-from sqlalchemy import func, text
-from ..models.db_citynder import Commune
+from flask import render_template, request, flash, jsonify
 from flask_login import login_required
+from ..models.db_citynder import Commune, Etablissements_culturels
+from sqlalchemy import func
 
-@app.route("/graphiques/loyers_communes", methods=['GET', 'POST'])
-def graphiques_loyers_communes():
-    return render_template("pages/graphiques/loyers_communes.html")
+@app.route("/graphiques/moyenne_loyer_par_commune", methods=['GET', 'POST'])
+def graphique_loyer_par_commune():
+    return render_template("pages/graphiques/moyenne_loyer_par_commune.html")
 
-@app.route("/graphiques/loyers_communes_data", methods=['GET', 'POST'])
-def graphiques_loyers_communes_data():
-    donnees_brutes = db.session.query(
-    Commune.LIBGEO,
-    func.avg(Commune.LOYERM2_MAISON).label('loyer_maison_moyen'),
-    func.avg(Commune.LOYERM2_APPART).label('loyer_appart_moyen')
-    )\
-    .group_by(Commune.LIBGEO)\
-    .order_by(func.avg(Commune.LOYERM2_APPART).desc())\
-    .limit(20)
+@app.route('/moyenne_loyer_par_commune_data', methods=['GET', 'POST'])
+def moyenne_loyer_par_commune_data():
+    communes = Commune.query.limit(35)
+    data = []
 
-
-    donnees = []
-
-    for commune in donnees_brutes.all():
-        donnees.append({
-            "label": commune[0].LIBGEO,
-            "loyer": commune.LOYERM2_APPART
+    for commune in communes.all():
+        loyer = (commune.LOYERM2_APPART + commune.LOYERM2_MAISON)/2
+        data.append({
+                'label': commune.LIBGEO,
+                'nombre': loyer
         })
 
-    return donnees
+
+    return jsonify(data)
