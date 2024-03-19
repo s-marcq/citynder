@@ -263,6 +263,8 @@ def profil_commune(index):
         # Récupérer la liste des codes INSEE des communes de la session
         liste_code_insee = session['resultats']
 
+        print(len(liste_code_insee))
+
          # Vérifier si l'index est validé, s'il n'est pas vide ou trop plein, supérieur à la liste totale des codes insee
         if index < 0 or index >= len(liste_code_insee):
             raise IndexError("Index n'est pas valide.")
@@ -272,6 +274,33 @@ def profil_commune(index):
 
         # Récupérer les informations de base de la commune à partir de la bdd
         commune = Commune.query.get(code_insee)
+        
+
+
+        # Vérifier si chaque attribut de l'établissement culturel existe et l'ajouter à la somme
+        if getattr(commune, 'etablissements_culturels', None):
+            nb_etablissements_culturels = sum([commune.etablissements_culturels.MUSEE_sum, commune.etablissements_culturels.OPERA_sum, commune.etablissements_culturels.C_CREATION_MUSI_sum, commune.etablissements_culturels.C_CREATION_ARTI_sum, commune.etablissements_culturels.C_CULTU_sum, commune.etablissements_culturels.SCENE_sum, commune.etablissements_culturels.THEATRE_sum, commune.etablissements_culturels.C_ART_sum, commune.etablissements_culturels.BIB_sum, commune.etablissements_culturels.CONSERVATOIRE_sum, commune.etablissements_culturels.CINEMA_sum]),
+            nb_etablissements_culturels = nb_etablissements_culturels[0]
+        else:
+            nb_etablissements_culturels = 0 
+        
+        if getattr(commune, 'equipements_sportifs', None):
+            nb_etablissements_sportifs = sum([equipement.get_nombre() for equipement in commune.equipements_sportifs]),
+            nb_etablissements_sportifs = nb_etablissements_sportifs[0]
+        else:
+            nb_etablissements_sportifs = 0
+
+        if getattr(commune, 'environnement_naturel', None):
+            nb_environnement_naturels = {
+                'MER': commune.environnement_naturel.MER,
+                'LAC': commune.environnement_naturel.LAC,
+                'ESTUAIRE': commune.environnement_naturel.ESTUAIRE,
+                'LOI_MONTAGNE': commune.environnement_naturel.LOI_MONTAGNE,
+                'MASSIF': commune.environnement_naturel.MASSIF,
+            },
+            nb_environnement_naturels = nb_environnement_naturels[0]
+        else:
+            nb_environnement_naturels = 0 
 
         # Stocker le résultat des requêtes dans un dictionnaire pour les transmettre au template
         infos_commune = { 
@@ -279,26 +308,25 @@ def profil_commune(index):
             'nom_commune': commune.LIBGEO,
             'prix_m2_maisons': commune.LOYERM2_MAISON,
             'prix_m2_appartements': commune.LOYERM2_APPART,
-            'nb_etablissements_culturels': sum([commune.etablissements_culturels.MUSEE_sum, commune.etablissements_culturels.OPERA_sum, commune.etablissements_culturels.C_CREATION_MUSI_sum, commune.etablissements_culturels.C_CREATION_ARTI_sum, commune.etablissements_culturels.C_CULTU_sum, commune.etablissements_culturels.SCENE_sum, commune.etablissements_culturels.THEATRE_sum, commune.etablissements_culturels.C_ART_sum, commune.etablissements_culturels.BIB_sum, commune.etablissements_culturels.CONSERVATOIRE_sum, commune.etablissements_culturels.CINEMA_sum]),
-            'nb_etablissements_sportifs': sum([equipement.get_nombre() for equipement in commune.equipements_sportifs]),
-            'interets_naturels': {
-                'MER': commune.environnement_naturel.MER,
-                'LAC': commune.environnement_naturel.LAC,
-                'ESTUAIRE': commune.environnement_naturel.ESTUAIRE,
-                'LOI_MONTAGNE': commune.environnement_naturel.LOI_MONTAGNE,
-                'MASSIF': commune.environnement_naturel.MASSIF,
-            },
+            'nb_etablissements_culturels': nb_etablissements_culturels,
+            # 'nb_etablissements_culturels': sum([commune.etablissements_culturels.MUSEE_sum, commune.etablissements_culturels.OPERA_sum, commune.etablissements_culturels.C_CREATION_MUSI_sum, commune.etablissements_culturels.C_CREATION_ARTI_sum, commune.etablissements_culturels.C_CULTU_sum, commune.etablissements_culturels.SCENE_sum, commune.etablissements_culturels.THEATRE_sum, commune.etablissements_culturels.C_ART_sum, commune.etablissements_culturels.BIB_sum, commune.etablissements_culturels.CONSERVATOIRE_sum, commune.etablissements_culturels.CINEMA_sum]),
+            'nb_etablissements_sportifs': nb_etablissements_sportifs,
+            'interets_naturels':nb_environnement_naturels,
             'nb_commerces': sum([commune.equipements_commerciaux.ALIMENTATION, commune.equipements_commerciaux.COMMERCES_GENERAUX, commune.equipements_commerciaux.LOISIRS, commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES, commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE, commune.equipements_commerciaux.STATION_SERVICE])
         }
-
+# 'interets_naturels': {
+            #     'MER': commune.environnement_naturel.MER,
+            #     'LAC': commune.environnement_naturel.LAC,
+            #     'ESTUAIRE': commune.environnement_naturel.ESTUAIRE,
+            #     'LOI_MONTAGNE': commune.environnement_naturel.LOI_MONTAGNE,
+            #     'MASSIF': commune.environnement_naturel.MASSIF,
+            # },
         return render_template("pages/resultats.html", infos_commune=infos_commune, index=index)
 
     except Exception as e:
         flash("Une erreur s'est produite lors de l'affichage des résultats de votre requête : "+ str(e))
         return render_template("erreurs/404.html")
 
-        # Reste à faire : 
-        # Marina en html : coder le bouton " voir le profil détaillé" qui assure la redirection vers cette route en transmettant la variable du code insee dans le template resultats.html
         # Pour Sarah/Anna après le code sur la route des utilisateurs : code ajout dans le panier, gérer le cas où il n'y a plus de résultats (peut-être à faire en amont ou en html)
 
 
