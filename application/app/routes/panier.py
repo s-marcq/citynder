@@ -9,7 +9,14 @@ from sqlalchemy.sql import text
 @app.route("/panier/<int:page>", methods=['GET', 'POST']) 
 @login_required
 def panier() :
+    """
+    Route permettant l'affichage du panier de l'utilisateur.
 
+    Returns
+    -------
+    template
+        Retourne le template panier.html avec l'ID de l'utilisateur et les communes présentes dans son panier.
+    """
     try:
         # code affichage du panier
         id = current_user.USER_ID
@@ -54,6 +61,20 @@ def panier() :
 @app.route("/panier/suppression/<string:code_insee>", methods=['GET', 'POST']) 
 @login_required
 def suppression_panier(code_insee) :
+    """
+    Route permettant à l'utilisateur de supprimer une commune de son panier.
+
+    Parameters
+    ----------
+    code_insee : str, required
+        Le code INSEE de la commune à supprimer du panier.
+
+    Returns
+    -------
+    redirection
+        Redirige vers la route 'panier'.
+    """
+
     try : 
         id = current_user.USER_ID
         if current_user.is_authenticated :
@@ -69,6 +90,22 @@ def suppression_panier(code_insee) :
 @app.route("/panier/modif_favori/<string:code_insee>/<string:favori>", methods=['GET', 'POST']) 
 @login_required
 def modif_favori(code_insee, favori) :
+    """
+    Route permettant à l'utilisateur d'enregistrer une commune dans sa liste des favoris ou de la retirer de cette liste.
+
+    Parameters
+    ----------
+    code_insee : str, required
+        Le code INSEE de la commune à ajouter ou retirer de la liste des favoris.
+
+    favori : str, required
+        Indique si la commune est enregistré en tant que favorite ou non (booléen 0 ou 1).
+
+    Returns
+    -------
+    redirection
+        Redirige vers la route 'panier'.
+    """
     try : 
         id = current_user.USER_ID
         if current_user.is_authenticated :

@@ -9,6 +9,17 @@ from re import sub
 
 @app.route("/utilisateurs/ajout", methods=["GET", "POST"])
 def ajout_utilisateur():
+    """
+    Route permettant d'inscrire un utilisateur.
+
+    Returns
+    -------
+    template
+        Retourne le template ajout_utilisateur.html si l'utilisateur n'est pas inscrit/connecté.
+        
+    redirection
+        Retourne une redirection vers l'accueil une fois l'utilisateur inscrit/connecté.
+    """
     form = AjoutUtilisateur()
 
     if form.validate_on_submit():
@@ -28,6 +39,17 @@ def ajout_utilisateur():
 
 @app.route("/utilisateurs/connexion", methods=["GET","POST"])
 def connexion():
+    """
+    Route permettant de connecter l'utilisateur.
+
+    Returns
+    -------
+    template
+        Retourne le template connexion.html si l'utilisateur n'est pas connecté.
+
+    redirection
+        Retourne une redirection vers l'accueil une fois l'utilisateur connecté.
+    """
     form = Connexion()
     
     if current_user.is_authenticated is True:
@@ -54,6 +76,15 @@ def connexion():
 
 @app.route("/utilisateurs/deconnexion", methods=["POST", "GET"])
 def deconnexion():
+    """
+    Route permettant de déconnecter l'utilisateur.
+
+    Returns
+    -------
+    redirection
+        Retourne une redirection vers l'accueil.
+    """
+
     if current_user.is_authenticated is True:
         logout_user()
     flash("Tu es déconnecté.e", "info")

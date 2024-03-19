@@ -1,7 +1,9 @@
 {% extends "partials/conteneur.html" %}
 
 {% block content %}
+
 <div class="container-flex">
+    {% include "partials/popup/profil_detaille.html"%}
 
     <div class="row">
 
@@ -34,6 +36,11 @@
                 <li><strong>Massif montagneux :</strong> {% if infos_commune.interets_naturels.MASSIF %} Oui {% else %} Non {% endif %}</li>
                 <!-- Quid du pnr libgeo et du pn libgeo ?-->
             </ul>
+            <p>
+                <a class="float-right pointer" data-toggle="modal" data-target="#modalProfil">
+                    Plus de détails
+                </a>
+            </p>
         </div>
 
                 <!-- Bouton de droite -->

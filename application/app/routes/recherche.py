@@ -16,12 +16,22 @@ import geopy.distance
 @app.route("/recherche", methods=['GET', 'POST'])
 @login_required
 def recherche():
-    # coder des requêtes liées au formulaire de recherche (stocker les résultats sous forme de liste) -> Sarah et Anna
+    """
+    Route permettant une recherche filtrée dans la base de données. 
+    Permet de stocker une liste de communes correspondant aux critères de recherche définis dans le formulaire dans une variable de session.
+
+    Returns
+    -------
+    template
+        Retourne le template profil_commune.html
+    index
+        Retoure index=0 : profil de la commune auyant 0 pour index dans la liste des communes retournée dans la variable de session.
+    """
     query_results = Commune.query
     form = Recherche()
 
     try:
-        if form.validate_on_submit() and form.validation():
+        if form.validate_on_submit() and form.validation(): # si le formulaire est bien rempli et validé
 
             # Loyer
             session['appart'] = request.form.get('appartement', None)
@@ -34,7 +44,7 @@ def recherche():
             session['surface_max'] = request.form.get('surface_max', None)
 
 
-            # calcul du loyer minimal et maximal à requêter d'après les informations remplies par l'utilisateur
+                # Calcul du loyer minimal et maximal à requêter d'après les informations remplies par l'utilisateur
             loyer_m2_min = calculer_loyer_m2_min(session['loyer_min'], session['loyer_max'], session['surface_min'], session['surface_max'])
             loyer_m2_max = calculer_loyer_m2_max(session['loyer_min'], session['loyer_max'], session['surface_min'], session['surface_max'])
 
@@ -91,7 +101,7 @@ def recherche():
             if session['bibliothèque'] :
                 query_results = query_results.join(Commune.etablissements_culturels).filter(Etablissements_culturels.BIB_sum> 0)
 
-            #Sports
+            # Sports
             session['foot'] = request.form.get("foot", None)
             if session['foot']:
                 query_results = query_results.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Terrain de football")
@@ -117,7 +127,7 @@ def recherche():
             if session['petanque']:
                 query_results = query_results.join(Commune.equipements_sportifs).filter(Equipements_sportifs.nom_eq_sportif == "Terrain de pétanque")
 
-            # commerces 
+            # Commerces 
             session['com_alim'] = request.form.get("com_alim", None)
             match session['com_alim']:
                 case "0":
@@ -167,33 +177,27 @@ def recherche():
                     query_results = query_results.filter(Commune.POP > 10000)
 
             # Localisation
-                    # réduire le temps que ça prend --> pas ouf la boucle
-                    # trier les départements avec leaflet ?
-            session['coor'] = request.form.get('coor', None).strip("LatLng(").strip(")").split(',')
-            session['rayon'] = request.form.get('rayon', None)
-            coords_centre_cercle = (session['coor'][0], session['coor'][1])
-            rayon_km = float(session['rayon'])/1000
+            session['coor'] = request.form.get('coor', None).strip("LatLng(").strip(")").split(',') 
+            coords_centre_cercle = (session['coor'][0], session['coor'][1]) # coordonnées du centre du cercle sur la carte dans les filtres
+            session['rayon'] = request.form.get('rayon', None) # rayon du cercle sur la carte dans les filtres
+            rayon_km = float(session['rayon'])/1000 # conversion du rayon en km
 
-            liste_codes_insee = []
-
-            for result in random.sample(query_results.all(), k=len(query_results.all())) :
+            liste_codes_insee = [] 
+            # itératon sur la liste de communes obtenue via les requêtes précédente réordonnée aléatoirement
+            for result in random.sample(query_results.all(), k=len(query_results.all())) :  
                 coords_result = (result.LATITUDE, result.LONGITUDE)
-                distance = geopy.distance.geodesic(coords_centre_cercle, coords_result).km
+                distance = geopy.distance.geodesic(coords_centre_cercle, coords_result).km # on calcule la distance entre le centre du cercle de la carte et les coordonnées géographiques la ville
+                if distance <= rayon_km : # si elle est inférieure au rayon, le point est dans le cercle
+                    liste_codes_insee.append(result.INSEE_C)# ajout des codes insee des résultats dans une liste
                 
-                if distance <= rayon_km :
-                    liste_codes_insee.append(result.INSEE_C)# Mettre les codes insee des résultats dans une liste, les mélanger et les mettre dans une variable de session
-
+                if len(liste_codes_insee)>=500 : # s'arrêter au 500e résultat
+                    break
 
             if liste_codes_insee == []: # cas où il n'y aurait pas de résultat 
-                flash("Aucun résultat, veuillez réessayer")
+                flash("Aucun résultat ne correspond à tes attentes, tente à nouveau ta chance !")
                 return redirect(url_for('recherche'))
             
-            session['resultats'] = liste_codes_insee[:500]
-
-            #for resultat in liste_codes_insee :
-            # resultat = Commune.query.filter(Commune.INSEE_C == session['resultats'][0]).first()
-            # print(resultat)
-            #print(session)
+            session['resultats'] = liste_codes_insee # stockage des résultats dans une variable de session
 
             return redirect(url_for('profil_commune', index=0))
 

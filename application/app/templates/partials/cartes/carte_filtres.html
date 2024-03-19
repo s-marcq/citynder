@@ -10,7 +10,7 @@ integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
 crossorigin=""></script>
 
 <style>
-#map { height: 350px; }
+#map { height: 250px; }
 </style>
 
 <main>
@@ -48,7 +48,10 @@ var myZoom = {
   function get_coor_rayon() {
     document.getElementById("rayon").value = get_radius;
     document.getElementById("coor").value = get_lat_lng;  }  
-    
+
+map.scrollWheelZoom.disable(); //empêcher le zoom avec la souris
+
+
 map.on('zoomstart', function(e) {
      myZoom.start = map.getZoom(); //stocker le zoom de départ
   });
@@ -75,6 +78,11 @@ map.on('move',function(e){
     get_coor_rayon();
     }); // forcer le cercle au centre de la carte
 
+
+
+  
+  // redimensionner la carte quand l'élément collapse la contenant est déplié
+  
 
 </script>
 
