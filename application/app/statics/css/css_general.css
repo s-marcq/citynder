@@ -261,6 +261,20 @@ a.boutton-loupe:hover{
 }
 .boutton-loupe{
     color: #fafafa;
+    margin-right: 30%;
+    opacity: 0; /* Définit l'élément comme transparent */
+    animation: fadeIn 10s ease-in forwards; 
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Commence avec une opacité de 0 */
+    }
+    to {
+        opacity: 1; /* Termine avec une opacité de 1 */
+    }
+}
+.home_title {
+    margin-left: 30%;
 }
 
 #connexion{
@@ -327,4 +341,45 @@ a.boutton-loupe:hover{
         position:absolute;
         bottom:0;
         right:1%;
+}
+
+#apropos{
+    padding-left: 15%;
+    padding-right: 15%;
+    padding-top: 5%;
+    padding-bottom: 15%;
+    text-align: justify;
+}
+
+.apropos_titre{
+    padding-bottom: 2%;
+    text-align: center;
+    font-weight: bold ;
+    
+}
+
+.apropos_sous_titre{
+    padding-top: 4%;
+    font-weight: bold;
+}
+
+.footer{
+    color:#fafafa ;
+    background-color: #2f0458;
+
+}
+a.github{
+    text-decoration: none;
+    color: #fafafa;
+}
+
+a.github:hover{
+    color: #c76fe2;
+}
+
+#back_to_top{
+    background-color: #c76fe2;
+    color: #fafafa;
+    border: none;
+    border-radius: 50%;
 }

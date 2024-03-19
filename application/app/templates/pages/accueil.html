@@ -4,6 +4,7 @@
 {% block content%}
 
  <div class="container" id="accueil" > 
+   
 
 <div class="row">
         <div class="col-sm-8">
@@ -13,7 +14,7 @@
     </div>
 </div>
 <div class="home">
-    <div class="home_intro">
+    <div class="home_intro d-flex justify-content-between align-items-center">
         <article class="home_title is-active">
             <h1>
                 <span class="line line--1">City'nder,</span>
@@ -24,9 +25,10 @@
                     data-rotate='[ "vivre.", "est le loyer le moins cher.", "jouer au foot.", "nager.", "vivre près du cinéma.", "être heureux!" ]'>
                     </span>
                 </span>
-                <span><a href="{{ url_for('recherche')}}" class="boutton-loupe"><i class="fas fa-magnifying-glass-location fa-5x"></i> </a></span>
+                
             </h1>
         </article>
+        <a href="{{ url_for('recherche')}}" class="boutton-loupe"><i class="fas fa-magnifying-glass-location fa-3x"></i> </a>
     </div>
 </div>
 <!-- <img src="logo.jpg" alt="Image" class="bottom-center-image"> -->
