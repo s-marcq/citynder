@@ -234,12 +234,17 @@ body {
   max-width:100%;
   padding-left:20px;
   z-index: 100;
+  border: solid;
+  border-radius: 20px ;
 }
 
 a.boutton-item:hover{
     color: antiquewhite;
 text-decoration: none;
-background-color: #c76fe2;}
+background-color: #c76fe2;
+border-radius: 20px 20px 20px 20px;
+margin-inline-start: 10px;
+margin-left: 10px;}
 
 .boutton-item{
     padding-top: 20px;
@@ -247,8 +252,17 @@ background-color: #c76fe2;}
     color: antiquewhite;
 }
 
+a.boutton-loupe:hover{
+    color: #c76fe2;
+}
+.boutton-loupe{
+    color: #fafafa;
+}
+
 #connexion{
-  color: black;
+    color: #2f0458;
+    margin-top: 20px;
+  
 }
 
 /* Formulaire de recherche */
