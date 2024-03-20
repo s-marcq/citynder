@@ -97,30 +97,6 @@ font-weight: 500;
     z-index: 30;
 }
 
-body{
-    font-feature-settings: "kern", "liga", "clig", "calt", "onum", "pnum", "ss03";
-    text-size-adjust: none;
-    font-family: Arial, Helvetica, sans-serif;
-    font-kerning: normal;
-    font-size: 18px;
-    font-size: 1.125rem;
-    font-style: normal;
-    font-variant-alternates: styleset(ss03);
-    font-variant-ligatures: common-ligatures, contextual;
-    font-variant-numeric: oldstyle-nums, proportional-nums;
-    font-weight: 400;
-    line-height: 1.25;
-}
-
-body, html{
-    background-color: #fafafa;
-    color: #2f0458;
-}
-
-body.dark-mode {
-    background-color: #2f0458;
-    color: #fff;
-}
 
 body.dark-mode .home_intro {
     background-color: #2f0458;
@@ -152,9 +128,8 @@ body.dark-mode .home_title.is--active {
 } 
 
 #logo-navbar{
-    height:  40px;
+    height:  45px;
 }
-
 
 
 /* Panier  */
@@ -208,16 +183,8 @@ font-weight: 500;
     transition: color .75s linear;
     width: 100%;
     z-index: 10;
-
 }
 
-.home_intro{
-    background-color: #fafafa;
-    font-size: clamp(32px,  8w, 86px);
-    overflow: hidden;
-    position: relative;
-    z-index: 30;
-}
 
 body{
     font-feature-settings: "kern", "liga", "clig", "calt", "onum", "pnum", "ss03";
@@ -231,38 +198,35 @@ body{
     font-variant-ligatures: common-ligatures, contextual;
     font-variant-numeric: oldstyle-nums, proportional-nums;
     font-weight: 400;
-    line-height: 1.25;
-
-    
+    line-height: 1.25;    
 }
 
 body, html{
     background-color: #fafafa;
     color: #2f0458;
     min-height: 100vh;
-
 }
 
-body.dark-mode {
+body.dark-mode, .navbar {
     background-color: #2f0458;
     color: #fff;
 }
+#content{
+    /* margin-top: 10vh; */
+    min-height: 100vh;
+}
 
-body.dark-mode .home_intro {
+.footer{
+    color:#fafafa ;
     background-color: #2f0458;
+    border: solid #2f0458;
 }
-
-body.dark-mode .home_title.is--active {
-    color: #fff;
+#back_to_top{
+    background-color: #c76fe2;
+    color: #fafafa;
+    border: none;
+    border-radius: 50%;
 }
-
-:root {
-    /* --main-color: #ecf0f1; */
-    --point-color: #fff;
-    --size: 4px;
-}
-
-
 
 /* Panier  */
 
@@ -352,48 +316,71 @@ body.dark-mode .home_title.is--active {
     font-weight: bold;
     font-size: 105%
 } 
+#messages{
+    text-align: center;
+    font-size: medium;
+    padding-top: 10px;
+    margin-top: 2vh;
+    vertical-align: middle;
+    position:absolute;
+    left: 0; 
+    right: 0; 
+    margin-left: 20px; 
+    margin-right: 20px;   
+    z-index: 100;
+}
 
+
+/* .content.messages{
+    background-color: #A9C4D3;
+
+} */
 /* centrer verticalement */
 .vertical-center {
     text-align: center;
     align-items: center;
-    justify-content: center
+    justify-content: center;
 }
 
 /* body {
       background-color: #ebdff7;
       } */
             
-#topbar{
+/* #topbar{
         background-color: #2f0458;
         box-shadow: 8px 10px 10px 1px #393838;
     }
-    
+     */
 #topbar button:hover{
     background-color:  #c76fe2;
 }
+
 #topbar-item{
     color: antiquewhite;
-    padding: 10px;
+    font-size: large;
+    /* padding-right: 1px; */    
     
 }
 
-#img-logo{
+
+/* #img-logo{
     padding-left: 300px;
     padding-right: 300px;
-    
-}
+} */
 
 #navbarNavAltMarkup{
-  background-color: #2f0458;
   position:absolute;
   height:auto;
+  top: 55px;
   width:350px;
   max-width:100%;
-  padding-left:20px;
-  z-index: 100;
+  padding-left:50px;
+  z-index: 200000;
   border: solid;
-  border-radius: 20px ;
+  border-bottom-left-radius: 20px ;
+  border-bottom-right-radius: 20px ;
+  border-bottom-right-radius: 20px ;
+  background-color: #2f0458;
 }
 
 a.boutton-item:hover{
@@ -520,7 +507,6 @@ a.boutton-loupe:hover{
     background-size: contain;
     height: 90%;
     background-position: left;
-    position: fixed;
         }
         
 .bg-color-blue{ /* couleur d'arrière plan de la connexion et l'inscription */
@@ -553,11 +539,7 @@ a.boutton-loupe:hover{
     font-weight: bold;
 }
 
-.footer{
-    color:#fafafa ;
-    background-color: #2f0458;
 
-}
 a.github{
     text-decoration: none;
     color: #fafafa;
@@ -567,9 +549,3 @@ a.github:hover{
     color: #c76fe2;
 }
 
-#back_to_top{
-    background-color: #c76fe2;
-    color: #fafafa;
-    border: none;
-    border-radius: 50%;
-}

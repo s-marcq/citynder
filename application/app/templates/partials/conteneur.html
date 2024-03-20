@@ -1,9 +1,9 @@
 {% extends "bootstrap/base.html" %}
 
-  <!-- <title>Citynder | {{sous_titre}}</title> -->
-  {% block title %}Citynder{% endblock %}
+<!-- <title>Citynder | {{sous_titre}}</title> -->
+{% block title %}Citynder{% endblock %}
 
-  {% block head %}
+{% block head %}
   {% include "partials/css.html" %}
   {% include "partials/metadata.html" %}
   {% include "partials/js.html" %}
@@ -14,90 +14,95 @@
   
   {% block js %}{%endblock%}
 
-  {% block css %}
-  {%endblock%}
+  {% block css %}{%endblock%}
 
-  {% endblock %}
-
+{% endblock %}
 
 
-  {% block body %}
+
+{% block body %}
 
 
-  {% block navbar %}
-  <div class="d-md-none" >
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        
-    </button>
-</div>
-<div class="d-none d-md-block menuDesktop" id="topbar">
-    <button class="navbar-toggler btnMenu" id="topbar-item" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
-            aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="d-none d-md-inline-block"><i class="fas fa-bars"></i> Menu </span>
-    </button>
-    
-    <a id="headerPolymorphTopLeftLink" href="{{ url_for('accueil') }}">
-        <button class="navbar-toggler  ml-4" id="topbar-item" type="button">
-            <span class="d-none d-lg-inline-block">
-                Retour à l'accueil
-            </span>
-        </button>
-    </a>
-        
-            <a id="img-logo" href="{{ url_for('accueil') }}">
-                <img src="../../statics/img/logo-sans-bg.png" alt="Logo" id="logo-navbar">
-            </a>
-           
-        
-       
+{% block navbar %}
+<nav class="navbar fixed-top p-0" id="topbar">
 
-{% if current_user.is_authenticated %}
-<a id="headerPolymorphTopLeftLink" href="{{ url_for('deconnexion') }}">
-    <button class="navbar-toggler  ml-4" id="topbar-item" type="button">
-        <span class="d-none d-lg-inline-block">
-            Se déconnecter
-        </span>
-    </button>
-</a>
-{% else %}
+  <div class="row w-100 px-0 mx-0">
+    <div class="col-5 mt-3">
+      <button class="navbar-toggler" id="topbar-item" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+              aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="d-none d-inline-block"><i class="fas fa-bars"></i> Menu </span>
+      </button>
+        {% if current_user.is_authenticated %}
+        <a href="{{ url_for('deconnexion') }}">
+            <button class="navbar-toggler" id="topbar-item" type="button">
+                <span class="d-none d-lg-inline-block">
+                    Déconnexion
+                </span>
+            </button>
+        </a>
+        {% else %}
+          <a href="{{ url_for('connexion') }}">
+              <button class="navbar-toggler" id="topbar-item" type="button">
+                  <span class="d-none d-lg-inline-block">
+                      Connexion
+                  </span>
+              </button>
+          </a>
+        {% endif %}
+
+    </div>  
+     
+      <div class="col-2 vertical-center">
+        <a class="navbar-brand" id="img-logo" href="{{ url_for('accueil') }}">
+          <img src="../../statics/img/logo-sans-bg.png" alt="Logo" id="logo-navbar">
+        </a>   
+      </div>
+
+      <div class="col-5 mt-3 text-right">
+        <a href="{{ url_for('accueil') }}">
+          <button class="navbar-toggler" id="topbar-item" type="button">
+              <span class="d-none d-lg-inline-block">
+                  Accueil
+              </span>
+          </button>
+      </a>
+      </div>
+
+      <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+        <div class="navbar-nav">
+          <a href="{{ url_for('recherche')}}" class="boutton-item"><i class="fas fa-magnifying-glass mr-2"></i> Accèder à la recherche </a>
+          <a href="{{ url_for('panier')}}" class="boutton-item"><i class="fas fa-basket-shopping mr-2"></i> Accèder à mon panier</a>
+          {% if current_user.is_authenticated %}
+            <a href="{{ url_for('deconnexion')}}" class="boutton-item"><i class="fas fa-lock-open mr-2"></i> Se déconnecter</a>
+          {% else %}
+            <a href="{{ url_for('connexion')}}" class="boutton-item"><i class="fas fa-lock mr-2"></i></i> Se connecter</a>
+          {%endif%}
+          <a href="{{ url_for('ajout_utilisateur')}}" class="boutton-item"><i class="far fa-pen-to-square mr-2"></i> S'inscrire</a>
+          <a href="{{ url_for('a_propos')}}" class="boutton-item"><i class="fas fa-circle-info mr-2"></i> A propos</a>
+        </div>
+      </div>
 
 
-    <a id="headerPolymorphTopLeftLink" href="{{ url_for('connexion') }}">
-        <button class="navbar-toggler  ml-4" id="topbar-item" type="button">
-            <span class="d-none d-lg-inline-block">
-                Se connecter
-            </span>
-        </button>
-    </a>
-    {% endif %}
-</div>
-<div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+  </div>
+</nav>
 
-    <div class="navbar-nav">
-      <a href="{{ url_for('recherche')}}" class="boutton-item"><i class="fas fa-magnifying-glass"></i> Accèder à la recherche </a>
-      <a href="{{ url_for('panier')}}" class="boutton-item"><i class="fas fa-basket-shopping"></i> Accèder à mon panier</a>
-      <a href="{{ url_for('connexion')}}" class="boutton-item"><i class="fas fa-lock"></i></i> Se connecter</a>
-      <a href="{{ url_for('deconnexion')}}" class="boutton-item"><i class="fas fa-lock-open"></i> Se déconnecter</a>
-      <a href="{{ url_for('ajout_utilisateur')}}" class="boutton-item"><i class="far fa-pen-to-square"></i> S'inscrire</a>
-      <a href="./a_propos" class="boutton-item"><i class="fas fa-circle-info"></i> A propos</a>
-
-    </div>
-</div>
-  {%endblock%}
+{%endblock%}
 
 
 {%block messages %}
- 
-  <div class="container">
+
+  <div class="container-fluid text-center mt-5">
     {% with messages = get_flashed_messages(with_categories=true) %}
     {% if messages %}
-    <div class="row mt-4">
-      <div class="col">
-        {% for category, message in messages %}
-        <div class="alert alert-{{category}}" role="alert">{{ message }}</div>
-        {% endfor %}
-      </div>
+    <div class="row">
+        <div class="col-sm-1 col-md-2 col-lg-3"></div>
+        <div class="col-sm-10 col-md-8 col-lg-6++">
+            {% for category, message in messages %}
+            <div class="alert alert-{{category}} float-center" role="alert" id="messages">{{ message }} </div>
+            {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-1 col-md-2 col-lg-3"></div>
     </div>
     {% endif %}
     {% endwith %}
@@ -105,15 +110,16 @@
 
 {%endblock%} 
 
-  {%block content %}
+<div class="row w-100 h-100 m-0" id="content"> 
+  <div class="col p-0">
+    {%block content %}
+    {%endblock%}  
+  </div>
+</div>
 
-  {%endblock%}  
-  
-  {% block footer %}
-  <footer class="footer mt-5">
-    <div class="container">
-        <div class="row">
-            <p class="col-sm-12 text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
+{% block footer %}
+  <footer class="footer vmt-5">
+            <p class="text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
               © 2024 City'nder  -
               <a href="https://github.com/s-marcq/citynder" class="github" target="_blank"><i class="fab fa-github"></i> Github</a>
               <a href="https://www.chartes.psl.eu/" target="_blank" class="logo_ENC">
@@ -121,16 +127,16 @@
                   <img border=0 width=50 height=100 id="_x0000_i1029" src="https://www.chartes.psl.eu/sites/default/files/atoms/images/logo-chartespsl-mail-coul-82px_0.png" alt="logo &Eacute;cole nationale des chartes">
                 </span>
               </a>
-            </p>        
-        </div>
-    </div>   
-    <a href="#" class="btn btn-lg btn-secondary btn-lg-square back-to-top position-fixed" style="bottom: 20px; right: 20px;" id="back_to_top">
-      <i class="fas fa-arrow-up-long"></i>
-    </a>           
-</footer>
+
+            </p>     
+            <a href="#" class="btn btn-lg btn-secondary btn-lg-square back-to-top float-right mt-5 position-fixed" style="bottom: 20px; right: 20px; z-index:100;" id="back_to_top">
+              <i class="fas fa-arrow-up-long"></i>
+            </a>    
+  </footer>
+
 
 {% endblock %}
-    
-   
+  
+  
 
-    {% endblock %}
+  {% endblock %}
