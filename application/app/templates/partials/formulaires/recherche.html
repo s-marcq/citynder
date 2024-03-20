@@ -1,7 +1,7 @@
 
 {% set valeur_appart_et_maison = "checked" if champs.appartement is none and champs.appart_et_maison is none and champs.maison is none else champs.appart_et_maison %}
 
-<div class="container-fluid mt-5" id="conteneur">  
+<div class="container-fluid mb-5 mt-5" id="conteneur">  
 
     {% include "partials/popup/chargement.html"%}
 
@@ -266,7 +266,7 @@
                 </div>
             
 
-            <div class="row float-right" id="validation">
+            <div class="row float-right mb-5 border border primary" id="validation">
                     <input type="submit" class="btn btn-dark btn-lg mt-3 mb-5" value="Rechercher" id="bouton-rechercher" data-toggle="modal" data-target="#modalC"> 
                     <!-- lance la fonction get_coor_rayon et affiche le pop-up "modalC" codé dans le partial inclus plus haut -->
             </div>
