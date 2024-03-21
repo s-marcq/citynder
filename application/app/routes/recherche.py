@@ -233,6 +233,8 @@ def recherche():
         if champs[champ]=="on":
             champs[champ]= "checked"
 
+    print("\n", champs)
+
     return render_template('pages/recherche_filtres.html', form=form, champs=champs)
 
 ############################################## ----- RECHERCHE PROVISOIRE ----- ###############################################################################

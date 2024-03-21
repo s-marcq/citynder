@@ -6,7 +6,7 @@
 
     <div class="row justify-content-center">
             <!-- Bouton "Suivant" à gauche -->
-            <div class="col-3 text-center d-flex align-items-center justify-content-center">
+            <div class="col-3 text-center d-flex align-items-center justify-content-center mt-5">
                 <a href="{{ url_for('profil_commune', index=index+1) }}">
                     <button type="button" class="btn btn-danger btn-circle">
                         <i class="fa fa-times"></i>
@@ -15,10 +15,10 @@
             </div>
     
             <!-- Contenu centré -->
-            <div class="col-6">
-                <div class="text-center border p-3">
-                    <h1 class="h1">Première commune qui correspond à tes critères :</h1>
-                    <h2 class="h2"><strong>Nom:</strong> {{ infos_commune.nom_commune }}</h2>
+            <div class="col-6 mt-5">
+                <div class="text-center border p-3 mt-5">
+                    <h1 class="h1 mt-5 mb-1">Commune n°{{index+1}}</h1>
+                    <h2 class="h2 mb-3"><strong>Libellé:</strong> {{ infos_commune.nom_commune }}</h2>
                     <p><strong>Code INSEE :</strong> {{ infos_commune.code_insee }}</p>
                     <p><strong>Loyer maison :</strong> {{ infos_commune.prix_m2_maisons }} €/m²</p>
                     <p><strong>Loyer appartement :</strong> {{ infos_commune.prix_m2_appartements }} €/m²</p>
@@ -30,14 +30,19 @@
                         <li><strong>Lac :</strong> {% if infos_commune.interets_naturels.LAC %} Oui {% else %} Non {% endif %}</li>
                         <li><strong>Estuaire :</strong> {% if infos_commune.interets_naturels.ESTUAIRE %} Oui {% else %} Non {% endif %}</li>
                         <li><strong>Montagne :</strong> {% if infos_commune.interets_naturels.LOI_MONTAGNE %} Oui {% else %} Non {% endif %}</li>
-                        <li><strong>Massif montagneux :</strong> {% if infos_commune.interets_naturels.MASSIF %} Oui {% else %} Non {% endif %}</li>
+                            {% if infos_commune.interets_naturels.MASSIF %} 
+                                {% if infos_commune.interets_naturels.MASSIF!= "Hors massif" %} 
+                                    <li><strong>Massif montagneux :</strong> {{infos_commune.interets_naturels.MASSIF}} 
+                                {% endif %}
+                            {% endif %}
+                        </li>
                     </ul>
                 </div>
             </div>
     
             <!-- Bouton "Suivant" à droite -->
-            <div class="col-3 text-center d-flex align-items-center justify-content-center">
-                <a href="{{ url_for('profil_commune', index=index+1) }}">
+            <div class="col-3 text-center d-flex align-items-center justify-content-center mt-5">
+                <a href="{{ url_for('ajout_panier', index=index) }}" class="mt-5">
                     <button type="button" class="btn btn-success btn-circle">
                         <i class="fa fa-check"></i>
                     </button>
@@ -45,14 +50,24 @@
             </div>
         </div>
     
-        <!-- Bouton "Plus de détails" en bas au centre -->
-        <div class="row mt-3">
-            <div class="col-3 text-center d-flex align-items-center justify-content-center">
+        <div class="row mt-5">
+            <!-- Bouton "Plus de détails" en bas au centre -->
+            <div class="col-6 text-center d-flex align-items-center justify-content-center">
                 <p>
-                    <a class="pointer" data-toggle="modal" data-target="#modalProfil"><i class="fas fa-location-crosshairs"></i><strong> Plus de détails ici</strong></a>
+                    <a class="pointer" href="{{url_for('profil_detaille_commune', code_insee=infos_commune.code_insee)}}" targe="_blank"><i class="fas fa-location-crosshairs"></i><strong> Plus de détails ici</strong></a>
                 </p>
             </div>
+                    <!-- Bouton "Recherches terminées" en bas à droite -->
+            <div class="col-6 d-flex align-items-end justify-content-end">
+                <a href="{{url_for('panier')}}" class="mr-5">
+                    <button type="button" class="btn btn-lg btn-primary mr-5">
+                        Recherches terminées
+                    </button>
+                </a>
+            </div>
+
         </div>
+
     </div>
     
     
