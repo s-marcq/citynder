@@ -302,21 +302,43 @@ def profil_commune(index):
 
 
 @app.route("/resultats/detail/<string:code_insee>") 
+@login_required
 def profil_detaille_commune(code_insee):
-    print(code_insee)
-    return "ok"
-#     dico_codes_insee = dict() # creation dictionaire vide 'dico_codes_insee'
-#     try:
-#         form = ProfilDetailleCommune() # boutton ProfilDetailleCommune
-#         if form.validate_on_submit(): # bouton cliqué
-#             dico_codes_insee[code_insee] =  dico_codes_insee # stocke la variable recuperee 'code_insee' dans le dictionaire vide 'dico_codes_insee'
-#             return redirect(url_for('profil_detaille_commune', code_insee=''))
-#             flash("Bouton cliqué avec succès !")
     
-    # except Exception as e:
-    #     flash(f"ERREUR : {str(e)}. Le bouton n'a pas été encore cliqué !")
+    # GROUPE :: à mettre dans la route profil_commune gestion d'erreur 
+    # if code_insee is not str(code_insee):
+    #     raise TypeError("Code n'est pas valide")
     
-    # return render_template("pages/profil_detaille.html", form=form)
+    try:
+        # Récupérer les informations de base de la commune à partir de la bdd
+        commune = Commune.query.get(code_insee)
 
+        dico_code_insee = { 
+            'code_insee': code_insee,
+            'nom_commune': commune.LIBGEO,
+            'population': commune.POP,
+            'superficie': commune.SUPERFICIE,
+            'region': commune.REGION,
+            'departement': commune.DEPARTEMENT,
+            'interets_naturels': {
+                'MER': commune.environnement_naturel.MER,
+                'LAC': commune.environnement_naturel.LAC,
+                'ESTUAIRE': commune.environnement_naturel.ESTUAIRE,
+                'LOI_MONTAGNE': commune.environnement_naturel.LOI_MONTAGNE,
+                'MASSIF': commune.environnement_naturel.MASSIF,
+            },
+            'alimentation': commune.equipements_commerciaux.ALIMENTATION,
+            'commerces_generaux': commune.equipements_commerciaux.COMMERCES_GENERAUX,
+            'loisirs': commune.equipements_commerciaux.LOISIRS,
+            'beaute_acessoires':commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES,
+            'fleur_jardin_animalerie': commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE,
+            'station_service': commune.equipements_commerciaux.STATION_SERVICE,
+            'nb_etablissements_sportifs': sorted([(equipement.get_nombre(), equipement.nom_eq_sportif) for equipement in commune.equipements_sportifs], reverse=True)
+        }
+                
+        return render_template("pages/profil_detaille.html", dico_code_insee=dico_code_insee)
 
-##########################################################################################################################################################
+    except Exception as e:
+        
+        flash(f"ERREUR : {str(e)}. Le bouton n'a pas été encore cliqué !")
+        return render_template("erreur/404.html")
