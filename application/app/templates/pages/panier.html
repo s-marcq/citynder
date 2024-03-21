@@ -18,7 +18,7 @@
 
             {% set modalP = "modalP" ~ commune.INSEE_C %}
             {% include "partials/popup/profil_panier.html"%}
-            <div class="card" id="grille-commune-panier">
+            <div class="card hover-darker" id="grille-commune-panier">
 
                 {% if commune.favori == "0" %}
                     <a href="{{url_for('modif_favori', code_insee=commune.INSEE_C, favori=commune.favori)}}"><i class="far fa-star float-right mt-2" id="etoile-vide"></i></a>

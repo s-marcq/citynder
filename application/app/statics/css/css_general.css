@@ -249,7 +249,7 @@ body.dark-mode, .navbar {
     width: 100%;
     object-fit: contain;      
  }
- #grille-commune-panier:hover {
+ .hover-darker:hover {
     filter: brightness(80%);
   }
 
@@ -272,11 +272,6 @@ body.dark-mode, .navbar {
     margin-bottom: 0px;
     width: 100%;
    }
-
-.modal-big{
-    max-width: 80%;
-    position: center;
-}
 
 .no-margin-bottom{
     margin-bottom: 0;

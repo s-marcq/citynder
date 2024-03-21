@@ -1,99 +1,36 @@
 <!-- pop-up avec le profil détaillé  -->
 
 <div class="modal fade mt-5" id="{{modalP}}" tabindex="-1" role="dialog" aria-labelledby="modalPanier" aria-hidden="true">
-    <div class="modal-dialog modal-big" role="document">
+    <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="modalPanier"><i class="fas fa-file-lines mr-3"></i> {{commune.LIBGEO}}, {{commune.DEPARTEMENT}}</h5>
+            <div class="modal-header ml-2">
+                <h3 class="modal-title" id="modalPanier"><i class="fas fa-file-lines mr-3"></i> {{commune.LIBGEO}}, {{commune.DEPARTEMENT}}</h3>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body row">
-                <div class="col-8">
-                    <div class="popup_profil">
-                        <h1>(nom de la ville) </h1>
-                        
-                        <div class="row row1">
-                          <div class="col-md-4 margi_bottom">
-                             <div class="class_box text_align_center">
-                              <h3><i class="fas fa-hand-holding-dollar"></i> Loyer</h3>
-                              <p>Loyer appartement</p>
-                              <p>Loyer maison</p>
-                             </div>
-                          </div>
-                          <div class="col-md-4 margi_bottom">
-                             <div class="class_box blue text_align_center">
-                              <h3><i class="fas fa-person-running"></i> Sport</h3>
-                              <p>Pétanque</p>
-                              <p>Football</p>
-                              <p>autre</p> 
-                              </div>
-                             
-                          </div>
-                          <div class="col-md-4 margi_bottom">
-                             <div class="class_box text_align_center">
-                              <h3><i class="fas fa-landmark"></i> Culture</h3>
-                              <p>Cinéma </p>
-                              <p>Musées </p>
-                              <p>Centre de création artistique</p>
-                              <p>autre</p>
-                                
-                             </div>
-                             
-                          </div>
-                       </div>
-                       <div class="row row2">
-                        <div class="col-md-4 margi_bottom">
-                           <div class="class_box text_align_center">
-                            <h3><i class="fas fa-tree"></i> Nature</h3>
-                            <p>Mer </p>
-                            <p>Lac</p>
-                            <p>Montagne</p>
-                           </div>
-                        </div>
-                        <div class="col-md-4 margi_bottom">
-                           <div class="class_box blue text_align_center">
-                            <h3><i class="fas fa-cart-shopping"></i> Commerces</h3>
-                            <p>jsp</p>
-                            <p>jsp</p>
-                            <p>autre</p> 
-                            </div>
-                           
-                        </div>
-                        <div class="col-md-4 margi_bottom">
-                           <div class="class_box text_align_center">
-                            <h3><i class="fas fa-landmark"></i> Culture</h3>
-                            <p>Cinéma </p>
-                            <p>Musées </p>
-                            <p>Centre de création artistique</p>
-                            <p>autre</p>
-                              
-                           </div>
-                           
-                        </div>
-                     </div>
-                       </div>
-                </div>
-
-                <div class="col-4">
-                    <div>
-                        <p> 
-                            Voir les offres dans la commune :
-                            <br>
-                            <a href="{{commune.url_se_loger}}" target="_blank">
-                                SeLoger
+            <div class="modal-body ml-2">
+                <div>
+                    <p class="mt-2 text-decoration-underline">
+                        <a href="{{url_for('profil_detaille_commune', code_insee=commune.INSEE_C)}}" target="_blank" class="link">
+                            Voir le profil détaillé de la commune
+                        </a>
+                    </p>
+                    <p class="mt-2"> 
+                        Voir les offres dans la commune :
+                        <p class="vertical-center mt-3">
+                            <a href="{{commune.url_se_loger}}" class="btn btn-default mr-4 w-25 p-0" target="_blank">
+                                <img src="../../../statics/img/Logo-SeLoger.jpg" class="img-fluid border rounded hover-darker">
                             </a>
-                            <br>
-                            <a href="{{commune.url_leboncoin}}" target="_blank">
-                                Leboncoin
+                            <a href="{{commune.url_leboncoin}}" class="btn btn-lg ml-4 w-25 inline-block border rounded py-2 hover-darker" role="button" target="_blank">
+                                <img src="../../../statics/img/Logo_Leboncoin.png" class="img-fluid">
                             </a>
                         </p>
-                        <!-- Suppression : demande de confirmation avant de supprimer -->
-                        <a  onclick="if(confirm('Supprimer la commune du panier ?')) return true; else return false;" href="{{ url_for('suppression_panier', code_insee=commune.INSEE_C) }}">
-                            <i class="fas fa-trash-can text-dark down-right h1 mr-3 mb-2"></i>                                
-                        </a>
-                    </div>
+                    </p>
+                    <!-- Suppression : demande de confirmation avant de supprimer -->
+                    <a  onclick="if(confirm('Supprimer la commune du panier ?')) return true; else return false;" href="{{ url_for('suppression_panier', code_insee=commune.INSEE_C) }}">
+                        <i class="fas fa-trash-can text-dark float-right h2 mr-2 mt-2"></i>                                
+                    </a>
                 </div>
             </div>
         </div>
