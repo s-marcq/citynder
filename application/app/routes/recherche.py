@@ -194,7 +194,7 @@ def recherche():
                     break
 
             if liste_codes_insee == []: # cas où il n'y aurait pas de résultat 
-                flash("Aucun résultat ne correspond à tes attentes, tente à nouveau ta chance !")
+                flash("Aucun résultat ne correspond à tes attentes, tente à nouveau ta chance !", "warning")
                 return redirect(url_for('recherche'))
             
             session['resultats'] = liste_codes_insee # stockage des résultats dans une variable de session
@@ -300,7 +300,14 @@ def profil_commune(index):
             },
             nb_environnement_naturels = nb_environnement_naturels[0]
         else:
-            nb_environnement_naturels = 0 
+            nb_environnement_naturels = 0
+
+        if getattr(commune, 'equipements_commerciaux', None):
+            nb_commerces = sum([commune.equipements_commerciaux.ALIMENTATION, commune.equipements_commerciaux.COMMERCES_GENERAUX, commune.equipements_commerciaux.LOISIRS, commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES, commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE, commune.equipements_commerciaux.STATION_SERVICE])
+            nb_commerces = nb_commerces
+        else:
+            nb_commerces = 0
+
 
         # Stocker le résultat des requêtes dans un dictionnaire pour les transmettre au template
         infos_commune = { 
@@ -312,7 +319,7 @@ def profil_commune(index):
             # 'nb_etablissements_culturels': sum([commune.etablissements_culturels.MUSEE_sum, commune.etablissements_culturels.OPERA_sum, commune.etablissements_culturels.C_CREATION_MUSI_sum, commune.etablissements_culturels.C_CREATION_ARTI_sum, commune.etablissements_culturels.C_CULTU_sum, commune.etablissements_culturels.SCENE_sum, commune.etablissements_culturels.THEATRE_sum, commune.etablissements_culturels.C_ART_sum, commune.etablissements_culturels.BIB_sum, commune.etablissements_culturels.CONSERVATOIRE_sum, commune.etablissements_culturels.CINEMA_sum]),
             'nb_etablissements_sportifs': nb_etablissements_sportifs,
             'interets_naturels':nb_environnement_naturels,
-            'nb_commerces': sum([commune.equipements_commerciaux.ALIMENTATION, commune.equipements_commerciaux.COMMERCES_GENERAUX, commune.equipements_commerciaux.LOISIRS, commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES, commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE, commune.equipements_commerciaux.STATION_SERVICE])
+            'nb_commerces': nb_commerces
         }
 # 'interets_naturels': {
             #     'MER': commune.environnement_naturel.MER,

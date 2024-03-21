@@ -32,6 +32,22 @@
               aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
           <span class="d-none d-inline-block"><i class="fas fa-bars"></i> Menu </span>
       </button>
+      <a href="{{ url_for('accueil') }}">
+        <button class="navbar-toggler" id="topbar-item" type="button">
+            <span class="d-none d-lg-inline-block">
+                Accueil
+            </span>
+        </button>
+      </a>
+    </div>  
+     
+      <div class="col-2 vertical-center">
+        <a class="navbar-brand" id="img-logo" href="{{ url_for('accueil') }}">
+          <img src="../../statics/img/logo-sans-bg.png" alt="Logo" id="logo-navbar">
+        </a>   
+      </div>
+
+      <div class="col-5 mt-3 text-right">
         {% if current_user.is_authenticated %}
         <a href="{{ url_for('deconnexion') }}">
             <button class="navbar-toggler" id="topbar-item" type="button">
@@ -49,23 +65,6 @@
               </button>
           </a>
         {% endif %}
-
-    </div>  
-     
-      <div class="col-2 vertical-center">
-        <a class="navbar-brand" id="img-logo" href="{{ url_for('accueil') }}">
-          <img src="../../statics/img/logo-sans-bg.png" alt="Logo" id="logo-navbar">
-        </a>   
-      </div>
-
-      <div class="col-5 mt-3 text-right">
-        <a href="{{ url_for('accueil') }}">
-          <button class="navbar-toggler" id="topbar-item" type="button">
-              <span class="d-none d-lg-inline-block">
-                  Accueil
-              </span>
-          </button>
-      </a>
       </div>
 
       <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
@@ -121,7 +120,7 @@
   <footer class="footer vmt-5">
             <p class="text-center tm-font-light tm-color-white p-4 tm-margin-b-0">
               © 2024 City'nder  -
-              <a href="https://github.com/s-marcq/citynder" class="github" target="_blank"><i class="fab fa-github"></i> Github</a>
+              <a href="https://github.com/s-marcq/citynder" class="github" target="_blank"><i class="fab fa-github"></i> Github - </a>
               <a href="https://www.chartes.psl.eu/" target="_blank" class="logo_ENC">
                 <span style='mso-no-proof:yes;text-decoration:none;text-underline:none'>
                   <img border=0 width=50 height=100 id="_x0000_i1029" src="https://www.chartes.psl.eu/sites/default/files/atoms/images/logo-chartespsl-mail-coul-82px_0.png" alt="logo &Eacute;cole nationale des chartes">

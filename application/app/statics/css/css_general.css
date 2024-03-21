@@ -402,7 +402,7 @@ a.boutton-loupe:hover{
 }
 .boutton-loupe{
     color: #fafafa;
-    margin-right: 30%;
+    margin-right: 25%;
     opacity: 0; /* Définit l'élément comme transparent */
     animation: fadeIn 10s ease-in forwards; 
 }
@@ -549,3 +549,41 @@ a.github:hover{
     color: #c76fe2;
 }
 
+#back_to_top{
+    background-color: #c76fe2;
+    color: #fafafa;
+    border: none;
+    border-radius: 50%;
+}
+
+.class_box {
+    padding: 40px 5px 50px 5px;
+    border-radius: 10px;
+     background: #c76fe2;
+     margin-bottom: 50px;
+}
+.class_box p {
+    color: #fafafa;
+    font-size: x-small;
+    line-height: 28px;
+}
+.class_box h3{
+    color:#fafafa ;
+    font-size: medium;
+    text-align: center;
+}
+
+.popup_profil h1 {
+    text-align: center;
+    color: black;
+}
+.img-depasse {
+    
+    position:relative; /* Utilisez "fixed" pour que l'image reste fixe lors du défilement */
+    bottom: -50px; /* Réglez cette valeur selon la quantité que vous voulez que l'image dépasse */
+    right: -300px; /* Réglez cette valeur selon la quantité que vous voulez que l'image dépasse */
+     /* Assurez-vous que l'image soit au-dessus du contenu */
+}
+.image_petite{
+    width: 500px;
+}
