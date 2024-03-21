@@ -372,7 +372,9 @@ def profil_detaille_commune(code_insee):
             'beaute_acessoires':commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES,
             'fleur_jardin_animalerie': commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE,
             'station_service': commune.equipements_commerciaux.STATION_SERVICE,
-            'nb_etablissements_sportifs': sorted([(equipement.get_nombre(), equipement.nom_eq_sportif) for equipement in commune.equipements_sportifs], reverse=True)
+            'nb_etablissements_sportifs': sorted([(equipement.get_nombre(), equipement.nom_eq_sportif) for equipement in commune.equipements_sportifs], reverse=True),
+            'loyer_maison' : round(commune.LOYERM2_MAISON, 2),
+            'loyer_appart' : round(commune.LOYERM2_APPART, 2)
         }
                 
         return render_template("pages/profil_detaille.html", dico_code_insee=dico_code_insee)
