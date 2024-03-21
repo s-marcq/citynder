@@ -1,5 +1,5 @@
 from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, session
 from flask_login import current_user, login_required
 from ..models.db_citynder import Utilisateurs, Commune
 from sqlalchemy.sql import text
@@ -81,7 +81,7 @@ def suppression_panier(code_insee) :
             sql = f'DELETE FROM Contenu_panier_utilisateurs WHERE INSEE_C_item={code_insee} AND USER_ID={id}'
             db.session.execute(text(sql))
             db.session.commit()
-            flash("Suppression réalisée avec succès", "success")
+            flash("Ajout réalisée avec succès", "success")
 
     except Exception as e :
         flash("La suppression a rencontré une erreur : "+ str(e))
@@ -123,3 +123,34 @@ def modif_favori(code_insee, favori) :
     return redirect(url_for('panier'))
 
 
+@app.route("/panier/ajout/<int:index>", methods=['GET', 'POST']) 
+@login_required
+def ajout_panier(index) :
+    """
+    Route permettant à l'utilisateur d'ajouter une commune dans son panier.
+
+    Parameters
+    ----------
+    index : int, required
+        L'index de la commune à ajouter dans la liste des résultats.
+
+    Returns
+    -------
+    redirection
+        Redirige vers la route 'profil_commune' pour aller au résultat suivant.
+    """
+
+    try : 
+        liste_code_insee = session['resultats']
+        code_insee = liste_code_insee[index]
+
+        id = current_user.USER_ID
+        if current_user.is_authenticated :
+            sql = f'INSERT INTO Contenu_panier_utilisateurs (INSEE_C_item, USER_ID) VALUES ({code_insee}, {id})'
+            db.session.execute(text(sql))
+            db.session.commit()
+            flash("Ajout réalisé avec succès", "success")
+
+    except Exception as e :
+        flash("La suppression a rencontré une erreur : "+ str(e))
+    return redirect(url_for('profil_commune', index=index+1))
