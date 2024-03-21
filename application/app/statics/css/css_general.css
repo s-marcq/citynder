@@ -582,3 +582,12 @@ a.github:hover{
 .image_petite{
     width: 500px;
 }
+
+#image_profil{ 
+    border-radius: 20px;
+    width : 300px;
+}
+#image_profil img{ 
+    border-radius: 20px;
+    
+}

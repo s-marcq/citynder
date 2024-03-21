@@ -374,7 +374,24 @@ def profil_detaille_commune(code_insee):
             'station_service': commune.equipements_commerciaux.STATION_SERVICE,
             'nb_etablissements_sportifs': sorted([(equipement.get_nombre(), equipement.nom_eq_sportif) for equipement in commune.equipements_sportifs], reverse=True),
             'loyer_maison' : round(commune.LOYERM2_MAISON, 2),
-            'loyer_appart' : round(commune.LOYERM2_APPART, 2)
+            'loyer_appart' : round(commune.LOYERM2_APPART, 2),
+            'url_img' : commune.url_image,
+            'musee' : commune.etablissements_culturels.MUSEE_sum,
+            'opera' : commune.etablissements_culturels.OPERA_sum,
+            'crea_mus' : commune.etablissements_culturels.C_CREATION_MUSI_sum,
+            'crea_art' : commune.etablissements_culturels.C_CREATION_ARTI_sum,
+            'centre_culturel' : commune.etablissements_culturels.C_CULTU_sum,
+            'scene' : commune.etablissements_culturels.SCENE_sum,
+            'theatre': commune.etablissements_culturels.THEATRE_sum,
+            'bibliotheque' : commune.etablissements_culturels.BIB_sum,
+            'centre_artistique' : commune.etablissements_culturels.C_ART_sum,
+            'conservatoire' :  commune.etablissements_culturels.CONSERVATOIRE_sum,
+            'cinema' : commune.etablissements_culturels.CINEMA_sum,
+
+
+
+
+            
         }
                 
         return render_template("pages/profil_detaille.html", dico_code_insee=dico_code_insee)
