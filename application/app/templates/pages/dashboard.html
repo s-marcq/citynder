@@ -1,0 +1,16 @@
+{% extends "partials/conteneur.html" %}
+
+
+{% block content %}
+<div class="container">
+{% include "partials/cartes/carte.html"%}
+{% include "pages/graphiques/moyenne_loyer_par_commune.html"%}
+<div class="col-6 d-flex align-items-end justify-content-end">
+    <a href="{{url_for('panier')}}" class="mr-5">
+        <button type="button" class="btn btn-lg btn-primary mr-5">
+            Retour vers le panier
+        </button>
+    </a>
+</div>
+</div>
+{% endblock %}

@@ -19,4 +19,4 @@ login = LoginManager(app)
 login.login_message = "Connecte-toi pour accèder à cette page."
 login.login_message_category = "info"
 
-from .routes import recherche, users, erreurs, panier, page_finale, accueil, graphiques
+from .routes import dashboard, recherche, users, erreurs, panier, page_finale, accueil

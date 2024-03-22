@@ -1,0 +1,36 @@
+<div class="container">
+
+    <div class="row">
+        <h1>Carte des communes</h1>
+        <div>
+
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+    crossorigin=""/>
+    <style>
+        #map { height: 570px; width: 700px; }
+    </style>
+
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.2/dist/leaflet.js"
+    integrity="sha256-o9N1jGDZrf5tS+Ft4gbIK7mYMipq9lqpVJ91xHSyKhg="
+    crossorigin=""></script>
+
+    <script>
+        var map = L.map('map').setView([47.16, 2.04], 6);
+        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 16,
+            minZoom: 4,
+            attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+        }).addTo(map);
+
+        fetch('/carte_panier')
+            .then(response => response.json())
+            .then(data => {
+                data.forEach(commune => {
+                    L.marker([commune.coord.lat, commune.coord.long]).addTo(map)
+                        .bindPopup(commune.label);
+                });
+            });
+    </script>

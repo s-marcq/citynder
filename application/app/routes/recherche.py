@@ -324,13 +324,7 @@ def profil_commune(index):
             'interets_naturels':nb_environnement_naturels,
             'nb_commerces': nb_commerces
         }
-# 'interets_naturels': {
-            #     'MER': commune.environnement_naturel.MER,
-            #     'LAC': commune.environnement_naturel.LAC,
-            #     'ESTUAIRE': commune.environnement_naturel.ESTUAIRE,
-            #     'LOI_MONTAGNE': commune.environnement_naturel.LOI_MONTAGNE,
-            #     'MASSIF': commune.environnement_naturel.MASSIF,
-            # },
+        
         return render_template("pages/resultats.html", infos_commune=infos_commune, index=index)
 
     except Exception as e:
