@@ -10,7 +10,7 @@
     <div class="row mt-5 row1">
       <div class="col-md-4 margi_bottom">
          <div class="class_box text_align_center">
-          <h3><i class="fas fa-hand-holding-dollar"></i> Loyer</h3>
+          <h3><i class="fas fa-hand-holding-dollar fa-2x"></i> Loyer au m2</h3>
           <ul>
           <li>Moyenne pour les locations d'appartements : {{dico_code_insee.loyer_appart}} €/m²</li>
           <li>Moyenne pour les locations de maisons : {{dico_code_insee.loyer_maison}} €/m²</li>
@@ -19,7 +19,7 @@
       </div>
       <div class="col-md-4 margi_bottom">
          <div class="class_box blue text_align_center">
-          <h3><i class="fas fa-person-running"></i> Démographie et géographie</h3>
+          <h3><i class="fas fa-users fa-2x"></i> Démographie et géographie</h3>
           <ul>
             <li><strong>Nombre d'habitants :</strong> {{ "{:,.0f}".format(dico_code_insee.population|int).replace(',', ' ') }}</li>
             <li><strong>Département :</strong> {{ dico_code_insee.departement }}</li>
@@ -32,14 +32,37 @@
       {% if dico_code_insee.etablissements_sportifs %} 
       <div class="col-md-4 margi_bottom">
          <div class="class_box text_align_center">
-          <h3><i class="fas fa-landmark"></i> Sport</h3>
-          
-            <ul>
-                {% for equipement in dico_code_insee.etablissements_sportifs %}
+          <h3><i class="fas fa-person-running fa-2x"></i> Sport</h3>
+          {%if dico_code_insee.nb_etablissements_sportifs|length > 5 %}
+            <ul class="initial-display">
+                
+                {% for equipement in dico_code_insee.nb_etablissements_sportifs[:5]%} 
+
                     <li><strong>{{equipement[1]}} :</strong> {{equipement[0]}} </li>
                     {% endfor %}
                     <!-- afficher les 6 premiers voire plus  -->
+                    <li id="readMoreRow"><button id="readMoreBtn" class="btn btn-light">Read more</button></li>
             </ul>
+            <ul class="hidden-elements" style="display: none;">
+                {% for equipement in dico_code_insee.nb_etablissements_sportifs[6:]%}
+                    <li><strong>{{equipement[1]}} :</strong> {{equipement[0]}} </li>
+                    {% endfor %}
+                    <!-- afficher les 6 premiers voire plus  -->
+                    <li><button id="hideMoreBtn" class="btn btn-light">Hide more</button></li>
+
+            </ul>
+            
+            {%else%}
+            <ul>
+                
+                {% for equipement in dico_code_insee.etablissements_sportifs %} 
+
+                    <li><strong>{{equipement[1]}} :</strong> {{equipement[0]}} </li>
+                    
+                    {% endfor %}
+                    <!-- afficher les 6 premiers voire plus  -->
+            </ul>
+            {%endif%}
          </div>
          {% endif %}
       </div>
@@ -48,7 +71,7 @@
     {% if dico_code_insee.interets_naturels %}
     <div class="col-md-4 margi_bottom">
        <div class="class_box text_align_center">
-        <h3><i class="fas fa-tree"></i> Nature</h3>
+        <h3><i class="fas fa-tree fa-2x"></i> Nature</h3>
         <ul>
             <li><strong>Mer :</strong>
                 <!-- Vérifie si la variable est == 1, car il s'agit d'un Booléen -->
@@ -92,7 +115,7 @@
     {% if dico_code_insee.commerces %}
     <div class="col-md-4 margi_bottom">
        <div class="class_box blue text_align_center">
-        <h3><i class="fas fa-cart-shopping"></i> Nombre de commerces</h3>
+        <h3><i class="fas fa-cart-shopping fa-2x"></i> Commerces</h3>
         <ul>
             <li><strong>Alimentation :</strong>
                 <!-- Vérifie si la valeur de la variable est > ou = 1, si True affiche leur valeur -->
@@ -144,8 +167,8 @@
     {% if dico_code_insee.culture %}
     <div class="col-md-4 margi_bottom">
        <div class="class_box text_align_center">
-        <h3><i class="fas fa-landmark"></i> Culture</h3>
-        <ul>
+        <h3><i class="fas fa-landmark fa-2x"></i> Culture</h3>
+        <ul class="initial-display">
             <li><strong>Musée :</strong>
             {% if dico_code_insee.culture.musee >= 1 %}
                 {{ dico_code_insee.culture.musee }}
@@ -176,7 +199,10 @@
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
+            <li id="readMoreRow1"><button id="readMoreBtn1" class="btn btn-light">Read more</button></li>
             <!--READ MORE à partir de là--> 
+        </ul>
+        <ul class="hidden-elements1">
             <li><strong>Conservatoire :</strong>
                 {% if dico_code_insee.culture.conservatoire >= 1 %}
                     {{ dico_code_insee.culture.conservatoire }}
@@ -186,6 +212,12 @@
             <li><strong>Scène de spectacle :</strong>
                 {% if dico_code_insee.culture.scene >= 1 %}
                     {{ dico_code_insee.culture.scene }}
+                    <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
+                    {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
+            </li>
+            <li><strong>Centre artistique :</strong>
+                {% if dico_code_insee.centre_artistique>= 1 %}
+                    {{ dico_code_insee.centre_artistique }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
@@ -207,19 +239,52 @@
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
+                       
             <li><strong>Centre artistique :</strong>
                 {% if dico_code_insee.culture.centre_artistique>= 1 %}
                     {{ dico_code_insee.culture.centre_artistique }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
-            </li>          
+            </li>  
+            <li><button id="hideMoreBtn1" class="btn btn-light">Hide more</button></li>
+
+
+        
 
         </ul>
        </div>
     </div>
     {% endif %}
     </div>
-
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $(".hidden-elements").hide();
+        $("#readMoreBtn").click(function() {
+            $(".hidden-elements").slideDown();
+            $("#readMoreBtn").hide();
+            $("#readMoreRow").hide(); // Masquer la ligne contenant le bouton "Read more"
+        });
+        $("#hideMoreBtn").click(function() {
+            $(".hidden-elements").slideUp();
+            $("#readMoreBtn").show();
+            $("#readMoreRow").show(); // Afficher la ligne contenant le bouton "Read more" lorsque les éléments supplémentaires sont cachés
+        });
+    });
+    $(document).ready(function() {
+        $(".hidden-elements1").hide();
+        $("#readMoreBtn1").click(function() {
+            $(".hidden-elements1").slideDown();
+            $("#readMoreBtn1").hide();
+            $("#readMoreRow1").hide(); // Masquer la ligne contenant le bouton "Read more"
+        });
+        $("#hideMoreBtn1").click(function() {
+            $(".hidden-elements1").slideUp();
+            $("#readMoreBtn1").show();
+            $("#readMoreRow1").show(); // Afficher la ligne contenant le bouton "Read more" lorsque les éléments supplémentaires sont cachés
+        });
+    });
+</script>
     
 </div>
 

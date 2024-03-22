@@ -316,6 +316,11 @@ def profil_commune(index):
         infos_commune = { 
             'code_insee': code_insee,
             'nom_commune': commune.LIBGEO,
+            'region': commune.REGION,
+            'departement': commune.DEPARTEMENT,
+            'prix_m2_maisons': commune.LOYERM2_MAISON,
+            'prix_m2_appartements': commune.LOYERM2_APPART,
+            'url_img' : commune.url_image,
             'prix_m2_maisons': round(commune.LOYERM2_MAISON,2),
             'prix_m2_appartements': round(commune.LOYERM2_APPART,2),
             'nb_etablissements_culturels': nb_etablissements_culturels,
