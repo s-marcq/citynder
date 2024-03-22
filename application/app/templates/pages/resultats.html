@@ -15,11 +15,22 @@
             </div>
     
             <!-- Contenu centré -->
-            <div class="col-6 mt-5">
-                <div class="text-center border p-3 mt-5">
+            <div class="col-6 mt-5" id="bloc_resultat">
+                <div class="text-center p-3 mt-5">
                     <h1 class="h1 mt-5 mb-1">Commune n°{{index+1}}</h1>
                     <h2 class="h2 mb-3"><strong>Libellé:</strong> {{ infos_commune.nom_commune }}</h2>
+                    <div class="container" id="image_profil">
+                    <!-- Bouton "Plus de détails"  -->
+                    <p>
+                        <a class="pointer" href="{{url_for('profil_detaille_commune', code_insee=infos_commune.code_insee)}}" target="_blank">
+                            <img class="img-fluid hover-darker" src="{{ infos_commune.url_img }}" alt="image_ville">
+                            <i class="fas fa-location-crosshairs"></i><strong> Plus de détails ici</strong>
+                        </a>
+                    </p>
+                    </div>
                     <p><strong>Code INSEE :</strong> {{ infos_commune.code_insee }}</p>
+                    <p><strong>Région :</strong>{{ infos_commune.region }}</p>
+                    <p><strong>Département :</strong>{{ infos_commune.departement }}</p>
                     <p><strong>Loyer maison :</strong> {{ infos_commune.prix_m2_maisons }} €/m²</p>
                     <p><strong>Loyer appartement :</strong> {{ infos_commune.prix_m2_appartements }} €/m²</p>
                     <p><strong>Nombre d'établissements culturels :</strong> {{ infos_commune.nb_etablissements_culturels }}</p>
@@ -53,9 +64,7 @@
         <div class="row mt-5">
             <!-- Bouton "Plus de détails" en bas au centre -->
             <div class="col-6 text-center d-flex align-items-center justify-content-center">
-                <p>
-                    <a class="pointer" href="{{url_for('profil_detaille_commune', code_insee=infos_commune.code_insee)}}" targe="_blank"><i class="fas fa-location-crosshairs"></i><strong> Plus de détails ici</strong></a>
-                </p>
+               
             </div>
                     <!-- Bouton "Recherches terminées" en bas à droite -->
             <div class="col-6 d-flex align-items-end justify-content-end">

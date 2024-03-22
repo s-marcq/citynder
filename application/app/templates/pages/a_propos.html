@@ -5,7 +5,7 @@
         
     <div class="row">
         <div class="col-lg-6 text-center text-lg-start">
-            <img class="img-fluid animated zoomIn" src="../../statics/img/logo_rond_fond.png" alt="cytinder_map">
+            <img class="img-fluid animated zoomIn" src="../../statics/img/logo_rond_fond.png" alt="cytinder_map" id="cytinder_map">
         </div>
         <div class="col-lg-6">
             <h1 class="apropos_titre">À propos de City’nder, l'application qui t’indique où vivre ! </h1>
@@ -61,10 +61,23 @@
             <li>Sarah Marcq</li>
         </ul>
         
+        <p>C'est parti pour l'aventure, ton camion de démagement arrive déjà !</p>
+
+        <a class="pointer hover-darker" href="{{url_for('recherche')}}" >
+        <div class="loop-wrapper">
+            <div class="mountain"></div>
+            <div class="hill"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="tree"></div>
+            <div class="rock"></div>
+            <div class="truck" ></div>
+            <div class="wheels"></div>
+          </div> 
+        </a>
+        </div>
 
     </div>
-    <div class="img-depasse text-lg-end">
-        <img src="../../statics/img/City’nder_map.png" alt="cytinder_map" class="image_petite">
-    </div>
-    </div>
+    
+   
     {% endblock %}
