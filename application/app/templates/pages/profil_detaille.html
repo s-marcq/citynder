@@ -33,10 +33,11 @@
       <div class="col-md-4 margi_bottom">
          <div class="class_box text_align_center">
           <h3><i class="fas fa-person-running fa-2x"></i> Sport</h3>
-          {%if dico_code_insee.nb_etablissements_sportifs|length > 5 %}
+
+          {%if dico_code_insee.etablissements_sportifs|length > 5 %}
             <ul class="initial-display">
                 
-                {% for equipement in dico_code_insee.nb_etablissements_sportifs[:5]%} 
+                {% for equipement in dico_code_insee.etablissements_sportifs[:5]%} 
 
                     <li><strong>{{equipement[1]}} :</strong> {{equipement[0]}} </li>
                     {% endfor %}
@@ -44,7 +45,7 @@
                     <li id="readMoreRow"><button id="readMoreBtn" class="btn btn-light">Read more</button></li>
             </ul>
             <ul class="hidden-elements" style="display: none;">
-                {% for equipement in dico_code_insee.nb_etablissements_sportifs[6:]%}
+                {% for equipement in dico_code_insee.etablissements_sportifs[6:]%}
                     <li><strong>{{equipement[1]}} :</strong> {{equipement[0]}} </li>
                     {% endfor %}
                     <!-- afficher les 6 premiers voire plus  -->
@@ -216,8 +217,8 @@
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Centre artistique :</strong>
-                {% if dico_code_insee.centre_artistique>= 1 %}
-                    {{ dico_code_insee.centre_artistique }}
+                {% if dico_code_insee.culture.centre_artistique>= 1 %}
+                    {{ dico_code_insee.culture.centre_artistique }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
