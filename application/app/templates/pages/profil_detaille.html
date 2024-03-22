@@ -4,7 +4,9 @@
 
 <div class="container popup_profil mt-5">
     <h1>Voici {{ dico_code_insee.nom_commune }}</h1>
-    <div class="container" id="image_profil"><img class="img-fluid" src="{{dico_code_insee.url_img}}" alt="image_ville"></div>
+    {%if dico_code_insee.url_img %}
+        <div class="container" id="image_profil"><img class="img-fluid" src="{{dico_code_insee.url_img}}" alt="image_ville"></div>
+    {%endif%}
     <div class="row mt-5 row1">
       <div class="col-md-4 margi_bottom">
          <div class="class_box text_align_center">
@@ -27,13 +29,13 @@
           </div>
          
       </div>
-      {% if dico_code_insee.nb_etablissements_sportifs %} 
+      {% if dico_code_insee.etablissements_sportifs %} 
       <div class="col-md-4 margi_bottom">
          <div class="class_box text_align_center">
           <h3><i class="fas fa-landmark"></i> Sport</h3>
           
             <ul>
-                {% for equipement in dico_code_insee.nb_etablissements_sportifs %}
+                {% for equipement in dico_code_insee.etablissements_sportifs %}
                     <li><strong>{{equipement[1]}} :</strong> {{equipement[0]}} </li>
                     {% endfor %}
                     <!-- afficher les 6 premiers voire plus  -->
@@ -43,6 +45,7 @@
       </div>
     </div>
     <div class="row row2">
+    {% if dico_code_insee.interets_naturels %}
     <div class="col-md-4 margi_bottom">
        <div class="class_box text_align_center">
         <h3><i class="fas fa-tree"></i> Nature</h3>
@@ -84,138 +87,137 @@
         </ul>
        </div>
     </div>
+    {% endif %}
+
+    {% if dico_code_insee.commerces %}
     <div class="col-md-4 margi_bottom">
        <div class="class_box blue text_align_center">
         <h3><i class="fas fa-cart-shopping"></i> Commerces</h3>
         <ul>
             <li><strong>Alimentation :</strong>
                 <!-- Vérifie si la valeur de la variable est > ou = 1, si True affiche leur valeur -->
-                {% if dico_code_insee.alimentation >= 1 %}
-                {{ dico_code_insee.alimentation }}
+                {% if dico_code_insee.commerces.alimentation >= 1 %}
+                {{ dico_code_insee.commerces.alimentation }}
                 <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
             {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Commerces Generaux :</strong>
                 <!-- Vérifie si la valeur de la variable est > ou = 1, si True affiche leur valeur -->
-                {% if dico_code_insee.commerces_generaux >= 1 %}
-                {{ dico_code_insee.commerces_generaux }}
+                {% if dico_code_insee.commerces.commerces_generaux >= 1 %}
+                {{ dico_code_insee.commerces.commerces_generaux }}
                 <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
-                {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
+                {% else %} {{ dico_code_inseenom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Loisirs :</strong>
                 <!-- Vérifie si la valeur de la variable est > ou = 1, si True affiche leur valeur -->
-                {% if dico_code_insee.loisirs >= 1 %}
-                {{ dico_code_insee.loisirs }}
+                {% if dico_code_insee.commerces.loisirs >= 1 %}
+                {{ dico_code_insee.commerces.loisirs }}
                 <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                 {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Beauté et Accessoires :</strong>
                 <!-- Vérifie si la valeur de la variable est > ou = 1, si True affiche leur valeur -->
-                {% if dico_code_insee.beaute_acessoires >= 1 %}
-                {{ dico_code_insee.beaute_acessoires }}
+                {% if dico_code_insee.commerces.beaute_acessoires >= 1 %}
+                {{ dico_code_insee.commerces.beaute_acessoires }}
                 <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                 {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Station Service :</strong>
                 <!-- Vérifie si la valeur de la variable est > ou = 1, si True affiche leur valeur -->
-                {% if dico_code_insee.station_service >= 1 %}
-                {{ dico_code_insee.station_service }}
+                {% if dico_code_insee.commerces.station_service >= 1 %}
+                {{ dico_code_insee.commerces.station_service }}
                 <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                 {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Fleuriste, Jardinerie et Animalerie :</strong>
                 <!-- Vérifie si la valeur de la variable est > ou = 1, si True affiche leur valeur -->
-                {% if dico_code_insee.fleur_jardin_animalerie >= 1 %}
-                {{ dico_code_insee.fleur_jardin_animalerie }}
+                {% if dico_code_insee.commerces.fleur_jardin_animalerie >= 1 %}
+                {{ dico_code_insee.commerces.fleur_jardin_animalerie }}
                 <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                 {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
         </ul>
         </div>
-       
     </div>
+    {% endif %}
+
+    {% if dico_code_insee.culture %}
     <div class="col-md-4 margi_bottom">
        <div class="class_box text_align_center">
         <h3><i class="fas fa-landmark"></i> Culture</h3>
         <ul>
             <li><strong>Musée :</strong>
-            {% if dico_code_insee.musee >= 1 %}
-                {{ dico_code_insee.musee }}
+            {% if dico_code_insee.culture.musee >= 1 %}
+                {{ dico_code_insee.culture.musee }}
                 <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                 {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Cinéma :</strong>
-                {% if dico_code_insee.cinema>= 1 %}
-                    {{ dico_code_insee.cinema }}
+                {% if dico_code_insee.culture.cinema>= 1 %}
+                    {{ dico_code_insee.culture.cinema }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Théâtre :</strong>
-                {% if dico_code_insee.theatre >= 1 %}
-                    {{ dico_code_insee.theatre }}
+                {% if dico_code_insee.culture.theatre >= 1 %}
+                    {{ dico_code_insee.culture.theatre }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Opéra :</strong>
-                {% if dico_code_insee.opera >= 1 %}
-                    {{ dico_code_insee.opera }}
+                {% if dico_code_insee.culture.opera >= 1 %}
+                    {{ dico_code_insee.culture.opera }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Bibliothèque :</strong>
-                {% if dico_code_insee.bibliotheque >= 1 %}
-                    {{ dico_code_insee.bibliotheque }}
+                {% if dico_code_insee.culture.bibliotheque >= 1 %}
+                    {{ dico_code_insee.culture.bibliotheque }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <!--READ MORE à partir de là--> 
             <li><strong>Conservatoire :</strong>
-                {% if dico_code_insee.conservatoire >= 1 %}
-                    {{ dico_code_insee.conservatoire }}
+                {% if dico_code_insee.culture.conservatoire >= 1 %}
+                    {{ dico_code_insee.culture.conservatoire }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Scène de spectacle :</strong>
-                {% if dico_code_insee.scene >= 1 %}
-                    {{ dico_code_insee.scene }}
+                {% if dico_code_insee.culture.scene >= 1 %}
+                    {{ dico_code_insee.culture.scene }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Centre de création musicale :</strong>
-                {% if dico_code_insee.crea_mus >= 1 %}
-                    {{ dico_code_insee.crea_mus }}
+                {% if dico_code_insee.culture.crea_mus >= 1 %}
+                    {{ dico_code_insee.culture.crea_mus }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Centre de création artistique:</strong>
-                {% if dico_code_insee.crea_art >= 1 %}
-                    {{ dico_code_insee.crea_art }}
+                {% if dico_code_insee.culture.crea_art >= 1 %}
+                    {{ dico_code_insee.culture.crea_art }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Centre culturel :</strong>
-                {% if dico_code_insee.centre_culturel>= 1 %}
+                {% if dico_code_insee.culture.centre_culturel>= 1 %}
                     {{ dico_code_insee.centre_culturel }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
             <li><strong>Centre artistique :</strong>
-                {% if dico_code_insee.centre_artistique>= 1 %}
-                    {{ dico_code_insee.centre_artistique }}
+                {% if dico_code_insee.culture.centre_artistique>= 1 %}
+                    {{ dico_code_insee.culture.centre_artistique }}
                     <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
-            </li>
-            
-
-
-            
+            </li>          
 
         </ul>
-        
-         
        </div>
-       
     </div>
+    {% endif %}
     </div>
 
     

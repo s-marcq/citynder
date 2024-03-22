@@ -140,8 +140,7 @@ def ajout_panier(index) :
 
         id = current_user.USER_ID
         if current_user.is_authenticated :
-            sql = f'INSERT INTO Contenu_panier_utilisateurs (INSEE_C_item, USER_ID, FAVORI) VALUES ({code_insee}, {id}, 0)'
-            # question des favoris
+            sql = f'INSERT INTO Contenu_panier_utilisateurs (INSEE_C_item, USER_ID, FAVORI) VALUES ({code_insee}, {id}, false)'
             db.session.execute(text(sql))
             db.session.commit()
             flash("Ajout réalisé avec succès", "success")

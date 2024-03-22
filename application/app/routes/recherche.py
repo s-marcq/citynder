@@ -279,9 +279,7 @@ def profil_commune(index):
 
         # Récupérer les informations de base de la commune à partir de la bdd
         commune = Commune.query.get(code_insee)
-        
-
-
+    
         # Vérifier si chaque attribut de l'établissement culturel existe et l'ajouter à la somme
         if getattr(commune, 'etablissements_culturels', None):
             nb_etablissements_culturels = sum([commune.etablissements_culturels.MUSEE_sum, commune.etablissements_culturels.OPERA_sum, commune.etablissements_culturels.C_CREATION_MUSI_sum, commune.etablissements_culturels.C_CREATION_ARTI_sum, commune.etablissements_culturels.C_CULTU_sum, commune.etablissements_culturels.SCENE_sum, commune.etablissements_culturels.THEATRE_sum, commune.etablissements_culturels.C_ART_sum, commune.etablissements_culturels.BIB_sum, commune.etablissements_culturels.CONSERVATOIRE_sum, commune.etablissements_culturels.CINEMA_sum]),
@@ -357,6 +355,52 @@ def profil_detaille_commune(code_insee):
         # Récupérer les informations de base de la commune à partir de la bdd
         commune = Commune.query.get(code_insee)
 
+                # Vérifier si chaque attribut de l'établissement culturel existe et l'ajouter à la somme
+        if getattr(commune, 'etablissements_culturels', None):
+            culture = {
+                'musee' : commune.etablissements_culturels.MUSEE_sum,
+                'opera' : commune.etablissements_culturels.OPERA_sum,
+                'crea_mus' : commune.etablissements_culturels.C_CREATION_MUSI_sum,
+                'crea_art' : commune.etablissements_culturels.C_CREATION_ARTI_sum,
+                'centre_culturel' : commune.etablissements_culturels.C_CULTU_sum,
+                'scene' : commune.etablissements_culturels.SCENE_sum,
+                'theatre': commune.etablissements_culturels.THEATRE_sum,
+                'bibliotheque' : commune.etablissements_culturels.BIB_sum,
+                'centre_artistique' : commune.etablissements_culturels.C_ART_sum,
+                'conservatoire' :  commune.etablissements_culturels.CONSERVATOIRE_sum,
+                'cinema' : commune.etablissements_culturels.CINEMA_sum,
+            }
+        else:
+            culture = None 
+        
+        if getattr(commune, 'equipements_sportifs', None):
+            etablissements_sportifs = sorted([(equipement.get_nombre(), equipement.nom_eq_sportif) for equipement in commune.equipements_sportifs], reverse=True)
+        else:
+            etablissements_sportifs = None
+
+        if getattr(commune, 'environnement_naturel', None):
+            interets_naturels = {
+                'MER': commune.environnement_naturel.MER,
+                'LAC': commune.environnement_naturel.LAC,
+                'ESTUAIRE': commune.environnement_naturel.ESTUAIRE,
+                'LOI_MONTAGNE': commune.environnement_naturel.LOI_MONTAGNE,
+                'MASSIF': commune.environnement_naturel.MASSIF,
+            },
+        else:
+            interets_naturels = None
+
+        if getattr(commune, 'equipements_commerciaux', None):
+            commerces = {
+            'alimentation': commune.equipements_commerciaux.ALIMENTATION,
+            'commerces_generaux': commune.equipements_commerciaux.COMMERCES_GENERAUX,
+            'loisirs': commune.equipements_commerciaux.LOISIRS,
+            'beaute_acessoires':commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES,
+            'fleur_jardin_animalerie': commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE,
+            'station_service': commune.equipements_commerciaux.STATION_SERVICE,
+            }
+        else:
+            commerces = None
+
         dico_code_insee = { 
             'code_insee': code_insee,
             'nom_commune': commune.LIBGEO,
@@ -364,39 +408,13 @@ def profil_detaille_commune(code_insee):
             'superficie': commune.SUPERFICIE,
             'region': commune.REGION,
             'departement': commune.DEPARTEMENT,
-            'interets_naturels': {
-                'MER': commune.environnement_naturel.MER,
-                'LAC': commune.environnement_naturel.LAC,
-                'ESTUAIRE': commune.environnement_naturel.ESTUAIRE,
-                'LOI_MONTAGNE': commune.environnement_naturel.LOI_MONTAGNE,
-                'MASSIF': commune.environnement_naturel.MASSIF,
-            },
-            'alimentation': commune.equipements_commerciaux.ALIMENTATION,
-            'commerces_generaux': commune.equipements_commerciaux.COMMERCES_GENERAUX,
-            'loisirs': commune.equipements_commerciaux.LOISIRS,
-            'beaute_acessoires':commune.equipements_commerciaux.BEAUTE_ET_ACCESSOIRES,
-            'fleur_jardin_animalerie': commune.equipements_commerciaux.FLEURISTE_JARDINERIE_ANIMALERIE,
-            'station_service': commune.equipements_commerciaux.STATION_SERVICE,
-            'nb_etablissements_sportifs': sorted([(equipement.get_nombre(), equipement.nom_eq_sportif) for equipement in commune.equipements_sportifs], reverse=True),
+            'interets_naturels': interets_naturels,
+            'etablissements_sportifs': etablissements_sportifs,
             'loyer_maison' : round(commune.LOYERM2_MAISON, 2),
             'loyer_appart' : round(commune.LOYERM2_APPART, 2),
             'url_img' : commune.url_image,
-            'musee' : commune.etablissements_culturels.MUSEE_sum,
-            'opera' : commune.etablissements_culturels.OPERA_sum,
-            'crea_mus' : commune.etablissements_culturels.C_CREATION_MUSI_sum,
-            'crea_art' : commune.etablissements_culturels.C_CREATION_ARTI_sum,
-            'centre_culturel' : commune.etablissements_culturels.C_CULTU_sum,
-            'scene' : commune.etablissements_culturels.SCENE_sum,
-            'theatre': commune.etablissements_culturels.THEATRE_sum,
-            'bibliotheque' : commune.etablissements_culturels.BIB_sum,
-            'centre_artistique' : commune.etablissements_culturels.C_ART_sum,
-            'conservatoire' :  commune.etablissements_culturels.CONSERVATOIRE_sum,
-            'cinema' : commune.etablissements_culturels.CINEMA_sum,
-
-
-
-
-            
+            'commerces': commerces,
+            'culture' : culture
         }
                 
         return render_template("pages/profil_detaille.html", dico_code_insee=dico_code_insee)
