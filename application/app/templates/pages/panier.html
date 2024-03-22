@@ -3,12 +3,10 @@
 {% block content %}
 
 <div class="container mt-5 mb-5">
-
     <h1 class="text-center my-5">Ton panier : Les communes que tu as sélectionnées</h1>
     <p>
         Clique sur les villes pour afficher leur profil et accèder aux offres <i>Leboncoin</i> et <i>Seloger</i>.
-    </p>
-    <p>
+        <br>
         Tu peux mettre des villes en favori en cliquant sur la petite étoile.
     </p>
     
@@ -45,8 +43,10 @@
 
             {%endfor%}
         {%else%}
-            <p>Tu n'as aucune commune dans ton panier.</p>
-            <a class="link link-primary" href="{{url_for('recherche')}}">Faire une recherche</a>
+            <p class="mt-5">
+                <p><strong>Ton panier est vide...</strong></p>
+                <p><br><a class="link link-primary" href="{{url_for('recherche')}}">Faire une recherche</a></p>
+            </p>
         {%endif%}
     </div>
     

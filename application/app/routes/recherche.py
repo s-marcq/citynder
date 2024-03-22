@@ -265,7 +265,10 @@ def profil_commune(index):
         # Récupérer la liste des codes INSEE des communes de la session
         liste_code_insee = session['resultats']
 
-        print(len(liste_code_insee))
+        if index>=len(liste_code_insee):
+            
+            flash("Il n'y a plus aucun résultat qui corresponde à tes critères, si tu en veux plus, élargis ta recherche", "info")
+            return redirect(url_for('panier'))
 
          # Vérifier si l'index est validé, s'il n'est pas vide ou trop plein, supérieur à la liste totale des codes insee
         if index < 0 or index >= len(liste_code_insee):
@@ -315,8 +318,8 @@ def profil_commune(index):
         infos_commune = { 
             'code_insee': code_insee,
             'nom_commune': commune.LIBGEO,
-            'prix_m2_maisons': commune.LOYERM2_MAISON,
-            'prix_m2_appartements': commune.LOYERM2_APPART,
+            'prix_m2_maisons': round(commune.LOYERM2_MAISON,2),
+            'prix_m2_appartements': round(commune.LOYERM2_APPART,2),
             'nb_etablissements_culturels': nb_etablissements_culturels,
             # 'nb_etablissements_culturels': sum([commune.etablissements_culturels.MUSEE_sum, commune.etablissements_culturels.OPERA_sum, commune.etablissements_culturels.C_CREATION_MUSI_sum, commune.etablissements_culturels.C_CREATION_ARTI_sum, commune.etablissements_culturels.C_CULTU_sum, commune.etablissements_culturels.SCENE_sum, commune.etablissements_culturels.THEATRE_sum, commune.etablissements_culturels.C_ART_sum, commune.etablissements_culturels.BIB_sum, commune.etablissements_culturels.CONSERVATOIRE_sum, commune.etablissements_culturels.CINEMA_sum]),
             'nb_etablissements_sportifs': nb_etablissements_sportifs,

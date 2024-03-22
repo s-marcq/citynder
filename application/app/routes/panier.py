@@ -6,7 +6,6 @@ from sqlalchemy.sql import text
 # from ..models.formulaires import  
 
 @app.route("/panier", methods=['GET', 'POST']) 
-@app.route("/panier/<int:page>", methods=['GET', 'POST']) 
 @login_required
 def panier() :
     """
@@ -24,7 +23,6 @@ def panier() :
             communes = []
             communes_panier = Commune.query.join(Utilisateurs.panier).filter(Utilisateurs.USER_ID==id)
             for commune in communes_panier :
-
                 # Cas des communes avec arrondissements (posent problème dans les url du boncoin)
                 if 'Paris ' in commune.LIBGEO :
                     url_leboncoin = "https://www.leboncoin.fr/recherche?category=10&locations="+"Paris"
@@ -49,10 +47,6 @@ def panier() :
                 communes.append(dico)
                 communes = sorted(communes, key=lambda x: x['favori'], reverse=True)
 
-        # gérer la pagination
-
-        # code mettre un élément en favori
-                
     
     except Exception as e :
         flash("L'affichage du panier a rencontré une erreur : "+ str(e))
@@ -146,11 +140,12 @@ def ajout_panier(index) :
 
         id = current_user.USER_ID
         if current_user.is_authenticated :
-            sql = f'INSERT INTO Contenu_panier_utilisateurs (INSEE_C_item, USER_ID) VALUES ({code_insee}, {id})'
+            sql = f'INSERT INTO Contenu_panier_utilisateurs (INSEE_C_item, USER_ID, FAVORI) VALUES ({code_insee}, {id}, 0)'
+            # question des favoris
             db.session.execute(text(sql))
             db.session.commit()
             flash("Ajout réalisé avec succès", "success")
 
     except Exception as e :
-        flash("La suppression a rencontré une erreur : "+ str(e))
+        flash("L'ajout a rencontré une erreur : "+ str(e))
     return redirect(url_for('profil_commune', index=index+1))
