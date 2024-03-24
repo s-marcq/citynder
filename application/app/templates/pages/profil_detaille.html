@@ -12,8 +12,8 @@
          <div class="class_box text_align_center">
           <h3><i class="fas fa-hand-holding-dollar fa-2x"></i> Loyer au m2</h3>
           <ul>
-          <li>Moyenne pour les locations d'appartements : {{dico_code_insee.loyer_appart}} €/m²</li>
-          <li>Moyenne pour les locations de maisons : {{dico_code_insee.loyer_maison}} €/m²</li>
+          <li><strong>Moyenne pour les locations d'appartements :</strong> {{dico_code_insee.loyer_appart}} €/m²</li>
+          <li><strong>Moyenne pour les locations de maisons :</strong> {{dico_code_insee.loyer_maison}} €/m²</li>
           </ul>
          </div>
       </div>
@@ -41,7 +41,7 @@
 
                     <li><strong>{{equipement[1]}} :</strong> {{equipement[0]}} </li>
                     {% endfor %}
-                    <!-- afficher les 6 premiers voire plus  -->
+                    <!-- afficher les 5 premiers voire plus  -->
                     <li id="readMoreRow"><button id="readMoreBtn" class="btn btn-light">Read more</button></li>
             </ul>
             <ul class="hidden-elements" style="display: none;">
@@ -107,7 +107,7 @@
                 {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée.
                 {% endif %} 
             </li>
-            <!-- GILMAR// MARINA :: CORRIGER CONDITIONNEL -->
+            
         </ul>
        </div>
     </div>
@@ -241,12 +241,7 @@
                     {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
             </li>
                        
-            <li><strong>Centre artistique :</strong>
-                {% if dico_code_insee.culture.centre_artistique>= 1 %}
-                    {{ dico_code_insee.culture.centre_artistique }}
-                    <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
-                    {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
-            </li>  
+            
             <li><button id="hideMoreBtn1" class="btn btn-light">Hide more</button></li>
 
 

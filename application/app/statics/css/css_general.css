@@ -182,7 +182,25 @@ font-weight: 500;
     top: 0;
     transition: color .75s linear;
     width: 100%;
+    margin-left: 30%;
     z-index: 10;
+}
+a.boutton-loupe:hover{
+    color: #c76fe2;
+}
+.boutton-loupe{
+    color: #fafafa;
+    margin-right: 25%;
+    opacity: 0; /* Définit l'élément comme transparent */
+    animation: fadeIn 10s ease-in forwards; 
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0; /* Commence avec une opacité de 0 */
+    }
+    to {
+        opacity: 1; /* Termine avec une opacité de 1 */
+    }
 }
 
 
@@ -337,15 +355,7 @@ body.dark-mode, .navbar {
     justify-content: center;
 }
 
-/* body {
-      background-color: #ebdff7;
-      } */
-            
-/* #topbar{
-        background-color: #2f0458;
-        box-shadow: 8px 10px 10px 1px #393838;
-    }
-     */
+/*topbar et menu déroulant*/
 #topbar button:hover{
     background-color:  #c76fe2;
 }
@@ -353,15 +363,8 @@ body.dark-mode, .navbar {
 #topbar-item{
     color: antiquewhite;
     font-size: large;
-    /* padding-right: 1px; */    
-    
+    /* padding-right: 1px; */       
 }
-
-
-/* #img-logo{
-    padding-left: 300px;
-    padding-right: 300px;
-} */
 
 #navbarNavAltMarkup{
   position:absolute;
@@ -392,26 +395,7 @@ margin-left: 10px;}
     color: antiquewhite;
 }
 
-a.boutton-loupe:hover{
-    color: #c76fe2;
-}
-.boutton-loupe{
-    color: #fafafa;
-    margin-right: 25%;
-    opacity: 0; /* Définit l'élément comme transparent */
-    animation: fadeIn 10s ease-in forwards; 
-}
-@keyframes fadeIn {
-    from {
-        opacity: 0; /* Commence avec une opacité de 0 */
-    }
-    to {
-        opacity: 1; /* Termine avec une opacité de 1 */
-    }
-}
-.home_title {
-    margin-left: 30%;
-}
+
 
 #connexion{
     color: #2f0458;
@@ -514,6 +498,7 @@ a.boutton-loupe:hover{
         right:1%;
 }
 
+/*a propos*/
 #apropos{
     padding-left: 15%;
     padding-right: 15%;
@@ -533,67 +518,12 @@ a.boutton-loupe:hover{
     padding-top: 4%;
     font-weight: bold;
 }
-
-
-a.github{
-    text-decoration: none;
-    color: #fafafa;
-}
-
-a.github:hover{
-    color: #c76fe2;
-}
-
-#back_to_top{
-    background-color: #c76fe2;
-    color: #fafafa;
-    border: none;
-    border-radius: 50%;
-}
-
-.class_box {
-    padding: 40px 5px 50px 5px;
-    border-radius: 10px;
-     background: #c76fe2;
-     margin-bottom: 50px;
-}
-
-.class_box h3{
-    color:#fafafa ;
-    font-size:large;
-    text-align: center;
-}
-
-.popup_profil h1 {
-    text-align: center;
-    color: black;
-}
-.img-depasse {
-    
-    position:relative; /* Utilisez "fixed" pour que l'image reste fixe lors du défilement */
-    bottom: -50px; /* Réglez cette valeur selon la quantité que vous voulez que l'image dépasse */
-    right: -300px; /* Réglez cette valeur selon la quantité que vous voulez que l'image dépasse */
-     /* Assurez-vous que l'image soit au-dessus du contenu */
-}
-.image_petite{
-    width: 500px;
-}
-
 #cytinder_map{
     border-radius: 50%;
 }
 
-#image_profil{ 
-    border-radius: 20px;
-    width : 300px;
-}
-#image_profil img{ 
-    border-radius: 20px;
-    
-    
-}
-
-  .loop-wrapper {
+/*animation dans le a propos*/
+.loop-wrapper {
     margin: 0 auto;
     position: relative;
     display: block;
@@ -734,7 +664,55 @@ a.github:hover{
     100% {
       transform: translateX(-2000px);
     }
-  }
+}
+
+/*footer*/
+a.github{
+    text-decoration: none;
+    color: #fafafa;
+}
+
+a.github:hover{
+    color: #c76fe2;
+}
+
+#back_to_top{
+    background-color: #c76fe2;
+    color: #fafafa;
+    border: none;
+    border-radius: 50%;
+}
+
+/*profil détaillé*/
+.class_box {
+    padding: 40px 5px 50px 5px;
+    border-radius: 10px;
+     background: #c76fe2;
+     margin-bottom: 50px;
+}
+
+.class_box h3{
+    color:#fafafa ;
+    font-size:large;
+    text-align: center;
+}
+
+.popup_profil h1 {
+    text-align: center;
+    color: black;
+}
+
+
+#image_profil{ 
+    border-radius: 20px;
+    width : 300px;
+}
+#image_profil img{ 
+    border-radius: 20px;
+    
+    
+}
+
   #bloc_resultat{
     box-shadow: 8px 10px 10px 10px #393838;
     border-radius: 20px;
