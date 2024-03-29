@@ -1,0 +1,107 @@
+
+{% block content %}
+
+<div class="container">
+    <h1 class="text-center">Loyers en France par région (hors Mayotte)</h1>
+    <div>
+        <canvas id="graphique_region" style="width: 800px;"></canvas>
+    </div>
+   
+            
+    <script>
+        const ctx_reg = document.getElementById('graphique_region');
+            
+        var graphe_reg = new Chart(ctx_reg, {
+            type: 'bar', // type de graphique en barre
+            data: { // les données à afficher
+                labels: [],
+                datasets: [{
+                    data: [] 
+                }]
+            },
+            options: {
+                tooltips: { // configuration des info-bulles
+                    callbacks: {
+                        title: function(tooltipItem, data) {
+                            return 'Région'; // change le titre de l'info-bulle pour "Région"
+                        }
+                    }
+                },
+                scales: { // configuration des échelles
+                    xAxes: [{ // configuration de l'axe x
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Régions', // définit le label de l'axe x
+                            fontStyle: 'bold'
+                        },
+                        ticks: {
+                            font: {
+                                weight: 'bold'
+                            }
+                        }
+                    }],
+                    yAxes: [{ // configuration de l'axe y
+                        display: true, // affiche l'axe y
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Moyenne des prix loyer par m²', // définit le label de l'axe y
+                            fontStyle: 'bold'
+                        },
+                        ticks: {
+                            beginAtZero: true, // l'axe y commence à zéro
+                            font: {
+                                weight: 'bold'
+                            }
+                        }
+                    }]
+                },
+                    
+            }
+        });
+
+        fetch('{{url_for("moyenne_loyer_par_region_data")}}')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                    
+                    // calcul des labels et des nombres
+                    var labels = [];
+                    var nombres = [];
+            
+                    // trie 'nombres' par ordre croissant
+                    var donnees_sorted = data.sort((a, b) => a.nombre - b.nombre);
+
+                    // obtient les valeurs minimales et maximales
+                    var min = Math.min(...donnees_sorted.map(item => item.nombre));
+                    var max = Math.max(...donnees_sorted.map(item => item.nombre));
+
+                    // crée une échelle de couleurs (dont la valeur est 'OrRd') avec chroma.js
+                    var scale = chroma.scale('OrRd').domain([min, max]);
+
+                    // filtre les valeurs des données pour les couleurs dans l'échelle
+                    var backgroundColors = donnees_sorted.map(item => scale(item.nombre).hex());
+                    
+                    for (var i = 0; i < data.length; i++) {
+                        labels.push(data[i].label);
+                        nombres.push(data[i].nombre);
+                    }
+
+                    // crée un nouvel objet dataset pour chaque étiquette
+                    var datasets = [];
+                    for (var i = 0; i < labels.length; i++) {
+                        datasets.push({
+                            label: labels[i],
+                            data: [nombres[i]], // ajoute la valeur correspondante
+                            backgroundColor: backgroundColors[i]
+                        });
+                    }
+
+                    // ajout des données dans le graphique
+                    graphe_reg.data.datasets = datasets;
+                    graphe_reg.update();
+    });
+
+    </script>
+</div>
+{% endblock %}

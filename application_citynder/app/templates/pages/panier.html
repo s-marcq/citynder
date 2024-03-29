@@ -1,0 +1,53 @@
+{%extends "partials/conteneur.html" %}
+
+{% block content %}
+
+<div class="container mt-5 mb-5">
+    <h1 class="text-center my-5">Ton panier : les communes que tu as sélectionnées</h1>
+    <p>
+        Clique sur les villes pour afficher leur profil et accèder aux offres <i>Leboncoin</i> et <i>Seloger</i>.
+        <br>
+        Tu peux mettre des villes en favori en cliquant sur la petite étoile.
+    </p>
+    <div class="grid-wrapper my-5" id="grille-panier">
+        {% if communes%}
+        {% for commune in communes%}
+
+            {% set modalP = "modalP" ~ commune.INSEE_C %}
+            {% include "partials/popup/profil_panier.html"%}
+            <div class="card hover-darker" id="grille-commune-panier">
+
+                {% if commune.favori == "0" %}
+                    <a href="{{url_for('modif_favori', code_insee=commune.INSEE_C, favori=commune.favori)}}"><i class="far fa-star float-right mt-2" id="etoile-vide"></i></a>
+                {%else%}
+                    <a href="{{url_for('modif_favori', code_insee=commune.INSEE_C, favori=commune.favori)}}"><i class="fas fa-star float-right mt-2" id="etoile-pleine"></i></a>
+                {%endif%}
+
+                <a data-toggle="modal" data-target="#{{modalP}}">
+                    {% if commune.url_image %}
+                        <img src="{{commune.url_image}}" alt="image de {{commune.LIBGEO}}" class="card-img-top pointer" id="img_panier"/>
+                    {% else %}
+                        <div class="img-top pointer"  id="img_panier">Image indisponible</div>
+                    {% endif %}
+                </a>
+                
+                <a class="pointer" data-toggle="modal" data-target="#{{modalP}}">
+                    <div class="card-body no-margin-bottom">
+                        <p class="small">
+                                {{commune.LIBGEO}}, {{commune.DEPARTEMENT}}
+                        </p>
+                    </div>
+                </a>
+            </div>
+
+            {%endfor%}
+        {%else%}
+            <p class="mt-5">
+                <p><strong>Ton panier est vide...</strong></p>
+                <p><br><a class="link link-primary" href="{{url_for('recherche')}}">Faire une recherche</a></p>
+            </p>
+        {%endif%}
+    </div>
+    
+</div>
+{% endblock %}

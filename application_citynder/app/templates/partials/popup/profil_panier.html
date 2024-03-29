@@ -1,0 +1,39 @@
+<!-- pop-up avec le profil détaillé  -->
+
+<div class="modal fade mt-5" id="{{modalP}}" tabindex="-1" role="dialog" aria-labelledby="modalPanier" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header ml-2">
+                <h3 class="modal-title" id="modalPanier"><i class="fas fa-file-lines mr-3"></i> {{commune.LIBGEO}}, {{commune.DEPARTEMENT}}</h3>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <!-- popup panier, liens vers le profil déatillé et les offres -->
+            <div class="modal-body ml-2">
+                <div>
+                    <p class="mt-2 text-decoration-underline">
+                        <a href="{{url_for('profil_detaille_commune', code_insee=commune.INSEE_C)}}" target="_blank" class="link">
+                            Voir le profil détaillé de la commune
+                        </a>
+                    </p>
+                    <p class="mt-2"> 
+                        Voir les offres dans la commune :
+                        <p class="vertical-center mt-3">
+                            <a href="{{commune.url_se_loger}}" class="btn btn-default mr-4 w-25 p-0" target="_blank">
+                                <img src="../../../statics/img/Logo-SeLoger.jpg" class="img-fluid border rounded hover-darker">
+                            </a>
+                            <a href="{{commune.url_leboncoin}}" class="btn btn-lg ml-4 w-25 inline-block border rounded py-2 hover-darker" role="button" target="_blank">
+                                <img src="../../../statics/img/Logo_Leboncoin.png" class="img-fluid">
+                            </a>
+                        </p>
+                    </p>
+                    <!-- Suppression : demande de confirmation avant de supprimer -->
+                    <a  onclick="if(confirm('Supprimer la commune du panier ?')) return true; else return false;" href="{{ url_for('suppression_panier', code_insee=commune.INSEE_C) }}">
+                        <i class="fas fa-trash-can text-dark float-right h2 mr-2 mt-2"></i>                                
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

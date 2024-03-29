@@ -1,0 +1,85 @@
+
+{%block html%}
+<head>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.2/dist/leaflet.css"
+integrity="sha256-sA+zWATbFveLLNqWO2gtiw3HL/lh1giY/Inf1BJ0z14="
+crossorigin=""/>
+
+
+<style>
+#map { height: 250px; }
+</style>
+
+<main>
+    <div id="map"></div>
+</main>
+
+<script method="post">
+const map = L.map('map',{scrollWheelZoom: 'center'}); // initialisation de la carte 
+
+map.setView([48.36, 1.52], 4); // coordonnées initiales et zoom
+
+
+L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+maxZoom: 19,
+attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+}).addTo(map); // background de la carte
+
+let get_radius = 575000; // rayon de départ du cercle (en kilomètres)
+let get_lat_lng = [46.5, 1.94]; // coordonnées de départ du centre du cercle
+
+
+const circle = L.circle(get_lat_lng, {
+    radius: get_radius,
+    color: '#5784BA', 
+    opacity:.5}
+    );
+  circle.addTo(map); // intialisation et ajout du cercle
+ 
+var myZoom = {
+    start:  map.getZoom(),
+    end: map.getZoom()
+  }; 
+
+  function get_coor_rayon() {
+    document.getElementById("rayon").value = get_radius;
+    document.getElementById("coor").value = get_lat_lng;  }  
+
+map.scrollWheelZoom.disable(); //empêcher le zoom avec la souris
+
+
+map.on('zoomstart', function(e) {
+     myZoom.start = map.getZoom(); //stocker le zoom de départ
+  });
+  
+map.on('zoomend', function(e) {
+      myZoom.end = map.getZoom(); //stocker le zoom de final
+      var diff = myZoom.start - myZoom.end;
+      if (diff > 0) { // s'il y a eu un zoom, augmenter le rayon
+          radius = circle.setRadius(circle.getRadius() * 2);
+      } else if (diff < 0) { // s'il y a eu un dézoom, diminuer le rayon
+          radius = circle.setRadius(circle.getRadius() / 2);   
+      }
+    get_radius = circle.getRadius(); // stocker le nouveau rayon et les nouvelles coordonnées du centre
+    get_lat_lng = circle.getLatLng();
+    get_coor_rayon();
+    });
+
+
+map.on('move',function(e){
+    circle.setLatLng(map.getCenter());
+    map._renderer._update();
+    get_radius = circle.getRadius(); // stocker le nouveau rayon et les nouvelles coordonnées du centre
+    get_lat_lng = circle.getLatLng();
+    get_coor_rayon();
+    }); // forcer le cercle au centre de la carte
+
+
+
+  
+
+</script>
+
+  
+{%endblock%}
