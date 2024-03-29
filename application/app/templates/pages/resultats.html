@@ -2,79 +2,77 @@
 
 {% block content %}
 
-<div class="container-flex">
+<div class="container-fluid">
 
     <div class="row justify-content-center">
-            <!-- Bouton "Suivant" à gauche -->
-            <div class="col-3 text-center d-flex align-items-center justify-content-center mt-5">
-                <a href="{{ url_for('profil_commune', index=index+1) }}">
-                    <button type="button" class="btn btn-danger btn-circle">
-                        <i class="fa fa-times"></i>
-                    </button>
-                </a>
-            </div>
-    
-            <!-- Contenu centré -->
-            <div class="col-6 mt-5" id="bloc_resultat">
-                <div class="text-center p-3 mt-5">
-                    <h1 class="h1 mt-5 mb-1">Commune n°{{index+1}}</h1>
-                    <h2 class="h2 mb-3"><strong>Libellé:</strong> {{ infos_commune.nom_commune }}</h2>
-                    <div class="container" id="image_profil">
-                    <!-- Bouton "Plus de détails"  -->
-                    <p>
-                        <a class="pointer" href="{{url_for('profil_detaille_commune', code_insee=infos_commune.code_insee)}}" target="_blank">
-                            <img class="img-fluid hover-darker" src="{{ infos_commune.url_img }}" alt="image_ville">
-                            <i class="fas fa-location-crosshairs"></i><strong> Plus de détails ici</strong>
-                        </a>
-                    </p>
-                    </div>
-                    <p><strong>Code INSEE :</strong> {{ infos_commune.code_insee }}</p>
-                    <p><strong>Région :</strong>{{ infos_commune.region }}</p>
-                    <p><strong>Département :</strong>{{ infos_commune.departement }}</p>
-                    <p><strong>Loyer maison :</strong> {{ infos_commune.prix_m2_maisons }} €/m²</p>
-                    <p><strong>Loyer appartement :</strong> {{ infos_commune.prix_m2_appartements }} €/m²</p>
-                    <p><strong>Nombre d'établissements culturels :</strong> {{ infos_commune.nb_etablissements_culturels }}</p>
-                    <p><strong>Nombre d'établissements sportifs :</strong> {{ infos_commune.nb_etablissements_sportifs }}</p>
-                    <p><strong>Intérêts naturels :</strong></p>
-                    <ul class="list-unstyled">
-                        <li><strong>Mer :</strong> {% if infos_commune.interets_naturels.MER %} Oui {% else %} Non {% endif %}</li>
-                        <li><strong>Lac :</strong> {% if infos_commune.interets_naturels.LAC %} Oui {% else %} Non {% endif %}</li>
-                        <li><strong>Estuaire :</strong> {% if infos_commune.interets_naturels.ESTUAIRE %} Oui {% else %} Non {% endif %}</li>
-                        <li><strong>Montagne :</strong> {% if infos_commune.interets_naturels.LOI_MONTAGNE %} Oui {% else %} Non {% endif %}</li>
-                            {% if infos_commune.interets_naturels.MASSIF %} 
-                                {% if infos_commune.interets_naturels.MASSIF!= "Hors massif" %} 
-                                    <li><strong>Massif montagneux :</strong> {{infos_commune.interets_naturels.MASSIF}} 
-                                {% endif %}
-                            {% endif %}
-                        </li>
-                    </ul>
+        <!-- Bouton "Suivant" à gauche -->
+        <div class="col-3 text-center d-flex align-items-center justify-content-center mt-5">
+            <a href="{{ url_for('profil_commune', index=index+1) }}">
+                <button type="button" class="btn btn-danger btn-circle">
+                    <i class="fa fa-times"></i>
+                </button>
+            </a>
+        </div>
+
+        <!-- Contenu centré -->
+        <div class="col-6 mt-5" id="bloc_resultat">
+            <div class="text-center p-3">
+                <h1 class="h1 mt- mb-1">Commune n°{{index+1}}</h1>
+                <h2 class="h2 mb-3"><strong>Libellé:</strong> {{ infos_commune.nom_commune }}</h2>
+                <div class="container" id="image_profil">
+                <!-- Bouton "Plus de détails"  -->
+                <p>
+                    <a class="pointer" href="{{url_for('profil_detaille_commune', code_insee=infos_commune.code_insee)}}" target="_blank">
+                        <img class="img-fluid hover-darker" src="{{ infos_commune.url_img }}" alt="Image de la ville">
+                        <br>
+                        <i class="fas fa-location-crosshairs"></i><strong> Plus de détails ici</strong>    
+                    </a>
+                </p>
                 </div>
-            </div>
-    
-            <!-- Bouton "Suivant" à droite -->
-            <div class="col-3 text-center d-flex align-items-center justify-content-center mt-5">
-                <a href="{{ url_for('ajout_panier', index=index) }}" class="mt-5">
-                    <button type="button" class="btn btn-success btn-circle">
-                        <i class="fa fa-check"></i>
-                    </button>
-                </a>
+                <p><strong>Code INSEE :</strong> {{ infos_commune.code_insee }}</p>
+                <p><strong>Région :</strong>{{ infos_commune.region }}</p>
+                <p><strong>Département :</strong>{{ infos_commune.departement }}</p>
+                <p><strong>Loyer maison :</strong> {{ infos_commune.prix_m2_maisons }} €/m²</p>
+                <p><strong>Loyer appartement :</strong> {{ infos_commune.prix_m2_appartements }} €/m²</p>
+                <p><strong>Nombre d'établissements culturels :</strong> {{ infos_commune.nb_etablissements_culturels }}</p>
+                <p><strong>Nombre d'établissements sportifs :</strong> {{ infos_commune.nb_etablissements_sportifs }}</p>
+                <p><strong>Intérêts naturels :</strong></p>
+                <ul class="list-unstyled">
+                    <li><strong>Mer :</strong> {% if infos_commune.interets_naturels.MER %} Oui {% else %} Non {% endif %}</li>
+                    <li><strong>Lac :</strong> {% if infos_commune.interets_naturels.LAC %} Oui {% else %} Non {% endif %}</li>
+                    <li><strong>Estuaire :</strong> {% if infos_commune.interets_naturels.ESTUAIRE %} Oui {% else %} Non {% endif %}</li>
+                    <li><strong>Montagne :</strong> {% if infos_commune.interets_naturels.LOI_MONTAGNE %} Oui {% else %} Non {% endif %}</li>
+                        {% if infos_commune.interets_naturels.MASSIF %} 
+                            {% if infos_commune.interets_naturels.MASSIF!= "Hors massif" %} 
+                                <li><strong>Massif montagneux :</strong> {{infos_commune.interets_naturels.MASSIF}} 
+                            {% endif %}
+                        {% endif %}
+                    </li>
+                </ul>
             </div>
         </div>
+
+        <!-- Bouton "Suivant" à droite -->
+        <div class="col-3 text-center d-flex align-items-center justify-content-center mt-5">
+            <div class="row-flew"></div>
+            <a href="{{ url_for('ajout_panier', index=index) }}">
+                <button type="button" class="btn btn-success btn-circle">
+                    <i class="fa fa-check"></i>
+                </button>
+            </a>          
+        </div>
+    </div>
     
-        <div class="row mt-5">
-            <!-- Bouton "Plus de détails" en bas au centre -->
-            <div class="col-6 text-center d-flex align-items-center justify-content-center">
-               
-            </div>
-                    <!-- Bouton "Recherches terminées" en bas à droite -->
-            <div class="col-6 d-flex align-items-end justify-content-end">
-                <a href="{{url_for('dashboard')}}" class="mr-5">
-                    <button type="button" class="btn btn-lg btn-primary mr-5">
+        <div class="row my-5">
+            <div class="col-8"></div>
+            <div class="col-4">
+                <!-- Bouton "Recherches terminées" en bas à droite -->
+                <a href="{{url_for('dashboard')}}" class="ml-5">
+                    <button type="button" class="btn btn-primary">
                         Recherches terminées
                     </button>
                 </a>
             </div>
-
         </div>
 
     </div>

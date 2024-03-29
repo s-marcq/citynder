@@ -583,14 +583,9 @@ a.github:hover{
     border-radius: 50%;
 }
 
-#image_profil{ 
-    border-radius: 20px;
-    width : 300px;
-}
 #image_profil img{ 
-    border-radius: 20px;
-    
-    
+    border-radius: 20px; 
+    width : 300px;   
 }
 
   .loop-wrapper {
