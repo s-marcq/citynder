@@ -2,7 +2,7 @@ from flask import url_for, render_template, redirect, request, flash
 from ..models.formulaires import AjoutUtilisateur, Connexion
 from ..utils.transformations import  clean_arg
 from ..models.db_citynder import Utilisateurs
-from ..app import app, db, login
+from ..app import app, login
 from flask_login import login_user, current_user, logout_user
 from re import sub
 
