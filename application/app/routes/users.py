@@ -1,8 +1,7 @@
 from flask import url_for, render_template, redirect, request, flash
 from ..models.formulaires import AjoutUtilisateur, Connexion
 from ..utils.transformations import  clean_arg
-from ..models.users import Users
-
+from ..models.db_citynder import Utilisateurs
 from ..app import app, db, login
 from flask_login import login_user, current_user, logout_user
 from re import sub
@@ -23,7 +22,7 @@ def ajout_utilisateur():
     form = AjoutUtilisateur()
 
     if form.validate_on_submit():
-        statut, donnees = Users.ajout(
+        statut, donnees = Utilisateurs.ajout(
             mail=clean_arg(request.form.get("mail", None)),
             password=clean_arg(request.form.get("password", None))
         )
@@ -57,7 +56,7 @@ def connexion():
         return redirect(url_for("accueil"))
 
     if form.validate_on_submit():
-        utilisateur = Users.identification(
+        utilisateur = Utilisateurs.identification(
             mail=clean_arg(request.form.get("mail", None)),
             password=clean_arg(request.form.get("password", None))
         )

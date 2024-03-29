@@ -1,9 +1,8 @@
 from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for, session
+from flask import render_template, flash, redirect, url_for, session
 from flask_login import current_user, login_required
 from ..models.db_citynder import Utilisateurs, Commune
 from sqlalchemy.sql import text
-# from ..models.formulaires import  
 
 @app.route("/panier", methods=['GET', 'POST']) 
 @login_required

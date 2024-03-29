@@ -1,9 +1,9 @@
 {% extends "partials/conteneur.html" %}
 
 {% block content %}
-    <div class="container mx-5 my-5">
+<div class="container my-5">
     <h1>ERROR 404 : La page demandée n'a pas été trouvée.</h1>
-
-    <div style="width:100%;height:0;padding-bottom:75%;position:relative;"><iframe src="https://giphy.com/embed/BmUFjWsYMg23oplAmC" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/white-lama-lamas-BmUFjWsYMg23oplAmC">via GIPHY</a></p>
+    <p class="my-2"><a href="{{url_for('accueil')}}">Retourner à l'accueil</a></p>
+    <div style="width:90%;height:0;padding-bottom:75%;position:relative;"><iframe src="https://giphy.com/embed/BmUFjWsYMg23oplAmC" width="100%" height="100%" style="position:absolute" frameBorder="0" class="giphy-embed" allowFullScreen></iframe></div><p><a href="https://giphy.com/gifs/white-lama-lamas-BmUFjWsYMg23oplAmC">via GIPHY</a></p>
 </div>
 {% endblock %}

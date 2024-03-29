@@ -1,9 +1,8 @@
 import plotly.graph_objects as go
-import numpy as np
-from ..app import app, db
-from flask import render_template, request, flash, jsonify
-from flask_login import login_required, current_user, login_user
-from ..models.db_citynder import Commune, Utilisateurs, contenu_paniers_utilisateurs
+from ..app import app
+from flask import render_template, jsonify
+from flask_login import login_required, current_user
+from ..models.db_citynder import Commune, Utilisateurs
 from sqlalchemy.sql import func
 
 
@@ -31,8 +30,8 @@ def carte_panier():
             "label": commune.LIBGEO,
             "coord": {"lat": commune.LATITUDE, "long": commune.LONGITUDE},
             "region": commune.REGION,
-            "loyer_maison": commune.LOYERM2_MAISON,
-            "loyer_appart": commune.LOYERM2_APPART
+            "loyer_maison": round(commune.LOYERM2_MAISON,2),
+            "loyer_appart": round(commune.LOYERM2_APPART,2)
             })
 
     return jsonify(data)

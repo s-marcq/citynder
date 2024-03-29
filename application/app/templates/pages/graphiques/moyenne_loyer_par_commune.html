@@ -1,20 +1,14 @@
-{% extends "partials/conteneur.html" %}
 
-{% block body %}
-<div class="container">
-    <div class="row justify-content-center">
-        <h1 class="text-center">Les 20 communes les plus chères de France (de 25 à 30 €/m²)</h1>
-    </div>
-    <div class="row justify-content-center">
-        <div>
-            <canvas id="graphique" style="width: 1000px;"></canvas>
-        </div>
-    </div>
-        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred@1.0.2/dist/chartjs-plugin-deferred.min.js"></script>
-        <script type="text/javascript" src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.4.0/chartjs-plugin-colorschemes.js"></script>
+{% block content %}
 
-        <script>
+<div class="row justify-content-center">
+    <h1 class="text-center">Les 20 communes les plus chères de France (de 25 à 30 €/m²)</h1>
+    <div>
+        <canvas id="graphique" style="width: 1000px;"></canvas>
+    </div>
+    
+        
+    <script>
         const ctx = document.getElementById('graphique');
                     
         var graphe = new Chart(ctx, {
@@ -50,6 +44,5 @@
         
                         });
         </script>
-    </div>
 </div>
 {% endblock %}

@@ -1,16 +1,12 @@
-from ..app import app, db
-from flask import render_template, request, flash, redirect, url_for, abort, session
+from ..app import app
+from flask import render_template, request, flash, redirect, url_for, session
 import random
-from sqlalchemy import or_, and_, func
+from sqlalchemy import or_, and_
 from ..utils.calcul_loyer import calculer_loyer_m2_max, calculer_loyer_m2_min, normalisation_champs_texte
-# from ..models.citynder import 
 from ..models.formulaires import Recherche
 from ..models.db_citynder import Commune, Environnement_naturel_specifique, Etablissements_culturels, Etablissements_commerciaux, Equipements_sportifs
-from sqlalchemy.sql import text
 from flask_login import login_required
 import geopy.distance
-
-############################################### ----- SARAH & ANNA ----- ###########################################################################################
 
 
 @app.route("/recherche", methods=['GET', 'POST'])
@@ -237,31 +233,25 @@ def recherche():
 
     return render_template('pages/recherche_filtres.html', form=form, champs=champs)
 
-############################################## ----- RECHERCHE PROVISOIRE ----- ###############################################################################
 
-
-# @app.route("/recherche_provisoire", methods=['GET'])
-# def recherche_provisoire():
-#     liste_provisoire = ["71155", "59350", "26333", "38349","75107", "71543", "12269"]
-#     liste_provisoire = random.sample(liste_provisoire, k=len(liste_provisoire))
-#     session['resultats'] = liste_provisoire
-#     session['index']= 0    
-#     return redirect(url_for('profil_commune', index=session['index']))
-
-
-############################################### ----- MARINA ----- ###########################################################################################
-
-
-"""
-    Route qui affiche les résultats. L'index correspond à l'index du résultat dans la liste transmise dans la route précédente
-    L'index et la liste sont des variables de session propres à l'utilisateur.
-    Lancer la route recherche provisoire est obligatoire avant de lancer cette route.
-        => Prévoir une exception/redirection si elle n'a pas été lancée par l'utilisateur.
-"""
 @app.route("/resultats/<int:index>")
 @login_required
 def profil_commune(index):
+    """
+        Route permettant d'afficher le profil de la commune à partir de son index pour que l'utilisateur puisse l'ajouter à son panier ou l'ignorer.
+
+        Parameters
+        ----------
+        index : int, required
+            L'index de la commune dans la liste des résultats.
+
+        Returns
+        -------
+        template
+            Template d'affichage du résultat.
+    """
     try:
+        
         # Récupérer la liste des codes INSEE des communes de la session
         liste_code_insee = session['resultats']
 
@@ -336,25 +326,30 @@ def profil_commune(index):
         flash("Une erreur s'est produite lors de l'affichage des résultats de votre requête : "+ str(e))
         return render_template("erreurs/404.html")
 
-        # Pour Sarah/Anna après le code sur la route des utilisateurs : code ajout dans le panier, gérer le cas où il n'y a plus de résultats (peut-être à faire en amont ou en html)
-
-
-############################################### ----- GILMAR ----- ###########################################################################################
 
 
 @app.route("/resultats/detail/<string:code_insee>") 
 @login_required
 def profil_detaille_commune(code_insee):
-    
-    # GROUPE :: à mettre dans la route profil_commune gestion d'erreur 
-    # if code_insee is not str(code_insee):
-    #     raise TypeError("Code n'est pas valide")
-    
+    """
+        Route permettant d'afficher le profil détaillé de la commune à partir de son code Insee.
+
+        Parameters
+        ----------
+        code_insee : str, required
+            Le code Insee de la commune à afficher.
+
+        Returns
+        -------
+        template
+            Template d'affichage du profil détaillé.
+    """
+
     try:
         # Récupérer les informations de base de la commune à partir de la bdd
         commune = Commune.query.get(code_insee)
 
-                # Vérifier si chaque attribut de l'établissement culturel existe et l'ajouter à la somme
+        # Vérifier si chaque attribut de l'établissement culturel existe et l'ajouter dans un dictionnaire ou une variable
         if getattr(commune, 'etablissements_culturels', None):
             culture = {
                 'musee' : commune.etablissements_culturels.MUSEE_sum,
@@ -418,7 +413,6 @@ def profil_detaille_commune(code_insee):
                 
         return render_template("pages/profil_detaille.html", dico_code_insee=dico_code_insee)
 
-    except Exception as e:
-        
-        flash(f"ERREUR : {str(e)}. Le bouton n'a pas été encore cliqué !")
+    except Exception as e: # en cas d'erreur
+        flash(f"ERREUR : {str(e)}")
         return render_template("erreur/404.html")
