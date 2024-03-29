@@ -66,7 +66,7 @@ class Recherche(FlaskForm):
 
 
     
-    
+ # Utilisateurs   
 class AjoutUtilisateur(FlaskForm):
     mail = StringField("mail", validators=[DataRequired(message="Champ mail obligatoire"),
         Email(message="Le mail saisi n'est pas valide")])
