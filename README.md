@@ -14,5 +14,16 @@ Repository de l'application web City'nder créée dans le cadre du M2 TNAH à l'
 |Installer l'environnement                                      | virtualenv env -p python3                        |
 |Activer l'environnement                                        | source env/bin/activate                          |
 |Installer les requirements                                     |pip install -r requirements.txt                   |
+|Créer un fichier .env au même niveau que le dossier app        | nano .env                                        |
+|Changer les variables d'environnements                         | Copier/coller dans .env la partie ci-dessous*    |
 |Lancer  l'application                                          | python run.py                                    |
 
+Les variables d'environnements : 
+DEBUG=True ou False
+SQLALCHEMY_DATABASE_URI="sqlite://///.../application/db.sqlite" # mettre ici le lien vers la bdd sur votre pc
+SQLALCHEMY_ECHO=True ou False
+WTF_CSRF_ENABLE=True ou False
+SECRET_KEY= #écrire ici une clé secrète 
+
+#### Pour utiliser l'application : 
+Naviguez, amusez-vous et déménagez!
