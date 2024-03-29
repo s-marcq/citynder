@@ -1,57 +1,55 @@
-<div class="container">
+{% extends "partials/conteneur.html" %}
 
-    <div class="row">
-        <h1>Visualisation des loyers en France par région.</h1>
+{% block body %}
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 class="text-center">Les 20 communes les plus chères de France (de 25 à 30 €/m²)</h1>
+    </div>
+    <div class="row justify-content-center">
         <div>
-            <canvas id="graphique", style="width: 1200px;"></canvas>
+            <canvas id="graphique" style="width: 1000px;"></canvas>
         </div>
-        
+    </div>
         <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred@1.0.2/dist/chartjs-plugin-deferred.min.js"></script>
         <script type="text/javascript" src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.4.0/chartjs-plugin-colorschemes.js"></script>
 
         <script>
-
-            const ctx = document.getElementById('graphique');
-            
-            var graphe = new Chart(ctx, {
-                type: 'polarArea',
+        const ctx = document.getElementById('graphique');
+                    
+        var graphe = new Chart(ctx, {
+            type: 'polarArea',
                 data: {
                     labels: [],
                     datasets: [{
                         data: []
-                    }]
-                },
-                options: {
-                }
-            });
-
-            fetch('{{url_for("moyenne_loyer_par_commune_data")}}')
-                .then((response) => {
-                    return response.json();
-                })
-                .then((data) => {
-                    // calcul des labels et des nombres
-                    var labels = [];
-                    var nombres = [];
-                    console.log(data)
-                    for (var i = 0; i < data.length; i++) {
-                        labels.push(data[i].label);
-                        nombres.push(data[i].nombre);
-                    }
-                    
-                    // ajout des données dans le graphique
-                    graphe.data.labels = labels; ;
-                    graphe.data.datasets.forEach((dataset) => {
-                        dataset.data = nombres;
+                        }]
+                        },
+                        options: {
+                        }
                     });
-                    
-                    graphe.options.plugins.colorschemes.scheme = 'tableau.HueCircle19';
-                    graphe.update();
- 
-                });
+
+                    fetch('{{url_for("moyenne_loyer_par_commune_data")}}')
+                        .then((response) => {
+                            return response.json();
+                        })
+                        .then((data) => {
+                            data.sort((a, b) => b.nombre - a.nombre);
+                            
+                            const top30Communes = data.slice(0, 20);
+                            const labels = top30Communes.map(commune => commune.label);
+                            const nombres = top30Communes.map(commune => commune.nombre);
+
+                            graphe.data.labels = labels; ;
+                            graphe.data.datasets.forEach((dataset) => {
+                                dataset.data = nombres;
+                            });
+                            
+                            graphe.options.plugins.colorschemes.scheme = 'tableau.ClassicAreaRedGreen21';
+                            graphe.update();
+        
+                        });
         </script>
     </div>
-
 </div>
-
+{% endblock %}

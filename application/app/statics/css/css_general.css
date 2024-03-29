@@ -1,33 +1,31 @@
-/*Pré-accueil*/
+/*Page pré-accueil avec message qui défile + effet rebond */
 .bottom-center-image {
     position:fixed;
-    bottom: -100px; /* Initial position hors de l'écran */
-    left: 20px; /* Positionné à gauche */
-    animation: slide-in 0.5s ease-in-out forwards, bounce 0.3s ease-out 1s forwards ; /* Animation de l'insertion et rebond */
-    /* height: 50vh; */
-    z-index: 9999; /* Pour afficher au-dessus du contenu */
+    bottom: -100px; 
+    left: 20px; 
+    animation: slide-in 0.5s ease-in-out forwards, bounce 0.3s ease-out 1s forwards ; 
+    z-index: 9999; 
     border-radius: 30px;
     box-shadow: rgb(55, 4, 61);
 }
 
 @keyframes slide-in {
     0% {
-        bottom: -100px; /* Position initiale */
+        bottom: -100px; 
     }
     100% {
-        bottom: 20px; /* Position finale */
+        bottom: 20px; 
     }
 }
 
 @keyframes bounce {
     0%, 100% {
-        bottom: 20px; /* Position initiale et finale */
+        bottom: 20px; 
     }
     50% {
-        bottom: 10px; /* Point le plus bas du rebond */
+        bottom: 10px; 
     }
 }
-
 
 .h h1 span:first-child{
     font-size: 300px;
@@ -97,7 +95,6 @@ font-weight: 500;
     z-index: 30;
 }
 
-
 body.dark-mode .home_intro {
     background-color: #2f0458;
 }
@@ -107,19 +104,9 @@ body.dark-mode .home_title.is--active {
 }
 
 :root {
-    /* --main-color: #ecf0f1; */
     --point-color: #fff;
     --size: 4px;
 }
-/* VERIFIER LE LOGO CONTAINER
-.logo-container {
-    position:inherit;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    opacity: 0; /* Le logo sera initialement invisible */
-    /* transition: opacity 1.5s ease-in-out; /* Transition d'opacité 
-} */
 
 .logo {
     font-size: 100px;
@@ -132,7 +119,7 @@ body.dark-mode .home_title.is--active {
 }
 
 
-/* Panier  */
+/* Page panier  */
 
 #grille_panier {
     text-align: center;
@@ -146,7 +133,8 @@ body.dark-mode .home_title.is--active {
 
 .home_title span{
     display: block;
-}            
+}  
+
 .home_title h1{
 font-weight: 500;
 }   
@@ -246,7 +234,7 @@ body.dark-mode, .navbar {
     border-radius: 50%;
 }
 
-/* Panier  */
+/* Favori dans page panier  */
 
 #etoile-vide{
     color:rgb(0, 0, 0);
@@ -261,7 +249,7 @@ body.dark-mode, .navbar {
     position: absolute;
 }
 
-/* grille */
+/* Grille de la page panier */
 
 #img_panier {
     width: 100%;
@@ -296,26 +284,6 @@ body.dark-mode, .navbar {
     padding-bottom: 0;
 }
 
-/* #conteneur-row #grille_panier:nth-child(4n+1) { 
-    background: #FFED00;
-} */
-/* #conteneur-row #grille_panier:nth-child(4n+1) { 
-    background: linear-gradient(45deg, #e4dd78,50%, #ffe016);
-}
-#conteneur-row #grille_panier:nth-child(4n+2) { 
-    background: linear-gradient(45deg, #a7e2ed,50%, #11e6e9) ;
-
-}
-#conteneur-row #grille_panier:nth-child(4n+3) { 
-    background: linear-gradient(45deg, rgb(229, 229, 229),20%, rgb(255, 255, 255));
-}
-
-#conteneur-row #grille_panier:nth-child(4n+4) { 
-    background: linear-gradient(45deg,#f75939,70%, #e03f1e);
-
-}  */
-
-
 /* URL */
 
 .link-panier-2{
@@ -343,12 +311,6 @@ body.dark-mode, .navbar {
     z-index: 100;
 }
 
-
-/* .content.messages{
-    background-color: #A9C4D3;
-
-} */
-/* centrer verticalement */
 .vertical-center {
     text-align: center;
     align-items: center;
@@ -363,8 +325,11 @@ body.dark-mode, .navbar {
 #topbar-item{
     color: antiquewhite;
     font-size: large;
-    /* padding-right: 1px; */       
+  
+    
 }
+
+/* Menu déroulant */
 
 #navbarNavAltMarkup{
   position:absolute;
@@ -389,13 +354,33 @@ border-radius: 20px 20px 20px 20px;
 margin-inline-start: 10px;
 margin-left: 10px;}
 
+/* Loupe pour page pré-accueil */
 .boutton-item{
     padding-top: 20px;
     padding-bottom: 20px ;
     color: antiquewhite;
 }
 
-
+a.boutton-loupe:hover{
+    color: #c76fe2;
+}
+.boutton-loupe{
+    color: #fafafa;
+    margin-right: 25%;
+    opacity: 0; 
+    animation: fadeIn 10s ease-in forwards; 
+}
+@keyframes fadeIn {
+    from {
+        opacity: 0; 
+    }
+    to {
+        opacity: 1; 
+    }
+}
+.home_title {
+    margin-left: 30%;
+}
 
 #connexion{
     color: #2f0458;
@@ -412,9 +397,6 @@ margin-left: 10px;}
 }
 
 #bTypeBien{
-    /* background-color: rgb(218, 132, 173, 0.1);
-    border: 0px;
-    border-left: 5px solid rgb(218, 132, 173); */
     background-color: rgb(220, 132, 132, 0.1);
     border: 0px;
     border-left: 5px solid rgb(220, 132, 132);
@@ -470,13 +452,8 @@ margin-left: 10px;}
     line-height: 1.42857;
     }
 
-/* .center-in-div{
-    display:  flex;
-    align-items: center;
 
-} */
-
-/* image d'arrière plan de la connexion et l'inscription */
+/* image d'arrière plan d'inscription */
 .bg-image{
     background-image: url('../img/3d-view-map.jpg') ;
     background-repeat: no-repeat;
@@ -540,6 +517,7 @@ margin-left: 10px;}
     color: #fff;
     background-color: #A9C4D3;
   }
+
   .mountain {
     position: absolute;
     right: -900px;
@@ -589,6 +567,7 @@ margin-left: 10px;}
     position: absolute;
     background: #c76fe2;
   }
+
   .truck, .wheels {
     transition: all ease;
     width: 85px;
@@ -598,12 +577,13 @@ margin-left: 10px;}
     position: absolute;
     background: #eee;
   }
+
   .truck {
     background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/130015/truck.svg) no-repeat;
     background-size: contain;
     height: 60px;
-    
   }
+
   .truck:before {
     content: " ";
     position: absolute;
@@ -612,6 +592,7 @@ margin-left: 10px;}
       -30px 28px 0 1.5px #eee,
        -35px 18px 0 1.5px #eee;
   }
+
   .wheels {
     background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/130015/wheels.svg) no-repeat;
     height: 15px;
@@ -632,11 +613,13 @@ margin-left: 10px;}
     50% {}
     100% { transform: translate(-50px); }
   }
+
   @keyframes tree2 {
     0%   { transform: translate(650px); }
     50% {}
     100% { transform: translate(-50px); }
   }
+
   @keyframes tree3 {
     0%   { transform: translate(2750px); }
     50% {}
@@ -647,6 +630,7 @@ margin-left: 10px;}
     0%   { right: -200px; }
     100% { right: 2000px; }
   }
+
   @keyframes truck {
     0%   { }
     6%   { transform: translateY(0px); }
@@ -656,16 +640,19 @@ margin-left: 10px;}
     11%   { transform: translateY(0px); }
     100%   { }
   }
+
   @keyframes wind {
     0%   {  }
     50%   { transform: translateY(3px) }
     100%   { }
   }
+
   @keyframes mtn {
     100% {
       transform: translateX(-2000px) rotate(130deg);
     }
   }
+
   @keyframes hill {
     100% {
       transform: translateX(-2000px);
