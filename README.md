@@ -20,9 +20,13 @@ Repository de l'application web City'nder créée dans le cadre du M2 TNAH à l'
 
 *Les variables d'environnements : 
 DEBUG=True ou False
+
 SQLALCHEMY_DATABASE_URI="sqlite://///.../application/db.sqlite" # mettre ici le lien vers la bdd sur votre pc
+
 SQLALCHEMY_ECHO=True ou False
+
 WTF_CSRF_ENABLE=True ou False
+
 SECRET_KEY= #écrire ici une clé secrète 
 
 #### Pour utiliser l'application : 
