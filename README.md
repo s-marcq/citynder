@@ -18,7 +18,7 @@ Repository de l'application web City'nder créée dans le cadre du M2 TNAH à l'
 |Changer les variables d'environnements                         | Copier/coller dans .env la partie ci-dessous*    |
 |Lancer  l'application                                          | python run.py                                    |
 
-Les variables d'environnements : 
+*Les variables d'environnements : 
 DEBUG=True ou False
 SQLALCHEMY_DATABASE_URI="sqlite://///.../application/db.sqlite" # mettre ici le lien vers la bdd sur votre pc
 SQLALCHEMY_ECHO=True ou False
