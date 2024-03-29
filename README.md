@@ -30,6 +30,4 @@ WTF_CSRF_ENABLE=True ou False
 SECRET_KEY= #écrire ici une clé secrète 
 
 ## Utilisation  
-#### Naviguez,
-#### amusez-vous et 
-#### déménagez!
+#### Naviguez, amusez-vous et déménagez!
