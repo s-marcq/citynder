@@ -1,7 +1,7 @@
 
 {% block content %}
 
-<div class="row justify-content-center">
+<div class="container">
     <h1 class="text-center">Loyers en France par région (hors Mayotte)</h1>
     <div>
         <canvas id="graphique_region" style="width: 800px;"></canvas>
@@ -9,9 +9,9 @@
    
             
     <script>
-        const ctx = document.getElementById('graphique_region');
+        const ctx_reg = document.getElementById('graphique_region');
             
-        var graphe = new Chart(ctx, {
+        var graphe_reg = new Chart(ctx_reg, {
             type: 'bar', // type de graphique en barre
             data: { // les données à afficher
                 labels: [],
@@ -98,8 +98,8 @@
                     }
 
                     // ajout des données dans le graphique
-                    graphe.data.datasets = datasets;
-                    graphe.update();
+                    graphe_reg.data.datasets = datasets;
+                    graphe_reg.update();
     });
 
     </script>
