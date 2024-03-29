@@ -5,7 +5,7 @@ from flask_login import UserMixin
 # tables de jointure :  equipements sportifs et paniers utilisateurs (relations many-to-many)
 commune_equipements_sportifs = db.Table(
     "Commune_Equipements_sportifs",
-    db.Column("INSEE_C", db.Integer, db.ForeignKey('Commune.INSEE_C'), nullable=False, primary_key=True),
+    db.Column("INSEE_C", db.String(5), db.ForeignKey('Commune.INSEE_C'), nullable=False, primary_key=True),
     # /!\ Inversion nombre et sport_id --> le nombre correspond au sport_id
     db.Column("nombre", db.Integer, db.ForeignKey('Equipements_sportifs.sport_id'), nullable=False),
     db.Column("sport_id", db.Integer) # le sport_id correspond au nombre

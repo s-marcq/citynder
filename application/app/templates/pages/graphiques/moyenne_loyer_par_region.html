@@ -1,17 +1,17 @@
-
 {% block content %}
 
-<div class="row justify-content-center">
+<div class="container">
+
     <h1 class="text-center">Loyers en France par région (hors Mayotte)</h1>
     <div>
         <canvas id="graphique_region" style="width: 1000px;"></canvas>
     </div>
-   
-            
+    <div>tessssttttt</div>
+
     <script>
-        const ctx = document.getElementById('graphique_region');
+        const ctx_reg = document.getElementById('graphique_region');
             
-        var graphe = new Chart(ctx, {
+        var graphe_reg = new Chart(ctx_reg, {
             type: 'bar', // type de graphique en barre
             data: { // les données à afficher
                 labels: [],
@@ -66,8 +66,8 @@
             .then((data) => {
                     
                     // calcul des labels et des nombres
-                    var labels = [];
-                    var nombres = [];
+                    var labels_reg = [];
+                    var nombres_reg = [];
             
                     // trie 'nombres' par ordre croissant
                     var donnees_sorted = data.sort((a, b) => a.nombre - b.nombre);
@@ -83,23 +83,23 @@
                     var backgroundColors = donnees_sorted.map(item => scale(item.nombre).hex());
                     
                     for (var i = 0; i < data.length; i++) {
-                        labels.push(data[i].label);
-                        nombres.push(data[i].nombre);
+                        labels_reg.push(data[i].label);
+                        nombres_reg.push(data[i].nombre);
                     }
 
                     // crée un nouvel objet dataset pour chaque étiquette
                     var datasets = [];
-                    for (var i = 0; i < labels.length; i++) {
+                    for (var i = 0; i < labels_reg.length; i++) {
                         datasets.push({
-                            label: labels[i],
-                            data: [nombres[i]], // ajoute la valeur correspondante
+                            label: labels_reg[i],
+                            data: [nombres_reg[i]], // ajoute la valeur correspondante
                             backgroundColor: backgroundColors[i]
                         });
                     }
 
                     // ajout des données dans le graphique
-                    graphe.data.datasets = datasets;
-                    graphe.update();
+                    graphe_reg.data.datasets = datasets;
+                    graphe_reg.update();
     });
 
     </script>
