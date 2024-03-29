@@ -1,120 +1,117 @@
 {% extends "partials/conteneur.html" %}
 
 {% block body %}
-<div class="container-fluid mb-5 mt-5" id="conteneur">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="card card-body mx-auto my-1 py-0" id="idcarte">
-                <h3 data-toggle="collapse" data-target="#collapseBien" aria-expanded="false"
-                    aria-controls="collapseBien" class="card-title pl-4 pt-3" id="hidcarte">
-                    Les loyers en France par région <i class="fa-solid fa-caret-down float-right mr-4"></i>
-                </h3>
-                <div class="collapse show m-3" id="collapseBien"></div>
-                <div>
-                    <canvas id="graphique" style="height: 300px; width: 70%; background-color: rgba(160, 160, 160, 0.607);"></canvas>
-                </div>         
-                <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
-                <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred@1.0.2/dist/chartjs-plugin-deferred.min.js"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.1/chroma.min.js"></script>
-                <script type="text/javascript" src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.4.0/chartjs-plugin-colorschemes.js"></script>
 
-                <script>
-                    const ctx = document.getElementById('graphique');
-                    
-                    var graphe = new Chart(ctx, {
-                        type: 'bar', 
-                        data: { 
-                            labels: [],
-                            datasets: [{
-                                data: [] 
-                            }]
-                        },
-                        options: {
-                            tooltips: { 
-                                callbacks: {
-                                    title: function(tooltipItem, data) {
-                                        return 'Région'; 
-                                    }
-                                }
-                            },
-                            scales: { 
-                                xAxes: [{ 
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Régions', 
-                                        fontStyle: 'bold'
-                                    },
-                                    ticks: {
-                                        font: {
-                                            weight: 'bold'
-                                        }
-                                    }
-                                }],
-                                yAxes: [{ 
-                                    display: true,
-                                    scaleLabel: {
-                                        display: true,
-                                        labelString: 'Moyenne des prix du loyer au m²', 
-                                        fontStyle: 'bold'
-                                    },
-                                    ticks: {
-                                        beginAtZero: true, 
-                                        font: {
-                                            weight: 'bold'
-                                        }
-                                    }
-                                }]
-                            },
-                            
-                        }
-                    });
-
-                        fetch('{{url_for("moyenne_loyer_par_region_data")}}')
-                            .then((response) => {
-                                return response.json();
-                            })
-                            .then((data) => {
-                                
-                                // calcul des labels et des nombres
-                                var labels = [];
-                                var nombres = [];
-                        
-                                // trie 'nombres' par ordre croissant
-                                var donnees_sorted = data.sort((a, b) => a.nombre - b.nombre);
-
-                                // obtient les valeurs minimales et maximales
-                                var min = Math.min(...donnees_sorted.map(item => item.nombre));
-                                var max = Math.max(...donnees_sorted.map(item => item.nombre));
-
-                                // crée une échelle de couleurs (dont la valeur est 'OrRd') avec chroma.js
-                                var scale = chroma.scale('OrRd').domain([min, max]);
-
-                                // filtre les valeurs des données pour les couleurs dans l'échelle
-                                var backgroundColors = donnees_sorted.map(item => scale(item.nombre).hex());
-                                
-                                for (var i = 0; i < data.length; i++) {
-                                    labels.push(data[i].label);
-                                    nombres.push(data[i].nombre);
-                                }
-
-                                // crée un nouvel objet dataset pour chaque étiquette
-                                var datasets = [];
-                                for (var i = 0; i < labels.length; i++) {
-                                    datasets.push({
-                                        label: labels[i],
-                                        data: [nombres[i]], // ajoute la valeur correspondante
-                                        backgroundColor: backgroundColors[i]
-                                    });
-                                }
-
-                                // ajout des données dans le graphique
-                                graphe.data.datasets = datasets;
-                                graphe.update();
-                                });
-
-                </script>
-            </div>
+<div class="container">
+    <div class="row justify-content-center">
+        <h1 class="text-center">Loyers en France par région (hors Mayotte)</h1>
+    </div>
+    <div class="row justify-content-center">
+        <div>
+            <canvas id="graphique_region" style="width: 1000px;"></canvas>
         </div>
     </div>
+            
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-deferred@1.0.2/dist/chartjs-plugin-deferred.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chroma-js/2.1.1/chroma.min.js"></script>
+    <script type="text/javascript" src="https://github.com/nagix/chartjs-plugin-colorschemes/releases/download/v0.4.0/chartjs-plugin-colorschemes.js"></script>
+
+    <script>
+        const ctx = document.getElementById('graphique_region');
+            
+        var graphe = new Chart(ctx, {
+            type: 'bar', // type de graphique en barre
+            data: { // les données à afficher
+                labels: [],
+                datasets: [{
+                    data: [] 
+                }]
+            },
+            options: {
+                tooltips: { // configuration des info-bulles
+                    callbacks: {
+                        title: function(tooltipItem, data) {
+                            return 'Région'; // change le titre de l'info-bulle pour "Région"
+                        }
+                    }
+                },
+                scales: { // configuration des échelles
+                    xAxes: [{ // configuration de l'axe x
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Régions', // définit le label de l'axe x
+                            fontStyle: 'bold'
+                        },
+                        ticks: {
+                            font: {
+                                weight: 'bold'
+                            }
+                        }
+                    }],
+                    yAxes: [{ // configuration de l'axe y
+                        display: true, // affiche l'axe y
+                        scaleLabel: {
+                            display: true,
+                            labelString: 'Moyenne des prix loyer par m²', // définit le label de l'axe y
+                            fontStyle: 'bold'
+                        },
+                        ticks: {
+                            beginAtZero: true, // l'axe y commence à zéro
+                            font: {
+                                weight: 'bold'
+                            }
+                        }
+                    }]
+                },
+                    
+            }
+        });
+
+        fetch('{{url_for("moyenne_loyer_par_region_data")}}')
+            .then((response) => {
+                return response.json();
+            })
+            .then((data) => {
+                    
+                    // calcul des labels et des nombres
+                    var labels = [];
+                    var nombres = [];
+            
+                    // trie 'nombres' par ordre croissant
+                    var donnees_sorted = data.sort((a, b) => a.nombre - b.nombre);
+
+                    // obtient les valeurs minimales et maximales
+                    var min = Math.min(...donnees_sorted.map(item => item.nombre));
+                    var max = Math.max(...donnees_sorted.map(item => item.nombre));
+
+                    // crée une échelle de couleurs (dont la valeur est 'OrRd') avec chroma.js
+                    var scale = chroma.scale('OrRd').domain([min, max]);
+
+                    // filtre les valeurs des données pour les couleurs dans l'échelle
+                    var backgroundColors = donnees_sorted.map(item => scale(item.nombre).hex());
+                    
+                    for (var i = 0; i < data.length; i++) {
+                        labels.push(data[i].label);
+                        nombres.push(data[i].nombre);
+                    }
+
+                    // crée un nouvel objet dataset pour chaque étiquette
+                    var datasets = [];
+                    for (var i = 0; i < labels.length; i++) {
+                        datasets.push({
+                            label: labels[i],
+                            data: [nombres[i]], // ajoute la valeur correspondante
+                            backgroundColor: backgroundColors[i]
+                        });
+                    }
+
+                    // ajout des données dans le graphique
+                    graphe.data.datasets = datasets;
+                    graphe.update();
+    });
+
+    </script>
 </div>
+
 {% endblock %}

@@ -6,27 +6,6 @@ from flask_login import login_required, current_user, login_user
 from ..models.db_citynder import Commune, Utilisateurs, contenu_paniers_utilisateurs
 from sqlalchemy.sql import func
 
-############################################# Route pour le graphique ############################################# 
-
-@app.route("/graphiques/moyenne_loyer_par_region", methods=['GET', 'POST'])
-def graphique_loyer_par_region():
-    return render_template("pages/graphiques/moyenne_loyer_par_region.html")
-
-@app.route('/moyenne_loyer_par_region_data', methods=['GET', 'POST']) 
-
-#Récupère les régions et leur moyenne de loyer par mètre carré à partir de la base de données
-def moyenne_loyer_par_region_data():  
-    regions = Commune.query.with_entities(Commune.REGION, func.avg((Commune.LOYERM2_APPART + Commune.LOYERM2_MAISON)/2)).group_by(Commune.REGION).all()
-    
-    data = []
-
-    for region in regions:
-        data.append({
-            'label': region[0], 
-            'nombre': round(region[1], 2), # la moyenne de loyer arrondie à deux décimales
-        })
-    
-    return jsonify(data)
 
 ############################################## Route pour la carte du panier ############################################# 
 
@@ -58,7 +37,69 @@ def carte_panier():
 
     return jsonify(data)
 
-############################################## Route pour la heatmap ############################################# 
+############################################# Route pour le graphique top 30  ############################################# 
+
+@app.route("/graphiques/moyenne_loyer_par_commune", methods=['GET', 'POST'])
+def graphique_loyer_par_commune():
+    return render_template("pages/graphiques/moyenne_loyer_par_commune.html")
+
+@app.route('/moyenne_loyer_par_commune_data', methods=['GET'])
+def moyenne_loyer_par_commune_data():
+    regions = Commune.query.with_entities(Commune.LIBGEO, func.avg((Commune.LOYERM2_APPART + Commune.LOYERM2_MAISON) / 2).label('nombre')).group_by(Commune.LIBGEO).all()
+
+    regions_sorted = sorted(regions, key=lambda x: x[1], reverse=True)
+
+    top_30_communes = regions_sorted[:30]
+
+    data = [{'label': commune[0], 
+             'nombre': round(commune[1], 2)} 
+            for commune in top_30_communes]
+
+    return jsonify(data)
+
+############################################# Route pour le graphique bottom 30 commune - ############################################# 
+
+@app.route("/graphiques/moyenne_loyer_par_commune_bottom", methods=['GET', 'POST'])
+def graphique_loyer_par_commune_bottom():
+    return render_template("pages/graphiques/moyenne_loyer_par_commune_bottom.html")
+
+@app.route('/moyenne_loyer_par_commune_data_bottom_30', methods=['GET'])
+def moyenne_loyer_par_commune_data_bottom_30():
+    regions = Commune.query.with_entities(Commune.LIBGEO, func.avg((Commune.LOYERM2_APPART + Commune.LOYERM2_MAISON) / 2).label('nombre')).group_by(Commune.LIBGEO).all()
+
+    regions_sorted = sorted(regions, key=lambda x: x[1])
+
+    bottom_30_communes = regions_sorted[:30]
+
+    data = [{'label': commune[0], 
+             'nombre': round(commune[1], 2)} 
+            for commune in bottom_30_communes]
+
+    return jsonify(data)
+
+############################################# Route pour le graphique région ############################################# 
+
+@app.route("/graphiques/moyenne_loyer_par_region", methods=['GET', 'POST'])
+def graphique_loyer_par_region():
+    return render_template("pages/graphiques/moyenne_loyer_par_region.html")
+
+@app.route('/moyenne_loyer_par_region_data', methods=['GET', 'POST']) 
+def moyenne_loyer_par_region_data():  
+    regions = Commune.query.with_entities(Commune.REGION, func.avg((Commune.LOYERM2_APPART + Commune.LOYERM2_MAISON)/2)).group_by(Commune.REGION).all()
+    
+    data = []
+
+    for region in regions:
+        data.append({
+            'label': region[0], 
+            'nombre': round(region[1], 2)
+        })
+    
+    return jsonify(data)
+
+
+############################################## Route pour la heatmap (100 communes) ############################################# 
+
 @app.route("/carte_heatmap", methods=["GET"])
 @login_required
 def carte_heatmap():
@@ -90,7 +131,7 @@ def carte_heatmap():
         mapbox_zoom=4,
     )
 
-    fig.update_layout(title='Heatmap des communes aux loyers les plus chers en France')
+    fig.update_layout(title='Heatmap des 100 communes aux loyers les plus chers de France (hors Mayotte)')
 
     fig_json = fig.to_json()
 
