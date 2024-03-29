@@ -23,8 +23,8 @@ def ajout_utilisateur():
 
     if form.validate_on_submit():
         statut, donnees = Utilisateurs.ajout(
-            mail=clean_arg(request.form.get("mail", None)),
-            password=clean_arg(request.form.get("password", None))
+            EMAIL=clean_arg(request.form.get("mail", None)),
+            MDP=clean_arg(request.form.get("password", None))
         )
         if statut is True:
             flash("Inscription terminée", "success")
@@ -57,8 +57,8 @@ def connexion():
 
     if form.validate_on_submit():
         utilisateur = Utilisateurs.identification(
-            mail=clean_arg(request.form.get("mail", None)),
-            password=clean_arg(request.form.get("password", None))
+            EMAIL=clean_arg(request.form.get("mail", None)),
+            MDP=clean_arg(request.form.get("password", None))
         )
         if utilisateur:
             # flash("Connexion effectuée, tu as été redirigé.e vers l'accueil", "success")

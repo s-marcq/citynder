@@ -375,7 +375,10 @@ class Utilisateurs(UserMixin, db.Model):
         except Exception as erreur:
             db.session.rollback()
             return False, [str(erreur)]
-        
+    
+    def get_id(self):
+        return self.USER_ID
+    
     @login.user_loader
     def get_user_by_id(id):
         return Utilisateurs.query.get(int(id))
