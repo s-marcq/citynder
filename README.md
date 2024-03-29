@@ -29,5 +29,7 @@ WTF_CSRF_ENABLE=True ou False
 
 SECRET_KEY= #écrire ici une clé secrète 
 
-#### Pour utiliser l'application : 
-Naviguez, amusez-vous et déménagez!
+## Utilisation  
+#### Naviguez,
+#### amusez-vous et 
+#### déménagez!
