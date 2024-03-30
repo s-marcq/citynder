@@ -2,9 +2,16 @@
 {% block content %}
 
 <div class="container">
-    <h2 class="text-center">Les 20 communes les plus chères de France (de 25 à 30 €/m²)</h2>
-    <div>
-        <canvas id="graphique" style="width: 700px;"></canvas>
+    <div class="card card-body mx-auto my-1 py-0">
+
+    <h2 class="text-center" data-toggle="collapse" data-target="#collapseGraphique1" aria-expanded="false"
+    aria-controls="collapseGraphique1" class="card-title pl-4 pt-3 pointer">
+    Les 20 communes les plus chères de France (de 25 à 30 €/m²) <i class="fa-solid fa-caret-down float-right mr-4"></i>
+    </h2>
+    <div class="collapse show m-3" id="collapseGraphique1">
+                <div>
+                    <canvas id="graphique" style="width: 700px;"></canvas>
+                </div>
     </div>
     
         
