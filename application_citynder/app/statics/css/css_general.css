@@ -284,9 +284,8 @@ body.dark-mode, .navbar {
 /* URL */
 
 .link-panier-2{
-    color: rgb(55, 4, 61);
+    color: rgb(73, 9, 80);
     text-decoration-line: underline;
-    font-size: 90%
 } 
 
 .link-panier-1{
@@ -471,10 +470,10 @@ a.boutton-loupe:hover{
 
 /*a propos*/
 #apropos{
-    padding-left: 15%;
-    padding-right: 15%;
+    padding-left: 5%;
+    padding-right: 5%;
     padding-top: 5%;
-    padding-bottom: 15%;
+    padding-bottom: 5%;
     text-align: justify;
 }
 
@@ -699,7 +698,56 @@ a.github:hover{
     
 }
 
-#bloc_resultat{
-    box-shadow: 8px 10px 10px 10px #393838;
+
+
+#bloc_resultat_0{
+    background-color: rgb(220, 132, 132, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(220, 132, 132);
     border-radius: 20px;
-  }
+    box-shadow: rgb(55, 4, 61);
+}
+
+#bloc_resultat_1{
+    background-color: rgb(239, 185, 110, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(239, 185, 110);
+    border-radius: 20px;
+    box-shadow: rgb(55, 4, 61);
+}
+#bloc_resultat_2{
+    background-color: rgb(233, 243, 144, 0.1);
+    border: 0px;
+    border-left: 6px solid rgb(233, 243, 144);
+    border-radius: 20px;
+    box-shadow: rgb(55, 4, 61);
+}
+#bloc_resultat_3{
+    background-color: rgb(141, 218, 132, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(141, 218, 132);
+    border-radius: 20px;
+    box-shadow: rgb(55, 4, 61);
+}
+#bloc_resultat_4{
+    background-color: rgb(115, 206, 204, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(115, 206, 204);
+    border-radius: 20px;
+    box-shadow: rgb(55, 4, 61);
+}
+#bloc_resultat_5{
+    background-color: rgba(219, 159, 225, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(173, 158, 240);
+    border-radius: 20px;
+    box-shadow: rgb(55, 4, 61);
+}
+#bloc_resultat_6{
+    background-color: rgb(218, 132, 217, 0.1);
+    border: 0px;
+    border-left: 5px solid rgb(218, 132, 217);
+    border-radius: 20px;
+    box-shadow: rgb(55, 4, 61);
+
+}

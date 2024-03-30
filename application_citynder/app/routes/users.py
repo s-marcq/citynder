@@ -39,6 +39,7 @@ def ajout_utilisateur():
         
     except Exception as e :
         flash("L'ajout a rencontré une erreur : "+ str(e))
+        return render_template("pages/ajout_utilisateur.html", form=form)
 
     
 
@@ -82,6 +83,7 @@ def connexion():
         
     except Exception as e :
         flash("La connexion a rencontré une erreur : "+ str(e))
+        return render_template("pages/connexion.html", form=form)
 
 
 @app.route("/utilisateurs/deconnexion", methods=["POST", "GET"])
@@ -101,7 +103,8 @@ def deconnexion():
         return redirect(url_for("accueil"))
     
     except Exception as e :
-        flash("La connexion a rencontré une erreur : "+ str(e))
+        flash("La déconnexion a rencontré une erreur : "+ str(e))
+        return render_template("pages/accueil.html")
 
 
 login.login_view = 'connexion'

@@ -1,49 +1,47 @@
 
 {% block content %}
-<div class="container">
+<div class="img-fluid">
     <div class="card card-body mx-auto my-1 py-0">
-
-    <h2 class="text-center" data-toggle="collapse" data-target="#collapseGraphique2" aria-expanded="false"
-    aria-controls="collapseGraphique2" class="card-title pl-4 pt-3 pointer">
-    Les 30 communes les moins chères de France (autour de 5 €/m²) <i class="fa-solid fa-caret-down float-right mr-4"></i></h2>
-    <div class="collapse show m-3" id="collapseGraphique2">
-
-    <div>
-        <canvas id="graphique_bottom_30" style="width: 700px;"></canvas>
-    </div>
-    </div>
+        <h2 data-toggle="collapse" data-target="#collapseGraphique2" aria-expanded="false"
+        aria-controls="collapseGraphique2" class="card-title pl-4 pt-3 pointer">
+        Les 30 communes les moins chères de France (autour de 5 €/m²) <i class="fa-solid fa-caret-down float-right mr-4"></i></h2>
+        <div class="collapse show m-3" id="collapseGraphique2">
+            <div>
+                <canvas id="graphique_bottom_30" style="width: 700px;"></canvas>
+            </div>
+        </div>
          
-    <script>
-        const ctx_bottom_30 = document.getElementById('graphique_bottom_30');
-        var graphe_bottom_30 = new Chart(ctx_bottom_30, {
-            type: 'polarArea',
-            data: {
-                labels: [],
-                datasets: [{
-                    data: []
-                }]
-            },
-            options: {}
-        });
-
-        fetch('{{ url_for("moyenne_loyer_par_commune_data_bottom_30") }}')
-            .then(response => response.json())
-            .then(data => {
-                // Calcul des labels et des nombres
-                const labels_bottom_30 = data.map(commune => commune.label);
-                const nombres_bottom_30 = data.map(commune => commune.nombre);
-
-                // Ajout des données dans le graphique
-                graphe_bottom_30.data.labels = labels_bottom_30;
-                graphe_bottom_30.data.datasets.forEach(dataset => {
-                    dataset.data = nombres_bottom_30;
-                });
-
-                // Réglage du schéma de couleurs
-                graphe_bottom_30.options.plugins.colorschemes.scheme = 'tableau.HueCircle19';
-                graphe_bottom_30.update();
+        <script>
+            const ctx_bottom_30 = document.getElementById('graphique_bottom_30');
+            var graphe_bottom_30 = new Chart(ctx_bottom_30, {
+                type: 'polarArea',
+                data: {
+                    labels: [],
+                    datasets: [{
+                        data: []
+                    }]
+                },
+                options: {}
             });
-    </script>
+
+            fetch('{{ url_for("moyenne_loyer_par_commune_data_bottom_30") }}')
+                .then(response => response.json())
+                .then(data => {
+                    // Calcul des labels et des nombres
+                    const labels_bottom_30 = data.map(commune => commune.label);
+                    const nombres_bottom_30 = data.map(commune => commune.nombre);
+
+                    // Ajout des données dans le graphique
+                    graphe_bottom_30.data.labels = labels_bottom_30;
+                    graphe_bottom_30.data.datasets.forEach(dataset => {
+                        dataset.data = nombres_bottom_30;
+                    });
+
+                    // Réglage du schéma de couleurs
+                    graphe_bottom_30.options.plugins.colorschemes.scheme = 'tableau.HueCircle19';
+                    graphe_bottom_30.update();
+                });
+        </script>
 </div>
 
 {% endblock %}

@@ -247,6 +247,12 @@ def profil_commune(index):
         -------
         template
             Template d'affichage du résultat.
+        id
+            ID CSS du bloc résultat dans le template.
+        infos_commune
+            Dictionnaire contenant les informations de la commune à afficher
+        index
+            Index du premier résultat
     """
     try:
         
@@ -299,7 +305,8 @@ def profil_commune(index):
         else:
             nb_commerces = 0
 
-
+        id = f"bloc_resultat_{index%7}"
+        print(id)
         # Stocker le résultat des requêtes dans un dictionnaire pour les transmettre au template
         infos_commune = { 
             'code_insee': code_insee,
@@ -312,13 +319,12 @@ def profil_commune(index):
             'prix_m2_maisons': round(commune.LOYERM2_MAISON,2),
             'prix_m2_appartements': round(commune.LOYERM2_APPART,2),
             'nb_etablissements_culturels': nb_etablissements_culturels,
-            # 'nb_etablissements_culturels': sum([commune.etablissements_culturels.MUSEE_sum, commune.etablissements_culturels.OPERA_sum, commune.etablissements_culturels.C_CREATION_MUSI_sum, commune.etablissements_culturels.C_CREATION_ARTI_sum, commune.etablissements_culturels.C_CULTU_sum, commune.etablissements_culturels.SCENE_sum, commune.etablissements_culturels.THEATRE_sum, commune.etablissements_culturels.C_ART_sum, commune.etablissements_culturels.BIB_sum, commune.etablissements_culturels.CONSERVATOIRE_sum, commune.etablissements_culturels.CINEMA_sum]),
             'nb_etablissements_sportifs': nb_etablissements_sportifs,
             'interets_naturels':nb_environnement_naturels,
             'nb_commerces': nb_commerces
         }
         
-        return render_template("pages/resultats.html", infos_commune=infos_commune, index=index)
+        return render_template("pages/resultats.html", infos_commune=infos_commune, index=index, id=id)
 
     except Exception as e:
         flash("Une erreur s'est produite lors de l'affichage des résultats de votre requête : "+ str(e))

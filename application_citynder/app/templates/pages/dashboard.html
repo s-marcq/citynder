@@ -4,25 +4,28 @@
 {% block content %}
 <div class="container text-dark mb-3 mt-5">
     <h1 class="my-5 vertical-center">Dashboard : visualise les données de City'nder. </h1>
-    
-    <p class="mx-3">City'nder te propose de savoir où se situent les communes que tu as sélectionnées dans ton panier 
-        et une répartition du prix du loyer par région. Ainsi tu peux savoir si ta commune se situe dans une 
+    {%if nbre_communes %}
+        <p class="mx-3 h5">Tu as <b>{{nbre_communes}} communes</b> dans ton <a href="{{url_for('panier')}}" class="link-panier-2">panier</a>.</p>
+    {% endif %}
+    <p class="mx-3 pt-2 pb-2 h5">City'nder te propose de savoir <b>où se situent les communes que tu as sélectionnées dans ton panier</b> 
+        et une <b>répartition du prix du loyer par région</b>. Ainsi tu peux savoir si ta commune se situe dans une 
         zone aux loyers élevés et si elle est dans la moyenne haute ou basse des régions de France (hors Mayotte).<p>
     <p class="mx-3">Clique sur le titre des datavisualisations pour étendre ou cacher le contenu des champs.</p>
 
-    <!-- Dataviz des cartes/panier -->
-    {% include "partials/cartes/carte_dashboard.html"%}
-    <!-- Dataviz des communes les plus chères de France -->
-    {% include "partials/graphiques/moyenne_loyer_par_commune.html"%}
-    <!-- Dataviz des communes les moins chères de France -->
-    {% include "partials/graphiques/moyenne_loyer_par_commune_bottom.html"%}
-    <!-- Dataviz des régions -->
-    {% include "partials/graphiques/moyenne_loyer_par_region.html"%}
-
+    <div class="container">
+        <!-- Dataviz des cartes/panier -->
+        {% include "partials/cartes/carte_dashboard.html"%}
+        <!-- Dataviz des communes les plus chères de France -->
+        {% include "partials/graphiques/moyenne_loyer_par_commune.html"%}
+        <!-- Dataviz des communes les moins chères de France -->
+        {% include "partials/graphiques/moyenne_loyer_par_commune_bottom.html"%}
+        <!-- Dataviz des régions -->
+        {% include "partials/graphiques/moyenne_loyer_par_region.html"%}
+    </div>
 </div>
 
 <div class="col-6 d-flex align-items-start justify-content-start mt-3">
-    <a href="{{ url_for('panier') }}" class="btn btn-lg btn-primary mr-5" style="position: fixed; bottom: 20px; left: 20px; z-index: 100;">
+    <a href="{{ url_for('panier') }}" class="btn btn-lg btn-primary mr-5" style="position: fixed; bottom: 20px; left: 20px; z-index: 1000000;">
         Retour vers le panier
     </a>
 </div>  

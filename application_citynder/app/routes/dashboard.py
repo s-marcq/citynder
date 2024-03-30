@@ -1,6 +1,6 @@
 #import plotly.graph_objects as go
 from ..app import app
-from flask import render_template, jsonify
+from flask import render_template, jsonify, flash
 from flask_login import login_required, current_user
 from ..models.db_citynder import Commune, Utilisateurs
 from sqlalchemy.sql import func
@@ -18,9 +18,16 @@ def dashboard():
     -------
     template
         Retourne le template dashboard.html avec les communes présentes dans son panier.
+    nbre_communes
+        Retourne le nombre de communes dans le panier de l'utilisateur.
     """
-    
-    return render_template("/pages/dashboard.html")
+    try:
+        id = current_user.USER_ID
+        nbre_communes = len(Commune.query.join(Utilisateurs.panier).filter(Utilisateurs.USER_ID==id).all())
+    except Exception as e :
+        nbre_communes=None
+        flash("Une erreur s'est produite : "+ str(e))
+    return render_template("/pages/dashboard.html", nbre_communes=nbre_communes)
 
 
 @app.route("/carte_panier", methods=['GET'])
