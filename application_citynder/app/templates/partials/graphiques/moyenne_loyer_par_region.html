@@ -2,9 +2,13 @@
 {% block content %}
 
 <div class="container">
-    <h1 class="text-center">Loyers en France par région (hors Mayotte)</h1>
-    <div>
-        <canvas id="graphique_region" style="width: 800px;"></canvas>
+    <div class="card card-body mx-auto my-1 py-0">
+    <h2 class="text-center" data-toggle="collapse" data-target="#collapseGraphique3" aria-expanded="false"
+    aria-controls="collapseGraphique3" class="card-title pl-4 pt-3 pointer">Loyers en France par région (hors Mayotte) <i class="fa-solid fa-caret-down float-right mr-4"></i></h2>
+    <div class="collapse show m-3" id="collapseGraphique3">
+        <div>
+        <canvas id="graphique_region" style="width: 700px;"></canvas>
+    </div>
     </div>
    
             
