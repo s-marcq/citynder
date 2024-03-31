@@ -33,7 +33,6 @@ def dashboard():
 @app.route("/carte_panier", methods=['GET'])
 @login_required
 
-#Récupère les données du panier par compte utilisateur 
 def carte_panier():
     """
     Route permettant de récupérer les données du panier de l'utilisateur et les données de chaque 

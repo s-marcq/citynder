@@ -2,7 +2,7 @@
 
 {% block content %}
 
-<div class="container-fluid text-dark">
+<div class="container-fluid text-dark mt-5">
 
     <div class="row justify-content-center">
         <!-- Bouton "Suivant" à gauche -->
@@ -16,10 +16,10 @@
 
         <!-- Contenu centré -->
         <div class="col-6 mt-5">
-            <div class="card p-3" id="{{id}}" >
+            <div class="card p-3 radius-3D" id="{{id}}" >
                 <h1 class="h1 my-4 mb-1 text-center">Commune n°{{index+1}} : {{ infos_commune.nom_commune }}</h1>
                 <!-- Bouton "Plus de détails"  -->
-                <div class="row mt-5">
+                <div class="row mt-3">
                     <div class="col ml-5 text-center">
                         <a class="pointer" href="{{url_for('profil_detaille_commune', code_insee=infos_commune.code_insee)}}" target="_blank">
                             {%if infos_commune.url_img%}
@@ -42,7 +42,7 @@
                         <h4>Equipements</h4>
                         <p><strong>{{ infos_commune.nb_commerces }}</strong> commerces<br>
                             <strong>{{ infos_commune.nb_etablissements_culturels }}</strong> établissements culturels<br>
-                            <strong>{{ infos_commune.nb_etablissements_sportifs }}</strong> établissements sportifs</p>
+                            <strong>{{ infos_commune.nb_etablissements_sportifs }}</strong> équipements sportifs</p>
                     </div>
                     <div class= "col">
                         <h4>Nature</h4>

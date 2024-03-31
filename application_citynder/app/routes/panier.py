@@ -16,7 +16,6 @@ def panier() :
         Retourne le template panier.html avec l'ID de l'utilisateur et les communes présentes dans son panier.
     """
     try:
-        # code affichage du panier
         id = current_user.USER_ID
         if current_user.is_authenticated :
             communes = []

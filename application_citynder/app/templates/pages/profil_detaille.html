@@ -7,11 +7,11 @@
     {%if dico_code_insee.url_img %}
         <div class="container text-center"><img class="img-fluid w-50" src="{{dico_code_insee.url_img}}" alt="image_ville"></div>
     {%endif%}
-    <div class="row mt-5">
-        <div class="col-4 ">
+    <div class="row m-0 mt-5">
+        <div class="col-md-4 col-sm-12 ">
             <div class="card h-100 text_align_center">
-                <h3 class="card-title m-3"><i class="mr-2 fas fa-hand-holding-dollar"></i> Loyer au m2</h3>
-                <div class="card-body">
+                <h3 class="card-title mx-3 mb-0 mt-3"><i class="mr-2 fas fa-hand-holding-dollar"></i> Loyer au m2</h3>
+                <div class="card-body pt-2">
                     <ul>
                         <li><strong>Moyenne pour les locations d'appartements :</strong> {{dico_code_insee.loyer_appart}} €/m²</li>
                         <li><strong>Moyenne pour les locations de maisons :</strong> {{dico_code_insee.loyer_maison}} €/m²</li>
@@ -19,12 +19,12 @@
                 </div>
             </div>
             </div>
-            <div class="col-4 ">
+            <div class="col-md-4 col-sm-12 ">
                 <div class="card h-100 blue text_align_center">
-                    <div class="card-title m-3">
+                    <div class="card-title mx-3 mb-0 mt-3">
                         <h3><i class="mr-2 fas fa-users"></i> Démographie et géographie</h3>
                     </div>
-                    <div class="card-body">
+                    <div class="card-body pt-2">
                         <ul>
                             <li><strong>Nombre d'habitants :</strong> {{ "{:,.0f}".format(dico_code_insee.population|int).replace(',', ' ') }}</li>
                             <li><strong>Département :</strong> {{ dico_code_insee.departement }}</li>
@@ -34,12 +34,12 @@
                     </div>
                 </div>
             </div>
-      <div class="col-4 ">
+      <div class="col-md-4 col-sm-12">
             <div class="card h-100 text_align_center">
-                <div class="card-title m-3">
+                <div class="card-title mx-3 mb-0 mt-3">
                     <h3><i class="mr-2 fas fa-person-running"></i> Sport</h3>
                 </div>
-                <div class="card-body">
+                <div class="card-body pt-2">
                 {% if dico_code_insee.etablissements_sportifs %} 
                     {%if dico_code_insee.etablissements_sportifs|length > 5 %}
                         <ul class="initial-display">
@@ -74,20 +74,20 @@
                         {%endif%}
                 
                 {% else %}
-                <p>Aucun établissement sportif recensé</p>
+                <p>Aucun équipement sportif recensé</p>
                 </div>
                 {% endif %}
             </div>
       </div>
     </div>
     
-    <div class="row">
-    <div class="col-4">
+    <div class="row m-0">
+    <div class="col-md-4 col-sm-12">
         <div class="card h-100 text_align_center">
-            <div class="card-title m-3"> 
+            <div class="card-title mx-3 mb-0 mt-3"> 
                 <h3><i class="mr-2 fas fa-tree"></i> Nature</h3>
             </div>
-            <div class="card-text"> 
+            <div class="card-body mx-3 mb-0 mt-3"> 
 
                 {% if dico_code_insee.interets_naturels %}
                 <ul>
@@ -124,7 +124,12 @@
                         {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée.
                         {% endif %}
                     </li>
-                    
+                    {% if dico_code_insee.interets_naturels.PN %}
+                    <li><strong>{{dico_code_insee.interets_naturels.PN}}</strong></li>
+                    {% endif %}
+                    {% if dico_code_insee.interets_naturels.PNR %}
+                    <li><strong>{{dico_code_insee.interets_naturels.PNR}}</strong></li>
+                    {% endif %}
                 </ul>
                 {% else %}
                 <p>Aucune information disponible</p>
@@ -135,12 +140,12 @@
 
     </div>
     
-    <div class="col-4 ">
+    <div class="col-md-4 col-sm-12">
        <div class="card h-100 blue text_align_center">
-            <div class="card-title m-3">
+            <div class="card-title mx-3 mb-0 mt-3">
                 <h3><i class="mr-2 fas fa-cart-shopping"></i> Commerces</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body pt-2">
                 {% if dico_code_insee.commerces %}
                 <ul>
                     <li><strong>Alimentation :</strong>
@@ -194,12 +199,12 @@
     </div>
 
 
-    <div class="col-4 ">
+    <div class="col-md-4 col-sm-12 ">
        <div class="card h-100 text_align_center">
-            <div class="card-title m-3">
+            <div class="card-title mx-3 mb-0 mt-3">
                 <h3><i class="mr-2 fas fa-landmark"></i> Culture</h3>
             </div>
-            <div class="card-body">
+            <div class="card-body pt-2">
                 {% if dico_code_insee.culture %}
                 <ul class="initial-display">
                     <li><strong>Musée :</strong>
@@ -249,7 +254,7 @@
                             {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
                     </li>
                     <li><strong>Centre artistique :</strong>
-                        {% if dico_code_insee.culture.centre_artistique>= 1 %}
+                        {% if dico_code_insee.culture.centre_artistique >= 1 %}
                             {{ dico_code_insee.culture.centre_artistique }}
                             <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                             {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
@@ -267,7 +272,7 @@
                             {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}
                     </li>
                     <li><strong>Centre culturel :</strong>
-                        {% if dico_code_insee.culture.centre_culturel>= 1 %}
+                        {% if dico_code_insee.culture.centre_culturel >= 1 %}
                             {{ dico_code_insee.centre_culturel }}
                             <!-- Si la valeur de la variable n'est pas > ou = 1, affiche message -->
                             {% else %} {{ dico_code_insee.nom_commune }} n'est pas concernée. {% endif %}

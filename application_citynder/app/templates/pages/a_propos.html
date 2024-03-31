@@ -1,7 +1,7 @@
 {% extends "partials/conteneur.html" %}
 
-    {% block content%}
-    <div class="container" id="apropos" >
+{% block content%}
+<div class="container" id="apropos" >
         
     <div class="row">
         <div class="col-4 text-center text-lg-start">
@@ -52,21 +52,41 @@
 
         <p>Notre application a été réalisée dans le cadre du Master 2 “Technologies numériques
              appliquées à l’histoire” à l’Ecole nationale des chartes.</p>
-
-        <ul>L’équipe City’nder :
-            <br>
-            <li>Gilmar Ballestrim</li>
-            <li>Marina Hervieu</li>
-            <li>Anna Le Duff</li>
-            <li>Sarah Marcq</li>
-        </ul>
+        <p>L’équipe City’nder :
+            <ul>
+                <li>Gilmar Ballestrim</li>
+                <li>Marina Hervieu</li>
+                <li>Anna Le Duff</li>
+                <li>Sarah Marcq</li>
+            </ul>
+        </p>
         <h3 class="apropos_sous_titre">Nos données</h3>
         <div>
-            <p>L'application est basée sur des jeux de données publics.</p>
-    
+            <p>L'application est basée sur les jeux de données publics suivants :</p>
+            <ul>
+                <li><a class="link-panier-2" href="https://www.data.gouv.fr/fr/datasets/carte-des-loyers-indicateurs-de-loyers-dannonce-par-commune-en-2022/#/resources">Les Indicateurs de loyers d'annonce par commune en France en 2022</a></li>
+                <li><a class="link-panier-2" href="https://equipements.sports.gouv.fr/pages/accueil/">Data ES : Recensement national des équipements sportifs et lieux de pratiques</a></li>
+                <li><a class="link-panier-2" href="https://www.data.gouv.fr/fr/datasets/base-des-lieux-et-equipements-culturels-basilic/#/community-reuses">Basilic : Base des lieux et équipements culturels</a></li>
+                <li><a class="link-panier-2" href="https://www.insee.fr/fr/statistiques/3568602?sommaire=3568656#consulter">La Base permanente des équipements (BPE) pour les commerces</a></li>
+                <li>Pour la nature :
+                    <ul>
+                        <li><a class="link-panier-2" href="https://www.observatoire-des-territoires.gouv.fr/pn-communes-des-parcs-nationaux">Les communes des parcs nationaux (PN)</a></li>
+                        <li><a class="link-panier-2" href="https://www.observatoire-des-territoires.gouv.fr/pnr-communes-des-parcs-naturels-regionaux">Les communes des parcs naturels réginaux (PNR)</a></li>
+                        <li><a class="link-panier-2" href="https://www.data.gouv.fr/fr/datasets/communes-de-la-loi-littoral-au-code-officiel-geographique-cog-2020-2022/#/resources">Les communes concernées par la Loi Littoral</a></li>
+                        <li><a class="link-panier-2" href="https://www.data.gouv.fr/fr/datasets/communes-de-la-loi-montagne-au-code-officiel-geographique-cog-2020-2022/">Les communes concernées par la Loi Montagne</a></li>
+                        <li><a class="link-panier-2" href="https://www.data.gouv.fr/fr/datasets/les-perimetres-de-massifs/#/resources">Les périmètres de massifs</a></li>
+                    </ul>
+                    
+                </li>
+            </ul>
+            <p>
+                Nous avons réalisé un important traitement de ces jeux pour construire la base de données l'application. Dans le cadre du projet, nous avons également eu l'occasion de réaliser quelques data-visualisation.
+            </p>
+            <p> <a class="link-panier-1 h5 float-right my-3" href="../../statics/Citynder_Journal_de_bord.pdf" target="_blank"><i class="fa fa-file-text mr-2" aria-hidden="true"></i>
+                 Consulter le journal de bord du traitement de données</a></p>
         </div>
         
-        <p>C'est parti pour l'aventure, ton camion de démagement arrive déjà !</p>
+        <h3 class="apropos_sous_titre text-center mt-5">C'est parti pour l'aventure, ton camion de démagement arrive déjà !</h3>
         <!-- Animation camion et lien vers la recherche -->
         <a class="pointer hover-darker" href="{{url_for('recherche')}}" >
         <div class="loop-wrapper">
@@ -80,11 +100,7 @@
             <div class="wheels"></div>
           </div> 
         </a>
-        </div>
-
     </div>
 
-
-    
-   
-    {% endblock %}
+</div>   
+{% endblock %}

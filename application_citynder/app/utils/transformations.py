@@ -1,35 +1,44 @@
-import re
-
-def nettoyage_string_to_int(chaine):
-    # Dans le cas où plusieurs informations sont données dans la chaine comme 
-    # <strong>Saint Helena: </strong>60 km<br> <strong>Ascension Island: </strong>NA<br> <strong>Tristan da Cunha (island only): </strong>34 km
-    # il faut retourner la somme de ces nombres
-    res = None
-
-    def clean(ch):
-        res = re.sub(r'\(.*\)', '', ch) # pour supprimer les dates entre parenthèses
-        res = re.sub(r'[^0-9\.]*', '', res) # pour supprimer tous les carctères sauf les points
-        res = re.sub(r'\..*', '', res) # pour supprimer toutes les décimales
-        if res:
-            res = int(res)
-        else:
-            res = None
-        return res
-    
-    if chaine :
-        # cas normal 
-        if "<" not in chaine:
-            res = clean(chaine)
-        # cas de la somme
-        else :
-            tmp = 0
-            for el in chaine.split("<br"):
-                tmp = tmp + int(clean(el))
-            res = tmp
-    return res
-
 def clean_arg(arg):
+
+    """
+        Fonction qui transforme les chaînes de caractère vides en None, sinon elle les retourne telles quelles.
+
+        Parameters
+        ----------
+        arg : required
+            argument de la fonction : chaîne à vérifier et transformer.
+
+        Returns
+        -------
+        arg
+            Retourne l'argument si ce n'est pas une chaîne vide.
+        None
+            None si la chaîne est vide
+    """
+
     if arg == "":
         return None
     else:
         return arg
+
+# Fonction de normalisation des champs texte lorsque "None doit être affiché"
+def normalisation_champs_texte(champs) :
+    """
+        Fonction de normalisation des champs texte pour les valeurs par défaut du formulaire lorsque que la valeur None ne peut être traitée.
+        
+        Parameters
+        ----------
+        champs : required
+            champs à modifier.
+
+        Returns
+        -------
+        champs
+            Retourne la chaîne contenue dans le champs si la valeur n'est pas nulle.
+        une chaîne de caractères vide
+            si le contenu du champs était nul
+    """
+    if champs == None :
+        return ""
+    else :
+        return champs

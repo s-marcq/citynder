@@ -4,7 +4,6 @@ from ..utils.transformations import  clean_arg
 from ..models.db_citynder import Utilisateurs
 from ..app import app, login
 from flask_login import login_user, current_user, logout_user
-from re import sub
 
 @app.route("/utilisateurs/ajout", methods=["GET", "POST"])
 def ajout_utilisateur():

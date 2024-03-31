@@ -2,7 +2,8 @@ from ..app import app
 from flask import render_template, request, flash, redirect, url_for, session
 import random
 from sqlalchemy import or_, and_
-from ..utils.calcul_loyer import calculer_loyer_m2_max, calculer_loyer_m2_min, normalisation_champs_texte
+from ..utils.calcul_loyer import calculer_loyer_m2_max, calculer_loyer_m2_min
+from ..utils.transformations import normalisation_champs_texte
 from ..models.formulaires import Recherche
 from ..models.db_citynder import Commune, Environnement_naturel_specifique, Etablissements_culturels, Etablissements_commerciaux, Equipements_sportifs
 from flask_login import login_required
@@ -66,7 +67,7 @@ def recherche():
             if session['montagne']:
                 query_results = query_results.join(Commune.environnement_naturel).filter(or_(
                                 Environnement_naturel_specifique.LOI_MONTAGNE == True,
-                                Environnement_naturel_specifique.MASSIF != None)
+                                Environnement_naturel_specifique.MASSIF != "Hors massif")
                             )
             session['PNR'] = request.form.get("PNR", None)
             if session['PNR']:
@@ -305,8 +306,6 @@ def profil_commune(index):
         else:
             nb_commerces = 0
 
-        id = f"bloc_resultat_{index%7}"
-        print(id)
         # Stocker le résultat des requêtes dans un dictionnaire pour les transmettre au template
         infos_commune = { 
             'code_insee': code_insee,
@@ -323,12 +322,14 @@ def profil_commune(index):
             'interets_naturels':nb_environnement_naturels,
             'nb_commerces': nb_commerces
         }
+
+        id = f"bloc_resultat_{index%7}" # génération de l'id CSS à intégrer pour que la couleur change à chaque résultat (gamme de 7 couleurs)
         
         return render_template("pages/resultats.html", infos_commune=infos_commune, index=index, id=id)
 
     except Exception as e:
         flash("Une erreur s'est produite lors de l'affichage des résultats de votre requête : "+ str(e))
-        return render_template("erreurs/404.html")
+        return render_template("pages/recherche_filtres.html")
 
 
 
@@ -383,6 +384,8 @@ def profil_detaille_commune(code_insee):
                 'ESTUAIRE': commune.environnement_naturel.ESTUAIRE,
                 'LOI_MONTAGNE': commune.environnement_naturel.LOI_MONTAGNE,
                 'MASSIF': commune.environnement_naturel.MASSIF,
+                'PN': commune.environnement_naturel.PN_LIBGEO,
+                'PNR': commune.environnement_naturel.PNR_LIBGEO,
             },
         else:
             interets_naturels = None
@@ -418,5 +421,5 @@ def profil_detaille_commune(code_insee):
         return render_template("pages/profil_detaille.html", dico_code_insee=dico_code_insee)
 
     except Exception as e: # en cas d'erreur
-        flash(f"ERREUR : {str(e)}")
+        flash(f"Une erreur s'est produite lors de l'affichage du profil détaillé : {str(e)}")
         return render_template("erreur/404.html")
