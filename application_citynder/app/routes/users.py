@@ -68,7 +68,6 @@ def connexion():
                 MDP=clean_arg(request.form.get("password", None))
             )
             if utilisateur:
-                # flash("Connexion effectuée, tu as été redirigé.e vers l'accueil", "success")
                 login_user(utilisateur)
                 flash("Tu es connecté.e, tu as été redirigé.e vers l'accueil", "info")
                 return redirect(url_for('accueil'))

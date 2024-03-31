@@ -43,9 +43,7 @@
                 {% if dico_code_insee.etablissements_sportifs %} 
                     {%if dico_code_insee.etablissements_sportifs|length > 5 %}
                         <ul class="initial-display">
-                            
                             {% for equipement in dico_code_insee.etablissements_sportifs[:5]%} 
-
                                 <li><strong>{{equipement[1]}} :</strong> {{equipement[0]}} </li>
                                 {% endfor %}
                                 <!-- afficher les 5 premiers voire plus  -->
@@ -65,7 +63,6 @@
                         <ul>
                             
                             {% for equipement in dico_code_insee.etablissements_sportifs %} 
-
                                 <li><strong>{{equipement[1]}} :</strong> {{equipement[0]}} </li>
                                 
                                 {% endfor %}

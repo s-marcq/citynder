@@ -9,7 +9,6 @@ from ..models.db_citynder import Commune, Environnement_naturel_specifique, Etab
 from flask_login import login_required
 import geopy.distance
 
-
 @app.route("/recherche", methods=['GET', 'POST'])
 @login_required
 def recherche():

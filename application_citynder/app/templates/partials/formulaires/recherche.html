@@ -5,8 +5,6 @@
 
     {% include "partials/popup/chargement.html"%}
 
-    <!-- formulaire -->
-
     <form class="form form-horizontal" action="{{url_for('recherche', champs=champs)}}" method="post" name="recherche">
         {{ form.hidden_tag() }}
         <div class="row">
@@ -16,6 +14,7 @@
                         aria-controls="collapseBien" class="card-title pl-4 pt-3" id="hTypeBien">
                         Type de bien <i class="fa-solid  fa-caret-down float-right mr-4"></i>
                     </h3>
+                    <!-- Type de bien -->
                     <div class="collapse show m-3" id="collapseBien">
                         <div class="card-text pl-2">
                             <!-- Formulaire -->
@@ -74,8 +73,6 @@
                         </div>
                     </div>
                 </div>
-
-
             </div>
                 
             <div class="col-md-6 col-lg-6 col-sm-12">
@@ -99,13 +96,11 @@
                 </div>
             </div>
             
-            </div>
-            <!-- Type de bien -->
-
+        </div>
                 
-            <!-- Population -->
+                <!-- Population -->
                 <div class="card card-body mx-0 px-0 my-1 py-0" id="bPop">
-        
+
                     <h3 data-toggle="collapse" data-target="#collapsePop" aria-expanded="false"
                         aria-controls="collapsePop" class="card-title pl-4 pt-3">
                         Population <i class="fa-solid  fa-caret-down float-right mr-4 ml-2"></i>
@@ -124,7 +119,7 @@
                 </div>
 
 
-            <!-- Nature-->
+                <!-- Nature-->
                 <div class="card card-body mx-0 px-0 my-1 py-0" id="bNat">
         
                     <h3 data-toggle="collapse" data-target="#collapseNature" aria-expanded="false"
@@ -157,7 +152,7 @@
                     </div>
                 </div>
 
-            <!-- Culture -->
+                <!-- Culture -->
                 <div class="card card-body mx-0 px-0 my-1 py-0" id="bCulture">
         
                     <h3 data-toggle="collapse" data-target="#collapseCulture" aria-expanded="false"
@@ -198,7 +193,7 @@
                     </div>
                 </div>
 
-            <!-- Sport -->
+                <!-- Sport -->
                 <div class="card card-body mx-0 px-0 my-1 py-0" id="bSport">
                     <h3 data-toggle="collapse" data-target="#collapseSport" aria-expanded="false"
                         aria-controls="collapseSport" class="card-title pl-4 pt-3">

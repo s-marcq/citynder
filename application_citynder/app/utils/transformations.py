@@ -21,7 +21,7 @@ def clean_arg(arg):
     else:
         return arg
 
-# Fonction de normalisation des champs texte lorsque "None doit être affiché"
+
 def normalisation_champs_texte(champs) :
     """
         Fonction de normalisation des champs texte pour les valeurs par défaut du formulaire lorsque que la valeur None ne peut être traitée.
