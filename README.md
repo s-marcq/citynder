@@ -8,7 +8,6 @@ Suivre dans l'ordre les tâches suivantes :
 
 | Tâche                                                         | Ligne de commande dans le terminal               |
 |---------------------------------------------------------------|--------------------------------------------------|
-|Initialiser un git depuis le dossier en local                  |git init                                          |
 |Copier le repo git depuis le dossier en local                  |git clone https://github.com/s-marcq/citynder.git |                                      |
 |Installer et activer un environnement virtuel                  |pip install virtualenv : installer le package     |
 |S'assurer que l'on est dans le dossier racine de l'application | pwd                                              |
@@ -19,6 +18,8 @@ Suivre dans l'ordre les tâches suivantes :
 |Créer un fichier .env au même niveau que le dossier app        | nano .env                                        |
 |Changer les variables d'environnements                         | Copier/coller dans .env la partie ci-dessous*    |
 |Lancer  l'application                                          | python run.py                                    |
+|Ouvrir l'application                                           | Cliquer sur le lien  http://127.0.0.1:5000       |
+|Quitter l'application                                          | ctrl+C                                           |
 
 *Les variables d'environnements :  
 
